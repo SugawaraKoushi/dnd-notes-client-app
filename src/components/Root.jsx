@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Layout, Menu, theme } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useState } from "react";
@@ -6,7 +6,6 @@ import { Link, Outlet, useNavigate } from "react-router";
 
 const Root = () => {
     const navigate = useNavigate();
-    const [theme, setTheme] = useState("dark");
     const items = [
         {
             key: "/campaigns",
@@ -18,25 +17,38 @@ const Root = () => {
         },
     ];
 
+    const {
+        token: { colorBgContainer, borderRadiusLG },
+    } = theme.useToken();
+
     const handleMenuItemClick = (e) => {
         navigate(e.key);
         console.log(e);
     };
 
     return (
-        <Layout style={{ height: "100vh" }}>
+        <Layout style={{ minHeight: "100vh" }}>
             <Header></Header>
             <Layout
                 style={{ margin: "auto", width: "100%", maxWidth: "1152px" }}
             >
                 <Sider>
-                    <Menu
-                        theme={theme}
-                        items={items}
-                    />
+                    <Menu theme={theme} items={items} />
                 </Sider>
-                <Content>
-                    <Outlet />
+                <Content
+                    style={{
+                        padding: "0 48px",
+                    }}
+                >
+                    <div
+                        style={{
+                            background: colorBgContainer,
+                            padding: 24,
+                            borderRadius: borderRadiusLG,
+                        }}
+                    >
+                        <Outlet />
+                    </div>
                 </Content>
             </Layout>
             <Footer></Footer>

@@ -3,7 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./components/Root";
-import CampaignList from "./components/campaigns/CampaignList";
+import CampaignList, {
+    loader as campaignLoader,
+} from "./components/campaigns/CampaignList";
 import CharacterList from "./components/characters/CharacterList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
             {
                 path: "/campaigns",
                 element: <CampaignList />,
+                loader: campaignLoader,
             },
             {
                 path: "/characters",

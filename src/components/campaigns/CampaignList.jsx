@@ -1,7 +1,19 @@
 import { List } from "antd";
+import axios from "axios";
+import { useLoaderData } from "react-router";
+
+export const loader = async () => {
+    const url = "http://localhost:8080/api/campaign/get";
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (err) {
+        alert(err.message);
+    }
+}
 
 const CampaignList = () => {
-    const campaigns = ["1", "2", "3"];
+    const campaigns = useLoaderData();
 
     return (
         <List
@@ -9,7 +21,7 @@ const CampaignList = () => {
             dataSource={campaigns}
             renderItem={(item) => (
                 <List.Item>
-                    <a href={item}>{item}</a>
+                    <a href={item}>{item.name}</a>
                 </List.Item>
             )}
         />
