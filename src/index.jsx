@@ -7,6 +7,7 @@ import CampaignList, {
     loader as campaignLoader,
 } from "./components/campaigns/CampaignList";
 import CharacterList from "./components/characters/CharacterList";
+import Login from "./components/auth/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
                 element: <CharacterList />,
             },
         ],
+    },
+    {
+        path: "/login",
+        element: <Login />,
     },
 ]);
 

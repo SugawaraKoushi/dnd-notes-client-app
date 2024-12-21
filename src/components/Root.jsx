@@ -1,5 +1,5 @@
 import { Layout, Menu, theme } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { Link, Outlet } from "react-router";
 
