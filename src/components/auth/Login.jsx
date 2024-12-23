@@ -7,13 +7,17 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onFinish = (values) => {
-        const url = "http://localhost:8080/api/auth/login"
+        const form = new FormData();
+        form.append("username", values.username);
+        form.append("password", values.password);
+
+        const url = "http://localhost:8080/api/login";
         try {
-            axios.post(url,{ params: values }).then(() => navigate("/campaigns"))
+            axios.post(url, form).then(() => navigate("/campaigns"));
         } catch (e) {
             console.log(e.message);
         }
-    }
+    };
 
     return (
         <div
@@ -21,7 +25,7 @@ const Login = () => {
                 width: 600,
                 margin: "200px auto",
                 textAlign: "center",
-                alignItems: "center"
+                alignItems: "center",
             }}
         >
             <Title level={1}>Вход в DnD Notes</Title>
