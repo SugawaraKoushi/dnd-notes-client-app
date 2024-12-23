@@ -6,7 +6,7 @@ export const loader = async () => {
     const url = "http://localhost:8080/api/campaign/get";
     try {
         const response = await axios.get(url);
-console.log(response);
+        console.log(response);
 
         return response.data;
     } catch (err) {
