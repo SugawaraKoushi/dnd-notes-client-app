@@ -6,15 +6,18 @@ const Login = () => {
     const { Title } = Typography;
     const navigate = useNavigate();
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const form = new FormData();
         form.append("username", values.username);
         form.append("password", values.password);
-
         const url = "http://localhost:8080/api/login";
+
         try {
-            axios.post(url, form).then(() => navigate("/campaigns"));
+            const res = await axios.post(url, form);
+            console.log(res);
+            //.then(() => navigate("/campaigns"));
         } catch (e) {
+            console.log(e);
             console.log(e.message);
         }
     };
