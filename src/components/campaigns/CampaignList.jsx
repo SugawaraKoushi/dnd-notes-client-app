@@ -3,16 +3,20 @@ import axios from "axios";
 import { useLoaderData } from "react-router";
 
 export const loader = async () => {
-    const url = "http://localhost:8080/api/campaign/get";
+    const url = "http://localhost:8080/api/campaigns/get";
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+            headers: {
+                withCredentials: true,
+            },
+        });
         console.log(response);
 
         return response.data;
     } catch (err) {
         alert(err.message);
     }
-}
+};
 
 const CampaignList = () => {
     const campaigns = useLoaderData();

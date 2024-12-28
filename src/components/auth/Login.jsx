@@ -7,15 +7,10 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onFinish = async (values) => {
-        const form = new FormData();
-        form.append("username", values.username);
-        form.append("password", values.password);
-        const url = "http://localhost:8080/api/login";
+        const url = "http://localhost:8080/auth/login";
 
         try {
-            const res = await axios.post(url, form);
-            console.log(res);
-            //.then(() => navigate("/campaigns"));
+            await axios.post(url, values).then(() => navigate("/"));
         } catch (e) {
             console.log(e);
             console.log(e.message);
@@ -31,7 +26,7 @@ const Login = () => {
                 alignItems: "center",
             }}
         >
-            <Title level={1}>Вход в DnD Notes</Title>
+            <Title level={1}>Welcome. Please sing in</Title>
             <Form
                 labelCol={{
                     span: 4,
