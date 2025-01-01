@@ -10,10 +10,9 @@ const Login = () => {
         const url = "http://localhost:8080/auth/login";
 
         try {
-            await axios.post(url, values).then(() => navigate("/"));
+            await axios.post(url, values).then(() => navigate("/campaigns"));
         } catch (e) {
             console.log(e);
-            console.log(e.message);
         }
     };
 

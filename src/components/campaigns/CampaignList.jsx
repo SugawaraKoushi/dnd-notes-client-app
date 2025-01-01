@@ -5,13 +5,7 @@ import { useLoaderData } from "react-router";
 export const loader = async () => {
     const url = "http://localhost:8080/api/campaigns/get";
     try {
-        const response = await axios.get(url, {
-            headers: {
-                withCredentials: true,
-            },
-        });
-        console.log(response);
-
+        const response = await axios.get(url);
         return response.data;
     } catch (err) {
         alert(err.message);

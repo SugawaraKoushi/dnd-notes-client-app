@@ -8,6 +8,7 @@ import CampaignList, {
 } from "./components/campaigns/CampaignList";
 import CharacterList from "./components/characters/CharacterList";
 import Login from "./components/auth/Login";
+import axios from "axios";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -32,6 +33,9 @@ const router = createBrowserRouter([
         element: <Login />,
     },
 ]);
+
+axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.withCredentials = true;
 
 root.render(
     <React.StrictMode>
