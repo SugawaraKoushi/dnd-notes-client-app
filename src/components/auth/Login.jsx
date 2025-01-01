@@ -1,6 +1,7 @@
-import { Button, Form, Input, Typography } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Login = () => {
     const { Title } = Typography;
@@ -19,53 +20,64 @@ const Login = () => {
     return (
         <div
             style={{
-                width: 600,
+                width: 360,
                 margin: "200px auto",
                 textAlign: "center",
                 alignItems: "center",
             }}
         >
-            <Title level={1}>Welcome. Please sing in</Title>
+            <Title level={1}>Вход в DnD Notes</Title>
             <Form
-                labelCol={{
-                    span: 4,
-                }}
-                wrapperCol={{
-                    span: 16,
-                }}
-                style={{
-                    maxWidth: 600,
+                name="login"
+                initialValues={{
+                    remember: false,
                 }}
                 onFinish={onFinish}
             >
                 <Form.Item
-                    label="Логин"
                     name="username"
                     rules={[
                         {
                             required: true,
-                            message: "Поле должно быть заполнено",
+                            message: "Введите Ваш логин!",
                         },
                     ]}
                 >
-                    <Input />
+                    <Input prefix={<UserOutlined />} placeholder="Логин" />
                 </Form.Item>
                 <Form.Item
-                    label="Пароль"
                     name="password"
                     rules={[
                         {
                             required: true,
-                            message: "Поле должно быть заполнено",
+                            message: "Введите Ваш пароль!",
                         },
                     ]}
                 >
-                    <Input type="password" />
+                    <Input
+                        prefix={<LockOutlined />}
+                        type="password"
+                        placeholder="Пароль"
+                    />
                 </Form.Item>
-                <Form.Item label={null}>
-                    <Button type="primary" htmlType="submit">
+                <Form.Item>
+                    <Flex justify="space-between" align="center">
+                        <Form.Item
+                            name="remember"
+                            valuePropName="checked"
+                            noStyle
+                        >
+                            <Checkbox>Запомнить</Checkbox>
+                        </Form.Item>
+                        <Link to="">Забыл пароль</Link>
+                    </Flex>
+                </Form.Item>
+
+                <Form.Item>
+                    <Button block type="primary" htmlType="submit">
                         Войти
                     </Button>
+                    или <Link to="">Зарегистрироваться!</Link>
                 </Form.Item>
             </Form>
         </div>
