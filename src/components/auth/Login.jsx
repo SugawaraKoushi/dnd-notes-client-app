@@ -72,7 +72,6 @@ const Login = () => {
                         <Link to="">Забыл пароль</Link>
                     </Flex>
                 </Form.Item>
-
                 <Form.Item>
                     <Button block type="primary" htmlType="submit">
                         Войти

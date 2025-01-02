@@ -9,6 +9,7 @@ import CampaignList, {
 import CharacterList from "./components/characters/CharacterList";
 import Login from "./components/auth/Login";
 import axios from "axios";
+import Registration from "./components/auth/Registration";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+    },
+    {
+        path: "/register",
+        element: <Registration />,
     },
 ]);
 
