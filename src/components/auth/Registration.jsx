@@ -1,10 +1,20 @@
 import { Button, Form, Input, Typography } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Registration = () => {
     const { Title } = Typography;
+    const navigate = useNavigate();
 
-    const onFinish = () => {};
+    const onFinish = async (values) => {
+        const url = "http://localhost:8080/api/users/create";
+
+        try {
+            await axios.post(url, values).then(() => navigate("/login"));
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     const validateLogin = async (username) => {
         if (username.length < 3) {
@@ -44,6 +54,7 @@ const Registration = () => {
             <Form
                 layout="horizontal"
                 name="register"
+                onFinish={onFinish}
                 scrollToFirstError
                 labelCol={{ span: 6 }}
             >
