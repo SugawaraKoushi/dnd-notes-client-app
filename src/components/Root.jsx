@@ -9,8 +9,8 @@ const Root = () => {
 
     const items = [
         {
-            key: "/campaigns",
-            label: <Link to="/campaigns">Кампании</Link>,
+            key: "/campaigns/list",
+            label: <Link to="/campaigns/list">Кампании</Link>,
         },
         {
             key: "/characters",
@@ -36,8 +36,17 @@ const Root = () => {
                     align="center"
                     justify="space-between"
                 >
-                    <div style={{display: "inline-flex", alignItems: "center", margin: "0"}}>
-                        <Link to="/" style={{ display: "flex", marginRight: "20px"}}>
+                    <div
+                        style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            margin: "0",
+                        }}
+                    >
+                        <Link
+                            to="/"
+                            style={{ display: "flex", marginRight: "20px" }}
+                        >
                             <img
                                 id="logo"
                                 alt="logo"

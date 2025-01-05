@@ -11,7 +11,7 @@ const Login = () => {
         const url = "/auth/login";
 
         try {
-            await instance.post(url, values).then(() => navigate("/campaigns"));
+            await instance.post(url, values).then(() => navigate("/campaigns/list"));
         } catch (e) {
             console.log(e);
         }

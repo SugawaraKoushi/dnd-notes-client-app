@@ -1,7 +1,7 @@
-import { Breadcrumb, List, theme } from "antd";
+import { FloatButton, List } from "antd";
 import { redirect, useLoaderData } from "react-router";
 import instance from "../../axios";
-
+import { PlusCircleTwoTone, PlusOutlined } from "@ant-design/icons";
 
 export const loader = async () => {
     const url = "/api/campaigns/get";
@@ -18,36 +18,28 @@ export const loader = async () => {
 
 const CampaignList = () => {
     const campaigns = useLoaderData();
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
-
-    const breadcrumbItems = [{ title: "Кампании" }];
 
     return (
         <>
-            <Breadcrumb
-                style={{
-                    margin: "16px 0",
-                }}
-                items={breadcrumbItems}
+            <List
+                dataSource={campaigns}
+                renderItem={(item) => (
+                    <List.Item>
+                        <List.Item.Meta
+                            title={item.name}
+                            description={item.description}
+                        />
+                    </List.Item>
+                )}
             />
-            <div
+            <FloatButton
+                href="/campaigns/new"
+                icon={<PlusOutlined />}
                 style={{
-                    background: colorBgContainer,
-                    padding: 24,
-                    borderRadius: borderRadiusLG,
+                    width: "50px",
+                    height: "50px",
                 }}
-            >
-                <List
-                    dataSource={campaigns}
-                    renderItem={(item) => (
-                        <List.Item>
-                            <a href={item}>{item.name}</a>
-                        </List.Item>
-                    )}
-                />
-            </div>
+            />
         </>
     );
 };

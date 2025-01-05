@@ -10,6 +10,8 @@ import CharacterList from "./components/characters/CharacterList";
 import Login from "./components/auth/Login";
 import axios from "axios";
 import Registration from "./components/auth/Registration";
+import NewCampaign from "./components/campaigns/NewCampaign";
+import Campaigns from "./components/campaigns/Campaigns";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -20,8 +22,18 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/campaigns",
-                element: <CampaignList />,
-                loader: campaignLoader,
+                element: <Campaigns />,
+                children: [
+                    {
+                        path: "/campaigns/new",
+                        element: <NewCampaign />,
+                    },
+                    {
+                        path: "/campaigns/list",
+                        element: <CampaignList />,
+                        loader: campaignLoader,
+                    },
+                ],
             },
             {
                 path: "/characters",
