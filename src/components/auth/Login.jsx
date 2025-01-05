@@ -1,17 +1,17 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
-import axios from "axios";
 import { Link, useNavigate } from "react-router";
+import instance from "../../axios";
 
 const Login = () => {
     const { Title } = Typography;
     const navigate = useNavigate();
 
     const onFinish = async (values) => {
-        const url = "http://localhost:8080/auth/login";
+        const url = "/auth/login";
 
         try {
-            await axios.post(url, values).then(() => navigate("/campaigns"));
+            await instance.post(url, values).then(() => navigate("/campaigns"));
         } catch (e) {
             console.log(e);
         }

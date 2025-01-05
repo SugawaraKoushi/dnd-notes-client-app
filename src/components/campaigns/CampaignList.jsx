@@ -1,14 +1,15 @@
 import { Breadcrumb, List, theme } from "antd";
-import BreadcrumbItem from "antd/es/breadcrumb/BreadcrumbItem";
-import axios from "axios";
 import { redirect, useLoaderData } from "react-router";
+import instance from "../../axios";
+
 
 export const loader = async () => {
-    const url = "http://localhost:8080/api/campaigns/get";
+    const url = "/api/campaigns/get";
     try {
-        const response = await axios.get(url);
+        const response = await instance.get(url, { withCredentials: true });
         return response.data;
     } catch (err) {
+        console.log(err);
         if (err.status === 401) {
             return redirect("/login");
         }
@@ -21,15 +22,16 @@ const CampaignList = () => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    const breadcrumbItems = [{ title: "Кампании" }];
+
     return (
         <>
             <Breadcrumb
                 style={{
                     margin: "16px 0",
                 }}
-            >
-                <BreadcrumbItem>Кампании</BreadcrumbItem>
-            </Breadcrumb>
+                items={breadcrumbItems}
+            />
             <div
                 style={{
                     background: colorBgContainer,

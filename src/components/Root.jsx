@@ -1,8 +1,12 @@
-import { Layout, Menu } from "antd";
+import { Button, Flex, Layout, Menu } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
+import instance from "../axios";
+import logoImage from "../../src/icons/logo.png";
 
 const Root = () => {
+    const navigate = useNavigate();
+
     const items = [
         {
             key: "/campaigns",
@@ -14,15 +18,43 @@ const Root = () => {
         },
     ];
 
+    const handleLogoutButtonClick = async () => {
+        const url = "/logout";
+
+        try {
+            await instance.get(url).then(() => navigate("/login"));
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     return (
         <Layout style={{ minHeight: "100vh" }}>
             <Header>
-                <Menu
-                    style={{ maxWidth: "1152px", margin: "auto" }}
-                    theme="dark"
-                    items={items}
-                    mode="horizontal"
-                />
+                <Flex
+                    style={{ maxWidth: "1200px", margin: "auto" }}
+                    align="center"
+                    justify="space-between"
+                >
+                    <div style={{display: "inline-flex", alignItems: "center", margin: "0"}}>
+                        <Link to="/" style={{ display: "flex", marginRight: "20px"}}>
+                            <img
+                                id="logo"
+                                alt="logo"
+                                src={logoImage}
+                                style={{ height: "40px" }}
+                            />
+                        </Link>
+                        <Menu theme="dark" items={items} mode="horizontal" />
+                    </div>
+                    <Button
+                        id="logout"
+                        type="link"
+                        onClick={handleLogoutButtonClick}
+                    >
+                        Выход
+                    </Button>
+                </Flex>
             </Header>
             <Layout
                 style={{ margin: "auto", width: "100%", maxWidth: "1152px" }}
@@ -32,15 +64,7 @@ const Root = () => {
                         padding: 24,
                     }}
                 >
-                    {/* <div
-                        style={{
-                            background: colorBgContainer,
-                            padding: 24,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    > */}
                     <Outlet />
-                    {/* </div> */}
                 </Content>
             </Layout>
         </Layout>

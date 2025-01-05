@@ -1,5 +1,4 @@
 import { Breadcrumb, List } from "antd";
-import BreadcrumbItem from "antd/es/breadcrumb/BreadcrumbItem";
 import { theme } from "antd";
 
 const CharacterList = () => {
@@ -7,6 +6,7 @@ const CharacterList = () => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+    const breadcrumbItems = [{ title: "Мои персонажи" }];
 
     return (
         <>
@@ -14,9 +14,8 @@ const CharacterList = () => {
                 style={{
                     margin: "16px 0",
                 }}
-            >
-                <BreadcrumbItem>GПрсонажи</BreadcrumbItem>
-            </Breadcrumb>
+                items={breadcrumbItems}
+            />
             <div
                 style={{
                     background: colorBgContainer,
