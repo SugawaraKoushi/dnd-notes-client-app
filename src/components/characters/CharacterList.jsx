@@ -1,37 +1,37 @@
-import { Breadcrumb, List } from "antd";
-import { theme } from "antd";
+import { FloatButton, List } from "antd";
+import CharacterTile from "./CharacterTile";
+import { PlusOutlined } from "@ant-design/icons";
 
 const CharacterList = () => {
-    const characters = ["3", "4", "5"];
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
-    const breadcrumbItems = [{ title: "Мои персонажи" }];
+    const characters = [
+        <CharacterTile name="Дундобород железный" hp="100" currentHp="25" />,
+        <CharacterTile name="Дундобород железный" hp="100" currentHp="75" />,
+        <CharacterTile name="Дундобород железный" hp="100" currentHp="100" />,
+    ];
 
     return (
         <>
-            <Breadcrumb
-                style={{
-                    margin: "16px 0",
+            <List
+                grid={{
+                    gutter: 12,
+                    xs: 1,
+                    sm: 2,
+                    md: 3,
+                    lg: 3,
+                    xl: 3,
+                    xxl: 3,
                 }}
-                items={breadcrumbItems}
+                dataSource={characters}
+                renderItem={(item) => <List.Item>{item}</List.Item>}
             />
-            <div
+            <FloatButton
+                href="/characters/new"
+                icon={<PlusOutlined />}
                 style={{
-                    background: colorBgContainer,
-                    padding: 24,
-                    borderRadius: borderRadiusLG,
+                    width: "50px",
+                    height: "50px",
                 }}
-            >
-                <List
-                    dataSource={characters}
-                    renderItem={(item) => (
-                        <List.Item>
-                            <a href={item}>{item}</a>
-                        </List.Item>
-                    )}
-                />
-            </div>
+            />
         </>
     );
 };

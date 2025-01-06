@@ -13,8 +13,8 @@ const Root = () => {
             label: <Link to="/campaigns/list">Кампании</Link>,
         },
         {
-            key: "/characters",
-            label: <Link to="/characters">Персонажи</Link>,
+            key: "/characters/list",
+            label: <Link to="/characters/list">Персонажи</Link>,
         },
     ];
 

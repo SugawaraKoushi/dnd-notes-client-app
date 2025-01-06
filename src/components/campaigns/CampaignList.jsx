@@ -1,7 +1,7 @@
 import { FloatButton, List } from "antd";
 import { redirect, useLoaderData } from "react-router";
 import instance from "../../axios";
-import { PlusCircleTwoTone, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 export const loader = async () => {
     const url = "/api/campaigns/get";
