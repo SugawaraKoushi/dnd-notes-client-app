@@ -15,7 +15,6 @@ const CharacterList = () => {
 
     useEffect(() => {
         const items = [{ title: "Персонажи" }, { title: "Мои персонажи" }];
-
         setBreadcrumbItems(items);
     }, []);
 
