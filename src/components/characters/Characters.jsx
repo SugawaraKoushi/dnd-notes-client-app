@@ -1,4 +1,5 @@
 import { Breadcrumb, theme } from "antd";
+import { useState } from "react";
 import { Outlet } from "react-router";
 
 const Characters = () => {
@@ -6,7 +7,9 @@ const Characters = () => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
-    const breadcrumbItems = [{ title: "Персонажи" }];
+    const [breadcrumbItems, setBreadcrumbsItems] = useState([
+        { title: "Персонажи" },
+    ]);
 
     return (
         <>
@@ -23,7 +26,7 @@ const Characters = () => {
                     borderRadius: borderRadiusLG,
                 }}
             >
-                <Outlet />
+                <Outlet context={[setBreadcrumbsItems]} />
             </div>
         </>
     );

@@ -1,6 +1,8 @@
 import { FloatButton, List } from "antd";
 import CharacterTile from "./CharacterTile";
 import { PlusOutlined } from "@ant-design/icons";
+import { useOutletContext } from "react-router";
+import { useEffect } from "react";
 
 const CharacterList = () => {
     const characters = [
@@ -8,6 +10,14 @@ const CharacterList = () => {
         <CharacterTile name="Дундобород железный" hp="100" currentHp="75" />,
         <CharacterTile name="Дундобород железный" hp="100" currentHp="100" />,
     ];
+
+    const [setBreadcrumbItems] = useOutletContext();
+
+    useEffect(() => {
+        const items = [{ title: "Персонажи" }, { title: "Мои персонажи" }];
+
+        setBreadcrumbItems(items);
+    }, []);
 
     return (
         <>
