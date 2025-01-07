@@ -1,9 +1,41 @@
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Button, Flex } from "antd";
+import { useEffect, useState } from "react";
 
 const AbilityTile = (props) => {
+    const [modifier, setModifier] = useState("+0");
+
+    useEffect(() => {
+        calculateModifier();
+    });
+
     const onIncrementButtonClick = () => {
-        props.increment();
+        if (props.value === 20) {
+            return;
+        }
+
+        props.setValue(props.value + 1);
+        calculateModifier();
+    };
+
+    const onDecrementButtonClick = () => {
+        if (props.value === 0) {
+            return;
+        }
+
+        props.setValue(props.value - 1);
+        calculateModifier();
+    };
+
+    const calculateModifier = () => {
+        const modifierValue = Math.floor((props.value - 10) / 2);
+
+        if (modifierValue >= 0) {
+            setModifier(`+${modifierValue}`);
+            return;
+        }
+
+        setModifier(modifierValue);
     };
 
     return (
@@ -13,6 +45,7 @@ const AbilityTile = (props) => {
                 type="outlined"
                 icon={<UpOutlined />}
                 block
+                disabled={props.value === 20}
             />
             <Flex
                 vertical
@@ -39,9 +72,15 @@ const AbilityTile = (props) => {
                 >
                     {props.value}
                 </span>
-                <span>+0</span>
+                <span>{modifier}</span>
             </Flex>
-            <Button type="outlined" icon={<DownOutlined />} block />
+            <Button
+                onClick={onDecrementButtonClick}
+                type="outlined"
+                icon={<DownOutlined />}
+                block
+                disabled={props.value === 0}
+            />
         </div>
     );
 };
