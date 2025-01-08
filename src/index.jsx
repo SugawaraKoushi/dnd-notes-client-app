@@ -14,6 +14,7 @@ import NewCampaign from "./components/campaigns/NewCampaign";
 import Campaigns from "./components/campaigns/Campaigns";
 import Characters from "./components/characters/Characters";
 import NewCharacter from "./components/characters/NewCharacter";
+import NewCharacterPage from "./components/characters/NewCharacterPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
                         path: "/characters/new",
                         element: <NewCharacter />,
                     },
+                    {
+                        path: "/characters/not-new",
+                        element: <NewCharacterPage />
+                    }
                 ],
             },
         ],

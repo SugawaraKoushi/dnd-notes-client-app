@@ -12,8 +12,9 @@ import {
 import AbilityTile from "./AbilityTile";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
+import NewAbilityTile from "./NewAbilityTile";
 
-const NewCharacter = () => {
+const NewCharacterPage = () => {
     const { Title } = Typography;
 
     const [setBreadcrumbItems] = useOutletContext();
@@ -121,86 +122,9 @@ const NewCharacter = () => {
             name="character"
             layout="vertical"
         >
-            <Title level={4}>Описание персонажа</Title>
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 1,
-                    sm: 1,
-                    md: 2,
-                    lg: 2,
-                    xl: 3,
-                    xxl: 3,
-                }}
-                dataSource={characterDetails}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-            <Divider style={{ borderColor: "#d0d0d0" }} />
-            <Title level={4}>Внешность</Title>
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 1,
-                    sm: 1,
-                    md: 2,
-                    lg: 2,
-                    xl: 3,
-                    xxl: 3,
-                }}
-                dataSource={appearance}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-            <Divider style={{ borderColor: "#d0d0d0" }} />
-            <Title level={4}>Характеристики</Title>
-            <Flex wrap gap="small" justify="space-between">
-                <AbilityTile
-                    name="сила"
-                    value={strength}
-                    setValue={setStrength}
-                />
-                <AbilityTile
-                    name="ловкость"
-                    value={dexterity}
-                    setValue={setDexterity}
-                />
-                <AbilityTile
-                    name="телосложение"
-                    value={constitution}
-                    setValue={setConstitution}
-                />
-                <AbilityTile
-                    name="интеллект"
-                    value={intelligence}
-                    setValue={setIntelligence}
-                />
-                <AbilityTile
-                    name="мудрость"
-                    value={wisdom}
-                    setValue={setWisdom}
-                />
-                <AbilityTile
-                    name="харизма"
-                    value={charisma}
-                    setValue={setCharisma}
-                />
-            </Flex>
-            <Title level={4}>Спас-броски</Title>
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 2,
-                    sm: 3,
-                    md: 3,
-                    lg: 6,
-                    xl: 6,
-                    xxl: 6,
-                }}
-                dataSource={savingThrows}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-            <Title level={4}>Навыки</Title>
+            <NewAbilityTile name="сила" value={10}/>
         </Form>
     );
 };
 
-export default NewCharacter;
+export default NewCharacterPage;

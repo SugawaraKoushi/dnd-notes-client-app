@@ -1,0 +1,39 @@
+.ability-tile {
+    width: 100%;
+}
+
+.ability-tile-header > * {
+    margin: 0 !important;
+    padding: 0 !important   ;
+}
+
+.ability-check {
+    flex: 1 1;
+    max-width: 50%;
+}
+
+.ability-check-wrap {
+    width: 100;
+    border-radius: 6px 0 0 6px;
+    border: 1px solid #d9d9d9;
+    padding: 4px 0;
+}
+
+.ability-check-label {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    margin: 0 10px;
+    color: inherit;
+    white-space: nowrap;
+}
+
+.ability-check-button {
+    margin-left: -1px;
+    font-weight: 700;
+    font-size: 19px;
+}
+
+.ability-check:not(:last-of-type) {
+    margin-right: 18px;
+}
