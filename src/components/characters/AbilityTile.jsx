@@ -19,7 +19,7 @@ const AbilityTile = (props) => {
     };
 
     const onDecrementButtonClick = () => {
-        if (props.value === 0) {
+        if (props.value === 1) {
             return;
         }
 
@@ -39,7 +39,7 @@ const AbilityTile = (props) => {
     };
 
     return (
-        <div>
+        <div style={{ display: "block", heigth: "178px" }}>
             <Button
                 onClick={onIncrementButtonClick}
                 type="outlined"
@@ -54,6 +54,7 @@ const AbilityTile = (props) => {
                     borderRadius: "8px",
                     border: "1px solid #d0d0d0",
                     width: "120px",
+                    height: "114px",
                     padding: "8px",
                 }}
             >
