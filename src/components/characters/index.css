@@ -12,8 +12,12 @@
     max-width: 50%;
 }
 
+.ability-check:not(:last-of-type) {
+    margin-right: 18px;
+}
+
 .ability-check-wrap {
-    width: 100;
+    width: 100%;
     border-radius: 6px 0 0 6px;
     border: 1px solid #d9d9d9;
     padding: 4px 0;
@@ -34,6 +38,6 @@
     font-size: 19px;
 }
 
-.ability-check:not(:last-of-type) {
-    margin-right: 18px;
+.ability-check-checkbox {
+    margin-left: -9px;
 }
