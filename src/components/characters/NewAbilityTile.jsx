@@ -11,10 +11,11 @@ const NewAbilityTile = (props) => {
                 <Title level={2}>{props.name.toUpperCase()}</Title>
                 <Title level={2}>{props.value}</Title>
             </Flex>
-            <div style={{ display: "flex" }}>
-                <AbilityCheck name="проверка" value={0} checkable={false} />
+            <Flex className="ability-checks">
+                <AbilityCheck name="проверка" value={0} />
                 <AbilityCheck name="спас-бросок" value={0} checkable={true} />
-            </div>
+            </Flex>
+            <AbilityCheck name="атлетика" value={0} checkable={true} skill={true} />
         </Flex>
     );
 };
