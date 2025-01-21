@@ -43,72 +43,34 @@ const NewCharacterPage = () => {
         { value: "CHAOTIC_EVIL", label: <span>Хаотично-злой</span> },
     ];
 
-    const characterDetails = [
-        <Form.Item name="name" label="Имя:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="sex" label="Пол:" required>
-            <Select options={sex} />
-        </Form.Item>,
-        <Form.Item name="alignment" label="Мировоззрение:" required>
-            <Select options={alignments} />
-        </Form.Item>,
-        <Form.Item name="author" label="Игрок:" required>
-            <Input disabled />  
-        </Form.Item>,
-        <Form.Item name="EXP" label="Текущий опыт:" required>
-            <InputNumber
-                style={{ width: "100%" }}
-                prefix="EXP"
-                min={0}
-                precision={0}
-            />
-        </Form.Item>,
-        <Form.Item name="deity" label="Божество:" required>
-            <Input />
-        </Form.Item>,
+    const strengthSkills = [{ name: "атлетика", value: 0 }];
+
+    const dexteritySkills = [
+        { name: "акробатика", value: 0 },
+        { name: "ловкость рук", value: 0 },
+        { name: "скрытность", value: 0 },
     ];
 
-    const appearance = [
-        <Form.Item name="age" label="Возраст:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="height" label="Рост:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="weight" label="Вес:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="eyes" label="Глаза:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="skin" label="Кожа:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="hair" label="Волосы:" required>
-            <Input />
-        </Form.Item>,
+    const intellegenceSkills = [
+        { name: "анализ", value: 0 },
+        { name: "история", value: 0 },
+        { name: "магия", value: 0 },
+        { name: "природа", value: 0 },
+        { name: "религия", value: 0 },
+    ];
+    const wisdomSkills = [
+        { name: "восприятие", value: 0 },
+        { name: "выживание", value: 0 },
+        { name: "медицина", value: 0 },
+        { name: "проницательность", value: 0 },
+        { name: "уход за животными", value: 0 },
     ];
 
-    const savingThrows = [
-        <Form.Item name="strengthST">
-            <Checkbox>Сила</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Ловкость</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Телосложение</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Интеллект</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Мудрость</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Харизма</Checkbox>
-        </Form.Item>,
+    const charismaSkills = [
+        { name: "выступление", value: 0 },
+        { name: "запугивание", value: 0 },
+        { name: "обман", value: 0 },
+        { name: "убеждение", value: 0 },
     ];
 
     useEffect(() => {
@@ -122,7 +84,34 @@ const NewCharacterPage = () => {
             name="character"
             layout="vertical"
         >
-            <NewAbilityTile name="сила" value={10}/>
+            <Flex className="ability-container" vertical>
+                <NewAbilityTile
+                    name="сила"
+                    value={strength}
+                    skills={strengthSkills}
+                />
+                <NewAbilityTile
+                    name="ловкость"
+                    value={dexterity}
+                    skills={dexteritySkills}
+                />
+                <NewAbilityTile name="телосложение" value={constitution} />
+                <NewAbilityTile
+                    name="интеллект"
+                    value={intelligence}
+                    skills={intellegenceSkills}
+                />
+                <NewAbilityTile
+                    name="мудрость"
+                    value={wisdom}
+                    skills={wisdomSkills}
+                />
+                <NewAbilityTile
+                    name="харизма"
+                    value={charisma}
+                    skills={charismaSkills}
+                />
+            </Flex>
         </Form>
     );
 };

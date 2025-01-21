@@ -66,7 +66,7 @@ const Root = () => {
                 </Flex>
             </Header>
             <Layout
-                style={{ margin: "auto", width: "100%", maxWidth: "1152px" }}
+                style={{ margin: "auto", width: "100%", maxWidth: "1200px" }}
             >
                 <Content
                     style={{

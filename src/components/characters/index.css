@@ -1,5 +1,38 @@
+.ability-container {
+    width: 578px;
+    height: 800px;
+    flex-wrap: wrap;
+}
+
 .ability-tile {
-    width: 100%;
+    min-width: 280px;
+    width: 280px;
+}
+
+.ability-tile:first-of-type {
+    margin-right: 18px;
+}
+
+.ability-tile:nth-of-type(2) {
+    order: 5;
+}
+
+.ability-tile:nth-of-type(3) {
+    margin-top: 0;
+    order: 2;
+}
+
+.ability-tile:nth-of-type(4) {
+    order: 3;
+}
+
+.ability-tile:nth-of-type(5) {
+    order: 6;
+}
+
+.ability-tile:nth-of-type(6) {
+    margin-bottom: 0 !important;
+    order: 4;
 }
 
 .ability-tile-header > * {
@@ -12,11 +45,15 @@
     max-width: 50%;
 }
 
+.ability-checks > .ability-check:last-of-type * .ability-check-label {
+    margin: 0 4px !important;
+}
+
 .ability-check {
     margin-bottom: 6px;
 }
 
-.ability-check:not(:last-of-type) {
+.ability-checks > .ability-check:not(:last-of-type) {
     margin-right: 18px;
 }
 
@@ -31,10 +68,11 @@
 .ability-check-label {
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
-    font-size: 12px;
-    margin: 0 10px;
+    font-size: 11px;
+    margin: 0 8px;
     color: inherit;
     white-space: nowrap;
+    text-align: left;
 }
 
 .ability-check-button {

@@ -4,16 +4,38 @@ import "./index.css";
 import { useState } from "react";
 
 const AbilityCheck = (props) => {
-    const [proficiency, setProficiency] = useState(props.proficiency);
+    const [checked, setChecked] = useState(false);
+    const [skillState, setSkillState] = useState(1);
+    const [indeterminate, setIndeterminate] = useState(false);
 
-    const handleProficiencyChange = () => {
-        if (proficiency === 2) {
-            setProficiency(0);
-            return false;
-        }
+    const handleLabelClick = () => {
+        props.openModal(true);
+    }
 
-        if (!props.skill) {
-            setProficiency();
+    const handleCheckboxClick = () => {
+        if (props.skill) {
+            if (skillState === 2) {
+                setSkillState(0);
+            } else {
+                setSkillState(skillState + 1);
+            }
+
+            if (skillState === 0) {
+                setChecked(false);
+                setIndeterminate(false);
+            }
+
+            if (skillState === 1) {
+                setChecked(false);
+                setIndeterminate(true);
+            }
+
+            if (skillState === 2) {
+                setChecked(true);
+                setIndeterminate(false);
+            }
+        } else {
+            setChecked(!checked);
         }
     };
 
@@ -22,11 +44,13 @@ const AbilityCheck = (props) => {
             <Flex className="ability-check-wrap" align="center">
                 {props.checkable && (
                     <Checkbox
-                        indeterminate={props.skill}
+                        checked={checked}
+                        indeterminate={props.skill && indeterminate}
                         className="ability-check-checkbox"
+                        onClick={handleCheckboxClick}
                     />
                 )}
-                <Link className="ability-check-label" to="">
+                <Link className="ability-check-label" to="" onClick={handleLabelClick}>
                     {props.name.toUpperCase()}
                 </Link>
             </Flex>
