@@ -1,6 +1,6 @@
 .ability-container {
     width: 578px;
-    height: 800px;
+    height: 690px;
     flex-wrap: wrap;
 }
 
@@ -79,6 +79,8 @@
     margin-left: -1px;
     font-weight: 700;
     font-size: 19px;
+    max-width: 42.94px;
+    max-height: 32px; 
 }
 
 .ability-check-checkbox {

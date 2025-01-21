@@ -2,6 +2,7 @@ import { Flex, Input, Modal, Typography } from "antd";
 import "./index.css";
 import AbilityCheck from "./AbilityCheck";
 import { useState } from "react";
+import { calculateModifier, calculateModifierAsString } from "../services/ModifierService";
 
 const NewAbilityTile = (props) => {
     const { Title } = Typography;
@@ -10,19 +11,8 @@ const NewAbilityTile = (props) => {
     const [value, setValue] = useState(props.value);
     const [modifier, setModifier] = useState(0);
 
-    const calculateModifier = () => {
-        const modifierValue = Math.floor((props.value - 10) / 2);
-
-        if (modifierValue >= 0) {
-            setModifier(modifierValue);
-            return;
-        }
-
-        setModifier(modifierValue);
-    };
-
     const handleModalOpen = () => {
-        calculateModifier();
+        calculateModifier(value);
         setIsModalOpen(true);
     };
 
@@ -51,12 +41,12 @@ const NewAbilityTile = (props) => {
             <Flex className="ability-checks">
                 <AbilityCheck
                     name="проверка"
-                    value={0}
+                    value={calculateModifierAsString(value)}
                     openModal={setIsModalOpen}
                 />
                 <AbilityCheck
                     name="спасбросок"
-                    value={0}
+                    value={calculateModifierAsString(value)}
                     checkable={true}
                     openModal={setIsModalOpen}
                 />
@@ -74,29 +64,32 @@ const NewAbilityTile = (props) => {
                     );
                 })}
             <Modal
-                title={props.name.toUpperCase()}
+                title={props.name.toUpperCase() + " " + calculateModifierAsString(value)}
                 open={isModalOpen}
                 onClose={handleModalClose}
                 onCancel={handleModalClose}
+                centered
+                footer={null}
             >
-                <Flex>
-                    <Input
-                        variant="borderless"
-                        size="large"
-                        type="number"
-                        placeholder="Значение"
-                        value={value}
-                        onChange={handleValueChange}
-                    />
-                    <Input
-                        variant="borderless"
-                        size="large"
-                        type="number"
-                        placeholder="Бонус к спасброску"
-                        prefix={modifier > 0 ? <span>+</span> : <span />}
-                        value={modifier}
-                        onChange={handleModifierChange}
-                    />
+                <Flex justify="space-around" gap={10}>
+                    <div>
+                        <Input
+                            size="large"
+                            type="number"
+                            value={value}
+                            onChange={handleValueChange}
+                            max={30}
+                        />
+                        <span>ЗНАЧЕНИЕ</span>
+                    </div>
+                    <div>
+                        <Input
+                            size="large"
+                            type="number"
+                            onChange={handleModifierChange}
+                        />
+                        <span>БОНУС К СПАСБРОСКУ</span>
+                    </div>
                 </Flex>
             </Modal>
         </Flex>

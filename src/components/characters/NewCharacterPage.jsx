@@ -1,29 +1,19 @@
-import {
-    Checkbox,
-    Divider,
-    Flex,
-    Form,
-    Input,
-    InputNumber,
-    List,
-    Select,
-    Typography,
-} from "antd";
-import AbilityTile from "./AbilityTile";
+import { Flex, Form, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 import NewAbilityTile from "./NewAbilityTile";
+import { calculateModifier, calculateModifierAsString } from "../services/ModifierService";
 
 const NewCharacterPage = () => {
     const { Title } = Typography;
 
     const [setBreadcrumbItems] = useOutletContext();
-    const [strength, setStrength] = useState(10);
-    const [dexterity, setDexterity] = useState(10);
-    const [constitution, setConstitution] = useState(10);
-    const [intelligence, setIntelligence] = useState(10);
-    const [wisdom, setWisdom] = useState(10);
-    const [charisma, setCharisma] = useState(10);
+    const [strength, setStrength] = useState(12);
+    const [dexterity, setDexterity] = useState(13);
+    const [constitution, setConstitution] = useState(15);
+    const [intelligence, setIntelligence] = useState(17);
+    const [wisdom, setWisdom] = useState(7);
+    const [charisma, setCharisma] = useState(20);
 
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
@@ -43,34 +33,34 @@ const NewCharacterPage = () => {
         { value: "CHAOTIC_EVIL", label: <span>Хаотично-злой</span> },
     ];
 
-    const strengthSkills = [{ name: "атлетика", value: 0 }];
+    const strengthSkills = [{ name: "атлетика", value: calculateModifierAsString(strength) }];
 
     const dexteritySkills = [
-        { name: "акробатика", value: 0 },
-        { name: "ловкость рук", value: 0 },
-        { name: "скрытность", value: 0 },
+        { name: "акробатика", value: calculateModifierAsString(dexterity) },
+        { name: "ловкость рук", value: calculateModifierAsString(dexterity) },
+        { name: "скрытность", value: calculateModifierAsString(dexterity) },
     ];
 
     const intellegenceSkills = [
-        { name: "анализ", value: 0 },
-        { name: "история", value: 0 },
-        { name: "магия", value: 0 },
-        { name: "природа", value: 0 },
-        { name: "религия", value: 0 },
+        { name: "анализ", value: calculateModifierAsString(intelligence) },
+        { name: "история", value: calculateModifierAsString(intelligence) },
+        { name: "магия", value: calculateModifierAsString(intelligence) },
+        { name: "природа", value: calculateModifierAsString(intelligence) },
+        { name: "религия", value: calculateModifierAsString(intelligence) },
     ];
     const wisdomSkills = [
-        { name: "восприятие", value: 0 },
-        { name: "выживание", value: 0 },
-        { name: "медицина", value: 0 },
-        { name: "проницательность", value: 0 },
-        { name: "уход за животными", value: 0 },
+        { name: "восприятие", value: calculateModifierAsString(wisdom) },
+        { name: "выживание", value: calculateModifierAsString(wisdom) },
+        { name: "медицина", value: calculateModifierAsString(wisdom) },
+        { name: "проницательность", value: calculateModifierAsString(wisdom) },
+        { name: "уход за животными", value: calculateModifierAsString(wisdom) },
     ];
 
     const charismaSkills = [
-        { name: "выступление", value: 0 },
-        { name: "запугивание", value: 0 },
-        { name: "обман", value: 0 },
-        { name: "убеждение", value: 0 },
+        { name: "выступление", value: calculateModifierAsString(charisma) },
+        { name: "запугивание", value: calculateModifierAsString(charisma) },
+        { name: "обман", value: calculateModifierAsString(charisma) },
+        { name: "убеждение", value: calculateModifierAsString(charisma) },
     ];
 
     useEffect(() => {
