@@ -16,6 +16,10 @@ const Root = () => {
             key: "/characters/list",
             label: <Link to="/characters/list">Персонажи</Link>,
         },
+        {
+            key: "/characters/not-new",
+            label: <Link to="/characters/not-new">Новый персонаж</Link>,
+        }
     ];
 
     const handleLogoutButtonClick = async () => {
@@ -66,7 +70,7 @@ const Root = () => {
                 </Flex>
             </Header>
             <Layout
-                style={{ margin: "auto", width: "100%", maxWidth: "1152px" }}
+                style={{ margin: "auto", width: "100%", maxWidth: "1200px" }}
             >
                 <Content
                     style={{

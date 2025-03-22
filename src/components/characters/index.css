@@ -1,11 +1,29 @@
+.abilities {
+    height: 777px;
+    width: 572px;
+    overflow: auto;
+}
+
 .ability-tile {
     width: 100%;
 }
 
+@media (min-width: 1200px) {
+    .ability-tile {
+        width: 45%;
+    }
+}
+
+
 .ability-tile-header > * {
     margin: 0 !important;
-    padding: 0 !important   ;
+    padding: 0 !important;
 }
+
+.ability-tile-title {
+    font-size: 25px;
+}
+
 
 .ability-checks > .ability-check {
     flex: 1 1;
@@ -16,7 +34,7 @@
     margin-bottom: 6px;
 }
 
-.ability-check:not(:last-of-type) {
+.ability-check:first-of-type {
     margin-right: 18px;
 }
 
@@ -37,13 +55,27 @@
     white-space: nowrap;
 }
 
+.ability-check-label-small {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    margin: 0 4px;
+    color: inherit;
+    white-space: nowrap;
+}
+
 .ability-check-button {
     margin-left: -1px;
     font-weight: 700;
     font-size: 19px;
 }
 
-.ability-check-checkbox {
+.ability-check-checkbox-small {
     margin-left: -9px;
+    padding: 0;
+}
+
+.ability-check-checkbox {
+    margin-left: 3px;
     padding: 0;
 }

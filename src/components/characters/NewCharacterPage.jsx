@@ -1,11 +1,14 @@
 import {
     Checkbox,
+    Col,
     Divider,
     Flex,
     Form,
+    Grid,
     Input,
     InputNumber,
     List,
+    Row,
     Select,
     Typography,
 } from "antd";
@@ -54,7 +57,7 @@ const NewCharacterPage = () => {
             <Select options={alignments} />
         </Form.Item>,
         <Form.Item name="author" label="Игрок:" required>
-            <Input disabled />  
+            <Input disabled />
         </Form.Item>,
         <Form.Item name="EXP" label="Текущий опыт:" required>
             <InputNumber
@@ -116,13 +119,90 @@ const NewCharacterPage = () => {
         setBreadcrumbItems(items);
     }, []);
 
+    const strengthSkills = ["атлетика"];
+    const agilitySkills = ["акробатика", "ловкость рук", "скрытность"];
+    const intelligenceSkills = [
+        "анализ",
+        "история",
+        "магия",
+        "природа",
+        "религия",
+    ];
+    const wisdomSkills = [
+        "восприятие",
+        "выживание",
+        "медицина",
+        "проницательность",
+        "уход за животными",
+    ];
+    const charismaSkills = ["выступление", "запугивание", "обман", "убеждение"];
+
     return (
         <Form
             style={{ lineHeight: "inherit" }}
             name="character"
             layout="vertical"
         >
-            <NewAbilityTile name="сила" value={10}/>
+            <Flex justify="space-between">
+                <Flex wrap className="abilities" vertical gap="small">
+                    <NewAbilityTile
+                        className
+                        name="сила"
+                        value={10}
+                        skills={strengthSkills}
+                    />
+                    <NewAbilityTile name="телосложение" value={10} />
+                    <NewAbilityTile
+                        name="интеллект"
+                        value={10}
+                        skills={intelligenceSkills}
+                    />
+                    <NewAbilityTile
+                        name="харизма"
+                        value={10}
+                        skills={charismaSkills}
+                    />
+                    <NewAbilityTile
+                        name="мудрость"
+                        value={10}
+                        skills={wisdomSkills}
+                    />
+                    <NewAbilityTile
+                        name="ловкость"
+                        value={10}
+                        skills={agilitySkills}
+                    />
+                </Flex>
+                <Flex className="abilities">
+                    <NewAbilityTile
+                        name="сила"
+                        value={10}
+                        skills={strengthSkills}
+                    />
+                    <NewAbilityTile name="телосложение" value={10} />
+                    <NewAbilityTile
+                        name="интеллект"
+                        value={10}
+                        skills={intelligenceSkills}
+                    />
+
+                    <NewAbilityTile
+                        name="харизма"
+                        value={10}
+                        skills={charismaSkills}
+                    />
+                    <NewAbilityTile
+                        name="мудрость"
+                        value={10}
+                        skills={wisdomSkills}
+                    />
+                    <NewAbilityTile
+                        name="ловкость"
+                        value={10}
+                        skills={agilitySkills}
+                    />
+                </Flex>
+            </Flex>
         </Form>
     );
 };

@@ -8,14 +8,16 @@ const NewAbilityTile = (props) => {
     return (
         <Flex className="ability-tile" vertical>
             <Flex className="ability-tile-header" justify="space-between">
-                <Title level={2}>{props.name.toUpperCase()}</Title>
-                <Title level={2}>{props.value}</Title>
+                <Title level={3} >{props.name.toUpperCase()}</Title>
+                <Title level={3}>{props.value}</Title>
             </Flex>
             <Flex className="ability-checks">
-                <AbilityCheck name="проверка" value={0} />
-                <AbilityCheck name="спас-бросок" value={0} checkable={true} />
+                <AbilityCheck name="проверка" small={true} value={0} />
+                <AbilityCheck name="спасбросок" small={true} value={0} checkable={true} />
             </Flex>
-            <AbilityCheck name="атлетика" value={0} checkable={true} skill={true} />
+            {props.skills && props.skills.map((skill, i) => (
+                <AbilityCheck name={skill} value={0} checkable={true} />
+            ))}
         </Flex>
     );
 };

@@ -1,32 +1,19 @@
 import { Button, Checkbox, Flex } from "antd";
 import { Link } from "react-router";
-import "./index.css";
-import { useState } from "react";
 
 const AbilityCheck = (props) => {
-    const [proficiency, setProficiency] = useState(props.proficiency);
-
-    const handleProficiencyChange = () => {
-        if (proficiency === 2) {
-            setProficiency(0);
-            return false;
-        }
-
-        if (!props.skill) {
-            setProficiency();
-        }
-    };
+    const labelClassName = props.small ? "ability-check-label-small" : "ability-check-label";
+    const checkboxClassName = props.small ? "ability-check-checkbox-small" : "ability-check-checkbox";
 
     return (
         <Flex className="ability-check" justify="space-beetwen" align="center">
             <Flex className="ability-check-wrap" align="center">
                 {props.checkable && (
                     <Checkbox
-                        indeterminate={props.skill}
-                        className="ability-check-checkbox"
+                        className={checkboxClassName}
                     />
                 )}
-                <Link className="ability-check-label" to="">
+                <Link className={labelClassName} to="">
                     {props.name.toUpperCase()}
                 </Link>
             </Flex>
