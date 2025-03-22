@@ -1,88 +1,47 @@
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import { Button, Flex } from "antd";
-import { useEffect, useState } from "react";
+import { Flex, Input, Modal, Typography } from "antd";
+import "./index.css";
+import AbilityCheck from "./AbilityCheck";
+import { useState } from "react";
+import { calculateModifier, calculateModifierAsString } from "../services/ModifierService";
 
 const AbilityTile = (props) => {
-    const [modifier, setModifier] = useState("+0");
+    const { Title } = Typography;
+    const [skills, setSkills] = useState(props.skills);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [value, setValue] = useState(props.value);
+    const [modifier, setModifier] = useState(0);
 
-    useEffect(() => {
-        calculateModifier();
-    });
-
-    const onIncrementButtonClick = () => {
-        if (props.value === 20) {
-            return;
-        }
-
-        props.setValue(props.value + 1);
-        calculateModifier();
+    const handleModalOpen = () => {
+        calculateModifier(value);
+        setIsModalOpen(true);
     };
 
-    const onDecrementButtonClick = () => {
-        if (props.value === 1) {
-            return;
-        }
-
-        props.setValue(props.value - 1);
-        calculateModifier();
+    const handleModalClose = () => {
+        setIsModalOpen(false);
     };
 
-    const calculateModifier = () => {
-        const modifierValue = Math.floor((props.value - 10) / 2);
+    const handleValueChange = (event) => {
+        setValue(event.target.value);
+    };
 
-        if (modifierValue >= 0) {
-            setModifier(`+${modifierValue}`);
-            return;
-        }
-
-        setModifier(modifierValue);
+    const handleModifierChange = (event) => {
+        setModifier(event.target.value);
     };
 
     return (
-        <div style={{ display: "block", heigth: "178px" }}>
-            <Button
-                onClick={onIncrementButtonClick}
-                type="outlined"
-                icon={<UpOutlined />}
-                block
-                disabled={props.value === 20}
-            />
-            <Flex
-                vertical
-                align="center"
-                style={{
-                    borderRadius: "8px",
-                    border: "1px solid #d0d0d0",
-                    width: "120px",
-                    height: "114px",
-                    padding: "8px",
-                }}
-            >
-                <span
-                    style={{
-                        fontSize: "11pt",
-                    }}
-                >
-                    {props.name.toUpperCase()}
-                </span>
-                <span
-                    style={{
-                        fontSize: "32pt",
-                        fontWeight: 500,
-                    }}
-                >
-                    {props.value}
-                </span>
-                <span>{modifier}</span>
+        <Flex className="ability-tile" vertical>
+            <Flex className="ability-tile-header" justify="space-between">
+                <Title level={3} >{props.name.toUpperCase()}</Title>
+                <Title level={3}>{props.value}</Title>
             </Flex>
-            <Button
-                onClick={onDecrementButtonClick}
-                type="outlined"
-                icon={<DownOutlined />}
-                block
-                disabled={props.value === 0}
-            />
-        </div>
+            <Flex className="ability-checks">
+                <AbilityCheck name="проверка" small={true} value={0} />
+                <AbilityCheck name="спасбросок" small={true} value={0} checkable={true} />
+            </Flex>
+            {props.skills && props.skills.map((skill, i) => (
+                <AbilityCheck name={skill} value={0} checkable={true} />
+            ))}
+        </Flex>
     );
 };
 

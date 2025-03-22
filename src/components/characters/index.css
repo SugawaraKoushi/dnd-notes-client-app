@@ -1,18 +1,36 @@
-.abilities {
-    height: 777px;
-    width: 572px;
-    overflow: auto;
-}
+
 
 .ability-tile {
     width: 100%;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 860px) {
+    .abilities {
+        height: 100%;
+    }
+
     .ability-tile {
-        width: 45%;
+        width: 99%;
     }
 }
+
+.abilities {
+    overflow: auto;
+}
+
+@media (min-width: 1200px) {
+    .abilities {
+        height: 777px;
+        width: 572px;
+        overflow: auto;
+    }
+
+    .ability-tile {
+        width: 48%;
+        overflow: auto;
+    }
+}
+
 
 
 .ability-tile-header > * {

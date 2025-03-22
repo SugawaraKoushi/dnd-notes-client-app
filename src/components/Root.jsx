@@ -16,10 +16,6 @@ const Root = () => {
             key: "/characters/list",
             label: <Link to="/characters/list">Персонажи</Link>,
         },
-        {
-            key: "/characters/not-new",
-            label: <Link to="/characters/not-new">Новый персонаж</Link>,
-        }
     ];
 
     const handleLogoutButtonClick = async () => {

@@ -1,28 +1,20 @@
-import {
-    Checkbox,
-    Divider,
-    Flex,
-    Form,
-    Input,
-    InputNumber,
-    List,
-    Select,
-    Typography,
-} from "antd";
-import AbilityTile from "./AbilityTile";
-import { useEffect, useState } from "react";
+import { Flex, Form, Input, InputNumber, Select, Typography } from "antd";
+import { useState } from "react";
 import { useOutletContext } from "react-router";
+import AbilityTile from "./AbilityTile";
 
-const NewCharacter = () => {
+
+
+const NewCharacterPage = () => {
     const { Title } = Typography;
 
     const [setBreadcrumbItems] = useOutletContext();
-    const [strength, setStrength] = useState(10);
-    const [dexterity, setDexterity] = useState(10);
-    const [constitution, setConstitution] = useState(10);
-    const [intelligence, setIntelligence] = useState(10);
-    const [wisdom, setWisdom] = useState(10);
-    const [charisma, setCharisma] = useState(10);
+    const [strength, setStrength] = useState(12);
+    const [dexterity, setDexterity] = useState(13);
+    const [constitution, setConstitution] = useState(15);
+    const [intelligence, setIntelligence] = useState(17);
+    const [wisdom, setWisdom] = useState(7);
+    const [charisma, setCharisma] = useState(20);
 
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
@@ -53,7 +45,7 @@ const NewCharacter = () => {
             <Select options={alignments} />
         </Form.Item>,
         <Form.Item name="author" label="Игрок:" required>
-            <Input disabled />  
+            <Input disabled />
         </Form.Item>,
         <Form.Item name="EXP" label="Текущий опыт:" required>
             <InputNumber
@@ -68,52 +60,23 @@ const NewCharacter = () => {
         </Form.Item>,
     ];
 
-    const appearance = [
-        <Form.Item name="age" label="Возраст:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="height" label="Рост:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="weight" label="Вес:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="eyes" label="Глаза:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="skin" label="Кожа:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="hair" label="Волосы:" required>
-            <Input />
-        </Form.Item>,
+    const strengthSkills = ["атлетика"];
+    const agilitySkills = ["акробатика", "ловкость рук", "скрытность"];
+    const intelligenceSkills = [
+        "анализ",
+        "история",
+        "магия",
+        "природа",
+        "религия",
     ];
-
-    const savingThrows = [
-        <Form.Item name="strengthST">
-            <Checkbox>Сила</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Ловкость</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Телосложение</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Интеллект</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Мудрость</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Харизма</Checkbox>
-        </Form.Item>,
+    const wisdomSkills = [
+        "восприятие",
+        "выживание",
+        "медицина",
+        "проницательность",
+        "уход за животными",
     ];
-
-    useEffect(() => {
-        const items = [{ title: "Персонажи" }, { title: "Новый персонаж" }];
-        setBreadcrumbItems(items);
-    }, []);
+    const charismaSkills = ["выступление", "запугивание", "обман", "убеждение"];
 
     return (
         <Form
@@ -121,86 +84,42 @@ const NewCharacter = () => {
             name="character"
             layout="vertical"
         >
-            <Title level={4}>Описание персонажа</Title>
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 1,
-                    sm: 1,
-                    md: 2,
-                    lg: 2,
-                    xl: 3,
-                    xxl: 3,
-                }}
-                dataSource={characterDetails}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-            <Divider style={{ borderColor: "#d0d0d0" }} />
-            <Title level={4}>Внешность</Title>
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 1,
-                    sm: 1,
-                    md: 2,
-                    lg: 2,
-                    xl: 3,
-                    xxl: 3,
-                }}
-                dataSource={appearance}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-            <Divider style={{ borderColor: "#d0d0d0" }} />
-            <Title level={4}>Характеристики</Title>
-            <Flex wrap gap="small" justify="space-between">
-                <AbilityTile
-                    name="сила"
-                    value={strength}
-                    setValue={setStrength}
-                />
-                <AbilityTile
-                    name="ловкость"
-                    value={dexterity}
-                    setValue={setDexterity}
-                />
-                <AbilityTile
-                    name="телосложение"
-                    value={constitution}
-                    setValue={setConstitution}
-                />
-                <AbilityTile
-                    name="интеллект"
-                    value={intelligence}
-                    setValue={setIntelligence}
-                />
-                <AbilityTile
-                    name="мудрость"
-                    value={wisdom}
-                    setValue={setWisdom}
-                />
-                <AbilityTile
-                    name="харизма"
-                    value={charisma}
-                    setValue={setCharisma}
-                />
+            <Flex justify="space-between" gap="small">
+                <Flex vertical wrap className="abilities" gap="small">
+                    <AbilityTile
+                        className
+                        name="сила"
+                        value={10}
+                        skills={strengthSkills}
+                    />
+                    <AbilityTile name="телосложение" value={10} />
+                    <AbilityTile
+                        name="интеллект"
+                        value={10}
+                        skills={intelligenceSkills}
+                    />
+                    <AbilityTile
+                        name="харизма"
+                        value={10}
+                        skills={charismaSkills}
+                    />
+                    <AbilityTile
+                        name="мудрость"
+                        value={10}
+                        skills={wisdomSkills}
+                    />
+                    <AbilityTile
+                        name="ловкость"
+                        value={10}
+                        skills={agilitySkills}
+                    />
+                </Flex>
+                <Flex className="abilities">
+                    Текст
+                </Flex>
             </Flex>
-            <Title level={4}>Спас-броски</Title>
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 2,
-                    sm: 3,
-                    md: 3,
-                    lg: 6,
-                    xl: 6,
-                    xxl: 6,
-                }}
-                dataSource={savingThrows}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-            <Title level={4}>Навыки</Title>
         </Form>
     );
 };
 
-export default NewCharacter;
+export default NewCharacterPage;
