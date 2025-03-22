@@ -1,9 +1,32 @@
-import { Flex, Typography } from "antd";
+import { Flex, Input, Modal, Typography } from "antd";
 import "./index.css";
 import AbilityCheck from "./AbilityCheck";
+import { useState } from "react";
+import { calculateModifier, calculateModifierAsString } from "../services/ModifierService";
 
 const NewAbilityTile = (props) => {
     const { Title } = Typography;
+    const [skills, setSkills] = useState(props.skills);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [value, setValue] = useState(props.value);
+    const [modifier, setModifier] = useState(0);
+
+    const handleModalOpen = () => {
+        calculateModifier(value);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleValueChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    const handleModifierChange = (event) => {
+        setModifier(event.target.value);
+    };
 
     return (
         <Flex className="ability-tile" vertical>

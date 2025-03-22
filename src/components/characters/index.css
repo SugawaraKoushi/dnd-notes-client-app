@@ -30,6 +30,10 @@
     max-width: 50%;
 }
 
+.ability-checks > .ability-check:last-of-type * .ability-check-label {
+    margin: 0 4px !important;
+}
+
 .ability-check {
     margin-bottom: 6px;
 }
@@ -68,6 +72,8 @@
     margin-left: -1px;
     font-weight: 700;
     font-size: 19px;
+    max-width: 42.94px;
+    max-height: 32px; 
 }
 
 .ability-check-checkbox-small {

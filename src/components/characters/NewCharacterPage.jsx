@@ -16,17 +16,18 @@ import AbilityTile from "./AbilityTile";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 import NewAbilityTile from "./NewAbilityTile";
+import { calculateModifier, calculateModifierAsString } from "../services/ModifierService";
 
 const NewCharacterPage = () => {
     const { Title } = Typography;
 
     const [setBreadcrumbItems] = useOutletContext();
-    const [strength, setStrength] = useState(10);
-    const [dexterity, setDexterity] = useState(10);
-    const [constitution, setConstitution] = useState(10);
-    const [intelligence, setIntelligence] = useState(10);
-    const [wisdom, setWisdom] = useState(10);
-    const [charisma, setCharisma] = useState(10);
+    const [strength, setStrength] = useState(12);
+    const [dexterity, setDexterity] = useState(13);
+    const [constitution, setConstitution] = useState(15);
+    const [intelligence, setIntelligence] = useState(17);
+    const [wisdom, setWisdom] = useState(7);
+    const [charisma, setCharisma] = useState(20);
 
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
@@ -71,47 +72,19 @@ const NewCharacterPage = () => {
             <Input />
         </Form.Item>,
     ];
-
-    const appearance = [
-        <Form.Item name="age" label="Возраст:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="height" label="Рост:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="weight" label="Вес:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="eyes" label="Глаза:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="skin" label="Кожа:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="hair" label="Волосы:" required>
-            <Input />
-        </Form.Item>,
+    const wisdomSkills = [
+        { name: "восприятие", value: calculateModifierAsString(wisdom) },
+        { name: "выживание", value: calculateModifierAsString(wisdom) },
+        { name: "медицина", value: calculateModifierAsString(wisdom) },
+        { name: "проницательность", value: calculateModifierAsString(wisdom) },
+        { name: "уход за животными", value: calculateModifierAsString(wisdom) },
     ];
 
-    const savingThrows = [
-        <Form.Item name="strengthST">
-            <Checkbox>Сила</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Ловкость</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Телосложение</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Интеллект</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Мудрость</Checkbox>
-        </Form.Item>,
-        <Form.Item>
-            <Checkbox>Харизма</Checkbox>
-        </Form.Item>,
+    const charismaSkills = [
+        { name: "выступление", value: calculateModifierAsString(charisma) },
+        { name: "запугивание", value: calculateModifierAsString(charisma) },
+        { name: "обман", value: calculateModifierAsString(charisma) },
+        { name: "убеждение", value: calculateModifierAsString(charisma) },
     ];
 
     useEffect(() => {
