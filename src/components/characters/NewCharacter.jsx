@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useOutletContext } from "react-router";
 import AbilityTile from "./AbilityTile";
 
-
-
 const NewCharacterPage = () => {
     const { Title } = Typography;
 
@@ -61,7 +59,7 @@ const NewCharacterPage = () => {
     ];
 
     const strengthSkills = ["атлетика"];
-    const agilitySkills = ["акробатика", "ловкость рук", "скрытность"];
+    const dexteritySkills = ["акробатика", "ловкость рук", "скрытность"];
     const intelligenceSkills = [
         "анализ",
         "история",
@@ -87,36 +85,38 @@ const NewCharacterPage = () => {
             <Flex justify="space-between" gap="small">
                 <Flex vertical wrap className="abilities" gap="small">
                     <AbilityTile
-                        className
+                        id="strength"
                         name="сила"
-                        value={10}
+                        value={strength}
                         skills={strengthSkills}
                     />
-                    <AbilityTile name="телосложение" value={10} />
                     <AbilityTile
+                        id="dexterity"
+                        name="ловкость"
+                        value={dexterity}
+                        skills={dexteritySkills}
+                    />
+                    <AbilityTile id="constitution" name="телосложение" value={10} />
+                    <AbilityTile
+                        id="intelligence"
                         name="интеллект"
-                        value={10}
+                        value={intelligence}
                         skills={intelligenceSkills}
                     />
                     <AbilityTile
-                        name="харизма"
-                        value={10}
-                        skills={charismaSkills}
-                    />
-                    <AbilityTile
+                        id="wisdom"
                         name="мудрость"
-                        value={10}
+                        value={wisdom}
                         skills={wisdomSkills}
                     />
                     <AbilityTile
-                        name="ловкость"
-                        value={10}
-                        skills={agilitySkills}
+                        id="charisma"
+                        name="харизма"
+                        value={charisma}
+                        skills={charismaSkills}
                     />
                 </Flex>
-                <Flex className="abilities">
-                    Текст
-                </Flex>
+                <Flex className="abilities">Текст</Flex>
             </Flex>
         </Form>
     );

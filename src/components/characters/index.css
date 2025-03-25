@@ -29,6 +29,27 @@
         width: 48%;
         overflow: auto;
     }
+
+    #constitution {
+        order: 2;
+    }
+
+    #intelligence {
+        order: 3;
+    }
+
+    #charisma {
+        order: 4;
+    }
+
+    #dexterity {
+        order: 5;
+    }
+
+    #wisdom {
+        order: 6;
+    }
+
 }
 
 

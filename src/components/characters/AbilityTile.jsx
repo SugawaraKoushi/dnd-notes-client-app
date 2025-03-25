@@ -29,7 +29,7 @@ const AbilityTile = (props) => {
     };
 
     return (
-        <Flex className="ability-tile" vertical>
+        <Flex className="ability-tile" id={props.id} vertical>
             <Flex className="ability-tile-header" justify="space-between">
                 <Title level={3} >{props.name.toUpperCase()}</Title>
                 <Title level={3}>{props.value}</Title>
