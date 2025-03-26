@@ -5,8 +5,9 @@ const CharacterHeaderInfo = () => {
 
     return (
         <Flex
+            justify="center"
             align="flex-start"
-            style={{ maxWidth: "70000px", width: "100%", height: "100%" }}
+            style={{ height: "auto", overflow: "visible" }}
         >
             <Avatar
                 size={68}
@@ -14,21 +15,18 @@ const CharacterHeaderInfo = () => {
                 src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                 style={{ margin: "0 10px 0 0", padding: "0" }}
             />
-            <Flex vertical style={{ maxWidth: "242px", width: "100%" }}>
+            <Flex vertical style={{ minWidth: "300px", width: "300px" }}>
                 <Title level={4} style={{ margin: "0 0 3px 0", padding: "0" }}>
                     Имя
                 </Title>
                 <p
                     style={{
-                        maxWidth: "242px",
+                        maxWidth: "100%",
                         margin: "0 0 0 0",
-                        textOverflow: "ellipsis",
-                        overflow: "visible",
                         whiteSpace: "nowrap",
                     }}
                 >
-                    Это краткое описание персонажа о том, как он поражал своих
-                    врагов
+                    Дварф — Воин, Рыцарь Эхо / Паладин, Клятва Короны
                 </p>
             </Flex>
         </Flex>
