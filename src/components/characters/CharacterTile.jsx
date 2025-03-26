@@ -21,24 +21,18 @@ const CharacterTile = (props) => {
     return (
         <Link style={{ textDecoration: "none", color: "inherit" }}>
             <Flex
-                style={{
-                    height: "92px",
-                    maxWidth: "396px",
-                    borderRadius: "8px",
-                    border: "1px solid #f0f0f0",
-                    padding: "6px",
-                }}
+                className={props.className}
                 align="center"
             >
                 <Avatar
-                    size={78}
+                    size={70}
                     shape="square"
                     src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                     style={{ margin: "0 10px 0 0", padding: 0 }}
                 />
                 <Flex vertical style={{ maxWidth: "242px", width: "100%" }}>
                     <Title
-                        level={5}
+                        level={4}
                         style={{ margin: "0 0 3px 0", padding: 0 }}
                     >
                         {props.name}
@@ -62,7 +56,7 @@ const CharacterTile = (props) => {
                             fontFamily: "PT Mono, monospace",
                         }}
                     >
-                        {props.currentHp + " / " + props.hp}
+                        {props.currentHp + "/" + props.hp}
                     </p>
                 </Flex>
             </Flex>

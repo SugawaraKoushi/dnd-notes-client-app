@@ -68,11 +68,7 @@ const Root = () => {
             <Layout
                 style={{ margin: "auto", width: "100%", maxWidth: "1200px" }}
             >
-                <Content
-                    style={{
-                        padding: 24,
-                    }}
-                >
+                <Content>
                     <Outlet />
                 </Content>
             </Layout>

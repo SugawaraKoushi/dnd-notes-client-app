@@ -1,4 +1,4 @@
-import { FloatButton, List } from "antd";
+import { Breadcrumb, FloatButton, List } from "antd";
 import CharacterTile from "./CharacterTile";
 import { PlusOutlined } from "@ant-design/icons";
 import { useOutletContext } from "react-router";
@@ -6,12 +6,13 @@ import { useEffect } from "react";
 
 const CharacterList = () => {
     const characters = [
-        <CharacterTile name="Дундобород железный" hp="100" currentHp="25" />,
-        <CharacterTile name="Дундобород железный" hp="100" currentHp="75" />,
-        <CharacterTile name="Дундобород железный" hp="100" currentHp="100" />,
+        <CharacterTile className="character-tile-list-item" name="Дундобород железный" hp="100" currentHp="25" />,
+        <CharacterTile className="character-tile-list-item" name="Дундобород железный" hp="100" currentHp="75" />,
+        <CharacterTile className="character-tile-list-item" name="Дундобород железный" hp="100" currentHp="100" />,
     ];
 
     const [setBreadcrumbItems] = useOutletContext();
+    const items = [{ title: "Персонажи" }, { title: "Мои персонажи" }];
 
     useEffect(() => {
         const items = [{ title: "Персонажи" }, { title: "Мои персонажи" }];
@@ -20,7 +21,14 @@ const CharacterList = () => {
 
     return (
         <>
+            <Breadcrumb
+                style={{
+                    margin: "16px 0",
+                }}
+                items={items}
+            />
             <List
+                className="content-layout"
                 grid={{
                     gutter: 12,
                     xs: 1,

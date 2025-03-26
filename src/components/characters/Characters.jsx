@@ -11,25 +11,7 @@ const Characters = () => {
         { title: "Персонажи" },
     ]);
 
-    return (
-        <>
-            <Breadcrumb
-                style={{
-                    margin: "16px 0",
-                }}
-                items={breadcrumbItems}
-            />
-            <div
-                style={{
-                    background: colorBgContainer,
-                    padding: 24,
-                    borderRadius: borderRadiusLG,
-                }}
-            >
-                <Outlet context={[setBreadcrumbsItems]} />
-            </div>
-        </>
-    );
+    return <Outlet context={[setBreadcrumbsItems]} />;
 };
 
 export default Characters;
