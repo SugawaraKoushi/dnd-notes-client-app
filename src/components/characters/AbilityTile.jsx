@@ -5,7 +5,7 @@ import { calculateModifier, calculateModifierAsString } from "../services/Modifi
 
 const AbilityTile = (props) => {
     const { Title } = Typography;
-    const modalTitle = `${props.name} ${calculateModifierAsString(props.value)}`;
+    const abilityModalTitle = `${props.name} ${calculateModifierAsString(props.value)}`;
 
     return (
         <Flex className="ability-tile" id={props.id} vertical>
@@ -14,8 +14,8 @@ const AbilityTile = (props) => {
                 <Title level={3}>{props.value}</Title>
             </Flex>
             <Flex className="ability-checks">
-                <AbilityCheck name="проверка" skill={false} modalTitle={modalTitle} value={calculateModifier(props.value)}/>
-                <AbilityCheck name="спасбросок" skill={false} modalTitle={modalTitle} value={calculateModifier(props.value)} checkable={true} />
+                <AbilityCheck name="проверка" skill={false} modalTitle={abilityModalTitle} value={calculateModifier(props.value)}/>
+                <AbilityCheck name="спасбросок" skill={false} modalTitle={abilityModalTitle} value={calculateModifier(props.value)} checkable={true} />
             </Flex>
             {props.skills && props.skills.map((skill, i) => (
                 <AbilityCheck name={skill} skill={true} value={calculateModifier(props.value)} checkable={true} />

@@ -1,13 +1,11 @@
 import { Flex, Form, Input, InputNumber, Select, Typography } from "antd";
-import { createContext, useState } from "react";
+import { useState } from "react";
 import { useOutletContext } from "react-router";
 import AbilityTile from "./AbilityTile";
 import CharacterHeader from "./CharacterHeader";
-import { CharacterContext } from "./CharacterContext";
+import { AbilityContext } from "./AbilityContext";
 
 const NewCharacterPage = () => {
-    const CallbackContext = createContext();
-
     const { Title } = Typography;
 
     const [setBreadcrumbItems] = useOutletContext();
@@ -95,7 +93,7 @@ const NewCharacterPage = () => {
             >
                 <Flex justify="space-between" gap="small">
                     <Flex vertical wrap className="abilities" gap="small">
-                        <CharacterContext.Provider
+                        <AbilityContext.Provider
                             value={handleStrengthValueChange}
                         >
                             <AbilityTile
@@ -104,7 +102,7 @@ const NewCharacterPage = () => {
                                 value={strength}
                                 skills={strengthSkills}
                             />
-                        </CharacterContext.Provider>
+                        </AbilityContext.Provider>
                         <AbilityTile
                             id="dexterity"
                             name="ловкость"

@@ -1,11 +1,11 @@
 import { Flex, Form, InputNumber, Modal } from "antd";
 import { capitalize } from "../services/StringHelper";
 import { useContext, useState } from "react";
-import { CharacterContext } from "./CharacterContext";
+import { AbilityContext } from "./AbilityContext";
 
 const AbilityModal = (props) => {
     const [showPrefix, setShowPrefix] = useState(true);
-    const onValueChange = useContext(CharacterContext);
+    const onValueChange = useContext(AbilityContext);
     let plusPrefix = showPrefix && props.modifier > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
