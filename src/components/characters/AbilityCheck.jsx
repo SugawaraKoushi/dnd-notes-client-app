@@ -43,7 +43,7 @@ const AbilityCheck = (props) => {
                     </Link>
                 </Flex>
                 <Button className="ability-check-button">
-                    {modifierAsString(props.value)}
+                    {modifierAsString(props.modifierValue)}
                 </Button>
             </Flex>
             {props.skill ? (
@@ -59,6 +59,7 @@ const AbilityCheck = (props) => {
                     open={isModalOpen}
                     onClose={handleModalClose}
                     value={props.value}
+                    modifierValue={props.modifierValue}
                 />
             )}
         </>

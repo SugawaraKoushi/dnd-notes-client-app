@@ -16,8 +16,8 @@ const AbilityModal = (props) => {
         setShowPrefix(true);
     };
 
-    const handleModifierValueChange = (e) => {
-        onValueChange(e);
+    const handleModifierValueChange = (value) => {
+        onValueChange(value);
     };
 
     return (
@@ -42,11 +42,11 @@ const AbilityModal = (props) => {
                             size="large"
                             variant="outlined"
                             changeOnWheel
-                            onClick={handleInputClick}
-                            onBlur={handleBlurInput}
                             min={-30}
                             max={30}
-                            onChange={(e) => handleModifierValueChange(e)}
+                            onChange={(value) =>
+                                handleModifierValueChange(value)
+                            }
                         />
                     </Form.Item>
                     <Form.Item name="bonus" initialValue={0}>
@@ -61,7 +61,6 @@ const AbilityModal = (props) => {
                             min={-30}
                             max={30}
                             prefix={plusPrefix}
-                            onChange={(e) => handleModifierValueChange(e)}
                         />
                     </Form.Item>
                 </Flex>

@@ -9,12 +9,10 @@ const SkillModal = (props) => {
     let plusPrefix = showPrefix && props.modifier > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
-        console.log(plusPrefix);
         setShowPrefix(false);
     };
 
     const handleBlurInput = () => {
-        console.log(plusPrefix);
         setShowPrefix(true);
     };
 

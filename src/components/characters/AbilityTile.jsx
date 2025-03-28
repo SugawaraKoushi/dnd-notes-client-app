@@ -20,25 +20,27 @@ const AbilityTile = (props) => {
             </Flex>
             <Flex className="ability-checks">
                 <AbilityCheck
-                    key={props.name + props.value + 1}
+                    key={`${props.name} check`}
                     name="проверка"
                     skill={false}
                     modalTitle={abilityModalTitle}
-                    value={calculateModifier(props.value)}
+                    value={props.value}
+                    modifierValue={calculateModifier(props.value)}
                 />
                 <AbilityCheck
-                    key={props.name + props.value + 2}
+                    key={`${props.name} saving throw`}
                     name="спасбросок"
                     skill={false}
                     modalTitle={abilityModalTitle}
-                    value={calculateModifier(props.value)}
+                    value={props.value}
+                    modifierValue={calculateModifier(props.value)}
                     checkable={true}
                 />
             </Flex>
             {props.skills &&
                 props.skills.map((skill, i) => (
                     <AbilityCheck
-                        key={props.name + props.value + i}
+                        key={`${props.name} ability ${i}`}
                         name={skill}
                         skill={true}
                         value={calculateModifier(props.value)}

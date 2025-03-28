@@ -1,23 +1,17 @@
-import { Flex, Form, Input, InputNumber, Select, Typography } from "antd";
+import { Flex, Form, Input, InputNumber, Select } from "antd";
 import { useState } from "react";
 import { useOutletContext } from "react-router";
 import AbilityTile from "./AbilityTile";
 import CharacterHeader from "./CharacterHeader";
 import { AbilityContext } from "./AbilityContext";
+import Character from "../../entity/Characters";
 
 const NewCharacterPage = () => {
-    const { Title } = Typography;
-
     const [setBreadcrumbItems] = useOutletContext();
-    const [strength, setStrength] = useState(13);
-    const [dexterity, setDexterity] = useState(13);
-    const [constitution, setConstitution] = useState(13);
-    const [intelligence, setIntelligence] = useState(13);
-    const [wisdom, setWisdom] = useState(5);
-    const [charisma, setCharisma] = useState(7);
+    const [character, setCharacter] = useState(new Character());
 
     const handleStrengthValueChange = (value) => {
-        setStrength(value);
+        setCharacter({ ...character, strength: value });
     };
 
     const sex = [
@@ -94,44 +88,50 @@ const NewCharacterPage = () => {
                 <Flex justify="space-between" gap="small">
                     <Flex vertical wrap className="abilities" gap="small">
                         <AbilityContext.Provider
-                            value={handleStrengthValueChange}
+                            value={(value) => handleStrengthValueChange(value)}
                         >
                             <AbilityTile
+                                key="strength"
                                 id="strength"
                                 name="сила"
-                                value={strength}
+                                value={character.strength}
                                 skills={strengthSkills}
                             />
                         </AbilityContext.Provider>
-                        <AbilityTile
-                            id="dexterity"
-                            name="ловкость"
-                            value={dexterity}
-                            skills={dexteritySkills}
-                        />
-                        <AbilityTile
-                            id="constitution"
-                            name="телосложение"
-                            value={constitution}
-                        />
-                        <AbilityTile
-                            id="intelligence"
-                            name="интеллект"
-                            value={intelligence}
-                            skills={intelligenceSkills}
-                        />
-                        <AbilityTile
-                            id="wisdom"
-                            name="мудрость"
-                            value={wisdom}
-                            skills={wisdomSkills}
-                        />
-                        <AbilityTile
-                            id="charisma"
-                            name="харизма"
-                            value={charisma}
-                            skills={charismaSkills}
-                        />
+                            <AbilityTile
+                                key="dexterity"
+                                id="dexterity"
+                                name="ловкость"
+                                value={character.dexterity}
+                                skills={dexteritySkills}
+                            />
+                            <AbilityTile
+                                key="constitution"
+                                id="constitution"
+                                name="телосложение"
+                                value={character.constitution}
+                            />
+                            <AbilityTile
+                                key="intelligence"
+                                id="intelligence"
+                                name="интеллект"
+                                value={character.intelligence}
+                                skills={intelligenceSkills}
+                            />
+                            <AbilityTile
+                                key="wisdom"
+                                id="wisdom"
+                                name="мудрость"
+                                value={character.wisdom}
+                                skills={wisdomSkills}
+                            />
+                            <AbilityTile
+                                key="charisma"
+                                id="charisma"
+                                name="харизма"
+                                value={character.charisma}
+                                skills={charismaSkills}
+                            />
                     </Flex>
                     <Flex className="abilities">Текст</Flex>
                 </Flex>
