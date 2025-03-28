@@ -1,19 +1,26 @@
 import { Flex, Form, Input, InputNumber, Select, Typography } from "antd";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { useOutletContext } from "react-router";
 import AbilityTile from "./AbilityTile";
 import CharacterHeader from "./CharacterHeader";
+import { CharacterContext } from "./CharacterContext";
 
 const NewCharacterPage = () => {
+    const CallbackContext = createContext();
+
     const { Title } = Typography;
 
     const [setBreadcrumbItems] = useOutletContext();
-    const [strength, setStrength] = useState(10);
-    const [dexterity, setDexterity] = useState(10);
-    const [constitution, setConstitution] = useState(10);
-    const [intelligence, setIntelligence] = useState(10);
-    const [wisdom, setWisdom] = useState(10);
-    const [charisma, setCharisma] = useState(10);
+    const [strength, setStrength] = useState(13);
+    const [dexterity, setDexterity] = useState(13);
+    const [constitution, setConstitution] = useState(13);
+    const [intelligence, setIntelligence] = useState(13);
+    const [wisdom, setWisdom] = useState(5);
+    const [charisma, setCharisma] = useState(7);
+
+    const handleStrengthValueChange = (value) => {
+        setStrength(value);
+    };
 
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
@@ -88,12 +95,16 @@ const NewCharacterPage = () => {
             >
                 <Flex justify="space-between" gap="small">
                     <Flex vertical wrap className="abilities" gap="small">
-                        <AbilityTile
-                            id="strength"
-                            name="сила"
-                            value={strength}
-                            skills={strengthSkills}
-                        />
+                        <CharacterContext.Provider
+                            value={handleStrengthValueChange}
+                        >
+                            <AbilityTile
+                                id="strength"
+                                name="сила"
+                                value={strength}
+                                skills={strengthSkills}
+                            />
+                        </CharacterContext.Provider>
                         <AbilityTile
                             id="dexterity"
                             name="ловкость"

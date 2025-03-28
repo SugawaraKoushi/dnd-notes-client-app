@@ -1,6 +1,7 @@
 import { Button, Checkbox, Flex } from "antd";
 import { useState } from "react";
 import { Link } from "react-router";
+import { modifierAsString } from "../services/ModifierService";
 import SkillModal from "./SkillModal";
 
 const AbilityCheck = (props) => {
@@ -25,7 +26,7 @@ const AbilityCheck = (props) => {
         <>
             <Flex
                 className="ability-check"
-                justify="space-beetwen"
+                justify="space-between"
                 align="center"
                 onClick={handleModalOpen}
             >
@@ -37,12 +38,15 @@ const AbilityCheck = (props) => {
                         {props.name.toUpperCase()}
                     </Link>
                 </Flex>
-                <Button className="ability-check-button">{props.value}</Button>
+                <Button className="ability-check-button">
+                    {modifierAsString(props.value)}
+                </Button>
             </Flex>
             <SkillModal
                 title={props.name}
                 open={isModalOpen}
                 onClose={handleModalClose}
+                modifier={props.value}
             />
         </>
     );

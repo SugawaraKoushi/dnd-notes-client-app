@@ -1,5 +1,3 @@
-String.prototype.capitalize = function () {
-    if (!this) return "";
-    
-    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
-};
+export function capitalize(str) {
+    return String(str).charAt(0).toUpperCase() + String(str).slice(1);
+}

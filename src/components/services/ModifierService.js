@@ -11,3 +11,7 @@ export const calculateModifierAsString = (value) => {
 
     return modifier;
 }
+
+export const modifierAsString = (modifier) => {
+    return modifier > 0 ? `+${modifier}` : modifier;
+}
