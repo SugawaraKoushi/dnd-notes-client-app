@@ -3,16 +3,17 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { modifierAsString } from "../services/ModifierService";
 import SkillModal from "./SkillModal";
+import AbilityModal from "./AbilityModal";
 
 const AbilityCheck = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const labelClassName = props.small
-        ? "ability-check-label-small"
-        : "ability-check-label";
-    const checkboxClassName = props.small
-        ? "ability-check-checkbox-small"
-        : "ability-check-checkbox";
+    const labelClassName = props.skill
+        ? "ability-check-label"
+        : "ability-check-label-small";
+    const checkboxClassName = props.skill
+        ? "ability-check-checkbox"
+        : "ability-check-checkbox-small";
 
     const handleModalOpen = () => {
         setIsModalOpen(true);
@@ -28,13 +29,16 @@ const AbilityCheck = (props) => {
                 className="ability-check"
                 justify="space-between"
                 align="center"
-                onClick={handleModalOpen}
             >
                 <Flex className="ability-check-wrap" align="center">
                     {props.checkable && (
                         <Checkbox className={checkboxClassName} />
                     )}
-                    <Link className={labelClassName} to="">
+                    <Link
+                        className={labelClassName}
+                        to=""
+                        onClick={handleModalOpen}
+                    >
                         {props.name.toUpperCase()}
                     </Link>
                 </Flex>
@@ -42,12 +46,21 @@ const AbilityCheck = (props) => {
                     {modifierAsString(props.value)}
                 </Button>
             </Flex>
-            <SkillModal
-                title={props.name}
-                open={isModalOpen}
-                onClose={handleModalClose}
-                modifier={props.value}
-            />
+            {props.skill ? (
+                <SkillModal
+                    title={props.name}
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    modifier={props.value}
+                />
+            ) : (
+                <AbilityModal
+                    title={props.modalTitle}
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    value={props.value}
+                />
+            )}
         </>
     );
 };
