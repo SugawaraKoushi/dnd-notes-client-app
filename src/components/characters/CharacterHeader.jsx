@@ -1,7 +1,8 @@
 import { Checkbox, Flex } from "antd";
 import CharacterHeaderInfo from "./CharacterHeaderInfo";
+import { modifierAsString } from "../services/ModifierService";
 
-const CharacterHeader = () => {
+const CharacterHeader = (props) => {
     return (
         <div className="character-header">
             <Flex
@@ -14,20 +15,20 @@ const CharacterHeader = () => {
                     margin: "auto",
                 }}
             >
-                <CharacterHeaderInfo />
+                <CharacterHeaderInfo name={props.name} />
                 <Flex
                     align="center"
                     justify="space-between"
                     style={{ width: "592px" }}
                 >
                     <Flex justify="space-between" style={{ width: "224px" }}>
-                        <Flex align="center">18</Flex>
+                        <Flex align="center">10</Flex>
                         <Flex vertical align="center">
                             25
                             <div>скорость</div>
                         </Flex>
                         <Flex vertical align="center">
-                            +3
+                            {modifierAsString(props.proficiencyBonus)}
                             <div>владение</div>
                         </Flex>
                     </Flex>

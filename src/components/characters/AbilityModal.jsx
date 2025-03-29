@@ -5,7 +5,7 @@ import { AbilityContext } from "./AbilityContext";
 
 const AbilityModal = (props) => {
     const [showPrefix, setShowPrefix] = useState(true);
-    const onValueChange = useContext(AbilityContext);
+    const { onScoreChange } = useContext(AbilityContext);
     let plusPrefix = showPrefix && props.modifier > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
@@ -16,8 +16,8 @@ const AbilityModal = (props) => {
         setShowPrefix(true);
     };
 
-    const handleModifierValueChange = (value) => {
-        onValueChange(value);
+    const handleScoreChange = (value) => {
+        onScoreChange(value);
     };
 
     return (
@@ -35,7 +35,7 @@ const AbilityModal = (props) => {
                 }}
             >
                 <Flex justify="space-between">
-                    <Form.Item name="ability" initialValue={props.value}>
+                    <Form.Item name="ability-score" initialValue={props.score}>
                         <InputNumber
                             style={{ width: "auto" }}
                             placeholder="Значение"
@@ -44,9 +44,7 @@ const AbilityModal = (props) => {
                             changeOnWheel
                             min={-30}
                             max={30}
-                            onChange={(value) =>
-                                handleModifierValueChange(value)
-                            }
+                            onChange={(value) => handleScoreChange(value)}
                         />
                     </Form.Item>
                     <Form.Item name="bonus" initialValue={0}>

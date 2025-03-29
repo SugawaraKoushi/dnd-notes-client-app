@@ -4,14 +4,34 @@ import { useOutletContext } from "react-router";
 import AbilityTile from "./AbilityTile";
 import CharacterHeader from "./CharacterHeader";
 import { AbilityContext } from "./AbilityContext";
-import Character from "../../entity/Characters";
+import Character from "../../entity/Character";
 
 const NewCharacterPage = () => {
     const [setBreadcrumbItems] = useOutletContext();
     const [character, setCharacter] = useState(new Character());
 
-    const handleStrengthValueChange = (value) => {
+    const handleStrengthScoreChange = (value) => {
         setCharacter({ ...character, strength: value });
+    };
+
+    const handleStrengthSavingThrowProficiencyChange = () => {
+        setCharacter({
+            ...character,
+            strengthSavingThrowProficiency:
+                !character.strengthSavingThrowProficiency,
+        });
+    };
+
+    const handleDexterityValueChange = (value) => {
+        setCharacter({ ...character, strength: value });
+    };
+
+    const handleDexteritySavingThrowProficiencyChange = () => {
+        setCharacter({
+            ...character,
+            strengthSavingThrowProficiency:
+                !character.strengthSavingThrowProficiency,
+        });
     };
 
     const sex = [
@@ -78,7 +98,10 @@ const NewCharacterPage = () => {
 
     return (
         <>
-            <CharacterHeader />
+            <CharacterHeader
+                name={character.name}
+                proficiencyBonus={character.proficiencyBonus}
+            />
             <Form
                 className="content-layout"
                 style={{ lineHeight: "inherit" }}
@@ -88,50 +111,56 @@ const NewCharacterPage = () => {
                 <Flex justify="space-between" gap="small">
                     <Flex vertical wrap className="abilities" gap="small">
                         <AbilityContext.Provider
-                            value={(value) => handleStrengthValueChange(value)}
+                            value={{
+                                onScoreChange: handleStrengthScoreChange,
+                                onSavingThrowProficiencyChange: handleStrengthSavingThrowProficiencyChange
+                            }}
                         >
                             <AbilityTile
                                 key="strength"
                                 id="strength"
                                 name="сила"
-                                value={character.strength}
+                                score={character.strength}
                                 skills={strengthSkills}
+                                savingThrowProficiency={
+                                    character.strengthSavingThrowProficiency
+                                }
                             />
                         </AbilityContext.Provider>
-                            <AbilityTile
-                                key="dexterity"
-                                id="dexterity"
-                                name="ловкость"
-                                value={character.dexterity}
-                                skills={dexteritySkills}
-                            />
-                            <AbilityTile
-                                key="constitution"
-                                id="constitution"
-                                name="телосложение"
-                                value={character.constitution}
-                            />
-                            <AbilityTile
-                                key="intelligence"
-                                id="intelligence"
-                                name="интеллект"
-                                value={character.intelligence}
-                                skills={intelligenceSkills}
-                            />
-                            <AbilityTile
-                                key="wisdom"
-                                id="wisdom"
-                                name="мудрость"
-                                value={character.wisdom}
-                                skills={wisdomSkills}
-                            />
-                            <AbilityTile
-                                key="charisma"
-                                id="charisma"
-                                name="харизма"
-                                value={character.charisma}
-                                skills={charismaSkills}
-                            />
+                        <AbilityTile
+                            key="dexterity"
+                            id="dexterity"
+                            name="ловкость"
+                            score={character.dexterity}
+                            skills={dexteritySkills}
+                        />
+                        <AbilityTile
+                            key="constitution"
+                            id="constitution"
+                            name="телосложение"
+                            score={character.constitution}
+                        />
+                        <AbilityTile
+                            key="intelligence"
+                            id="intelligence"
+                            name="интеллект"
+                            score={character.intelligence}
+                            skills={intelligenceSkills}
+                        />
+                        <AbilityTile
+                            key="wisdom"
+                            id="wisdom"
+                            name="мудрость"
+                            score={character.wisdom}
+                            skills={wisdomSkills}
+                        />
+                        <AbilityTile
+                            key="charisma"
+                            id="charisma"
+                            name="харизма"
+                            score={character.charisma}
+                            skills={charismaSkills}
+                        />
                     </Flex>
                     <Flex className="abilities">Текст</Flex>
                 </Flex>

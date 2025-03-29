@@ -34,7 +34,7 @@ const SkillModal = (props) => {
                     remember: false,
                 }}
             >
-                <Form.Item name="modificator" initialValue={props.modifier}>
+                <Form.Item name="modifier" initialValue={props.modifier}>
                     <InputNumber
                         style={{ width: "100%" }}
                         placeholder="Бонус"

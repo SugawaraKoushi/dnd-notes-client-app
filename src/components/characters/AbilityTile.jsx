@@ -16,7 +16,7 @@ const AbilityTile = (props) => {
         <Flex className="ability-tile" id={props.id} vertical>
             <Flex className="ability-tile-header" justify="space-between">
                 <Title level={3}>{props.name.toUpperCase()}</Title>
-                <Title level={3}>{props.value}</Title>
+                <Title level={3}>{props.score}</Title>
             </Flex>
             <Flex className="ability-checks">
                 <AbilityCheck
@@ -24,17 +24,18 @@ const AbilityTile = (props) => {
                     name="проверка"
                     skill={false}
                     modalTitle={abilityModalTitle}
-                    value={props.value}
-                    modifierValue={calculateModifier(props.value)}
+                    score={props.score}
+                    modifier={calculateModifier(props.score)}
                 />
                 <AbilityCheck
                     key={`${props.name} saving throw`}
                     name="спасбросок"
                     skill={false}
                     modalTitle={abilityModalTitle}
-                    value={props.value}
-                    modifierValue={calculateModifier(props.value)}
+                    score={props.score}
+                    modifier={calculateModifier(props.score)}
                     checkable={true}
+                    checked={props.savingThrowProficiency}
                 />
             </Flex>
             {props.skills &&
@@ -43,7 +44,7 @@ const AbilityTile = (props) => {
                         key={`${props.name} ability ${i}`}
                         name={skill}
                         skill={true}
-                        value={calculateModifier(props.value)}
+                        value={calculateModifier(props.score)}
                         checkable={true}
                     />
                 ))}

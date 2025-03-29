@@ -1,12 +1,15 @@
 import { Button, Checkbox, Flex } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router";
 import { modifierAsString } from "../services/ModifierService";
 import SkillModal from "./SkillModal";
 import AbilityModal from "./AbilityModal";
+import { AbilityContext } from "./AbilityContext";
 
 const AbilityCheck = (props) => {
+    const { onSavingThrowProficiencyChange } = useContext(AbilityContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const modifier = props.checked ? props.modifier + 2 : props.modifier;
 
     const labelClassName = props.skill
         ? "ability-check-label"
@@ -23,6 +26,10 @@ const AbilityCheck = (props) => {
         setIsModalOpen(false);
     };
 
+    const handleProficiencyChange = () => {
+        onSavingThrowProficiencyChange();
+    };
+
     return (
         <>
             <Flex
@@ -32,7 +39,11 @@ const AbilityCheck = (props) => {
             >
                 <Flex className="ability-check-wrap" align="center">
                     {props.checkable && (
-                        <Checkbox className={checkboxClassName} />
+                        <Checkbox
+                            className={checkboxClassName}
+                            checked={props.checked}
+                            onChange={handleProficiencyChange}
+                        />
                     )}
                     <Link
                         className={labelClassName}
@@ -43,7 +54,7 @@ const AbilityCheck = (props) => {
                     </Link>
                 </Flex>
                 <Button className="ability-check-button">
-                    {modifierAsString(props.modifierValue)}
+                    {modifierAsString(modifier)}
                 </Button>
             </Flex>
             {props.skill ? (
@@ -51,15 +62,15 @@ const AbilityCheck = (props) => {
                     title={props.name}
                     open={isModalOpen}
                     onClose={handleModalClose}
-                    modifier={props.value}
+                    modifier={props.modifier}
                 />
             ) : (
                 <AbilityModal
                     title={props.modalTitle}
                     open={isModalOpen}
                     onClose={handleModalClose}
-                    value={props.value}
-                    modifierValue={props.modifierValue}
+                    score={props.score}
+                    modifier={props.modifier}
                 />
             )}
         </>

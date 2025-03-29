@@ -1,6 +1,7 @@
 import { Avatar, Flex, Typography } from "antd";
+import { capitalize } from "../services/StringHelper";
 
-const CharacterHeaderInfo = () => {
+const CharacterHeaderInfo = (props) => {
     const { Title } = Typography;
 
     return (
@@ -17,7 +18,7 @@ const CharacterHeaderInfo = () => {
             />
             <Flex vertical style={{ minWidth: "300px", width: "300px" }}>
                 <Title level={4} style={{ margin: "0 0 3px 0", padding: "0" }}>
-                    Имя
+                    {capitalize(props.name)}
                 </Title>
                 <p
                     style={{
