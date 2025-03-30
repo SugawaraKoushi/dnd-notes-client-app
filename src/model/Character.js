@@ -46,7 +46,7 @@ class Character {
         this.arcana = 0; // Магия
         this.history = 0; // История
         this.investigation = 0; // Анализ
-        this.natureBonus = 0; // Природа
+        this.nature = 0; // Природа
         this.religion = 0; // Религия
         this.animalHandling = 0; // Уход за животными
         this.insight = 0; // Проницательность
