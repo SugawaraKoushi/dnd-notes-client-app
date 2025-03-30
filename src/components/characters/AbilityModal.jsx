@@ -1,6 +1,6 @@
 import { Flex, Form, InputNumber, Modal } from "antd";
 import { capitalize } from "../services/StringHelper";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AbilityContext } from "./AbilityContext";
 
 const AbilityModal = (props) => {

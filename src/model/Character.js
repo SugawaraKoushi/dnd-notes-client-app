@@ -79,7 +79,7 @@ class Character {
         this.persuasionProficiency = false; // Убеждение
 
         // Бонусы к навыкам
-        this.athleticsBonus = 1; // Атлетика
+        this.athleticsBonus = 0; // Атлетика
         this.acrobaticsBonus = 0; // Акробатика
         this.sleightOfHandBonus = 0; // Ловкость рук
         this.stealthBonus = 0; // Скрытность

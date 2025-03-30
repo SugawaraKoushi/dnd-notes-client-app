@@ -9,7 +9,6 @@ const SkillModal = (props) => {
     let plusPrefix = showPrefix && props.bonus > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
-        console.log(showPrefix, plusPrefix, props.bonus)
         setShowPrefix(false);
     };
 
@@ -35,7 +34,7 @@ const SkillModal = (props) => {
                     remember: false,
                 }}
             >
-                <Form.Item name="modifier" initialValue={1}>
+                <Form.Item name="modifier" initialValue={props.bonus}>
                     <InputNumber
                         style={{ width: "100%" }}
                         placeholder="Бонус"

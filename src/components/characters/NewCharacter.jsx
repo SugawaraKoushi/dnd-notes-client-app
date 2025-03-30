@@ -73,8 +73,6 @@ const NewCharacterPage = () => {
     const handleAthleticsBonusChange = (bonus) => {
         const athletics =
             character.athletics - character.athleticsBonus + bonus;
-        console.log(bonus);
-        console.log(athletics);
 
         setCharacter({
             ...character,
