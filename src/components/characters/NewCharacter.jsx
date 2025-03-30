@@ -340,7 +340,7 @@ const NewCharacterPage = () => {
         });
     };
 
-    const handleIntelligencehSavingThrowBonusChange = (bonus) => {
+    const handleIntelligenceSavingThrowBonusChange = (bonus) => {
         const savingThrow =
             character.intelligenceSavingThrow -
             character.intelligenceSavingThrowBonus +
@@ -383,8 +383,7 @@ const NewCharacterPage = () => {
         setCharacter({
             ...character,
             historyProficiency: proficiency,
-            history:
-                character.historyProficiency + k * character.proficiencyBonus,
+            history: character.history + k * character.proficiencyBonus,
         });
     };
 
@@ -496,6 +495,401 @@ const NewCharacterPage = () => {
 
     //#endRegion Интеллект
 
+    //#region Мудрость
+
+    const handleWisdomScoreChange = (score) => {
+        const modifier = calculateModifier(score);
+        const perception =
+            modifier +
+            character.perceptionBonus +
+            (character.perceptionProficiency ? character.proficiencyBonus : 0);
+        const survival =
+            modifier +
+            character.survivalBonus +
+            (character.survivalProficiency ? character.proficiencyBonus : 0);
+        const medicine =
+            modifier +
+            character.medicineBonus +
+            (character.medicineProficiency ? character.proficiencyBonus : 0);
+        const insight =
+            modifier +
+            character.insightBonus +
+            (character.insightProficiency ? character.proficiencyBonus : 0);
+        const animalHandling =
+            modifier +
+            character.animalHandlingBonus +
+            (character.animalHandlingProficiency
+                ? character.proficiencyBonus
+                : 0);
+
+        const savingThrow =
+            modifier +
+            character.wisdomSavingThrowBonus +
+            (character.wisdomSavingThrowProficiency
+                ? character.proficiencyBonus
+                : 0);
+
+        setCharacter({
+            ...character,
+            wisdom: score,
+            wisdomSavingThrow: savingThrow,
+            perception: perception,
+            survival: survival,
+            medicine: medicine,
+            insight: insight,
+            animalHandling: animalHandling,
+        });
+    };
+
+    const handleWisdomSavingThrowProficiencyChange = () => {
+        const proficiency = !character.wisdomSavingThrowProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            wisdomSavingThrowProficiency: proficiency,
+            wisdomSavingThrow:
+                character.wisdomSavingThrow + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleWisdomSavingThrowBonusChange = (bonus) => {
+        const savingThrow =
+            character.wisdomSavingThrow -
+            character.wisdomSavingThrowBonus +
+            bonus;
+
+        setCharacter({
+            ...character,
+            wisdomSavingThrow: savingThrow,
+            wisdomSavingThrowBonus: bonus,
+        });
+    };
+
+    const handlePerceptionProficiencyChange = () => {
+        const proficiency = !character.perceptionProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            perceptionProficiency: proficiency,
+            perception: character.perception + k * character.proficiencyBonus,
+        });
+    };
+
+    const handlePerceptionBonusChange = (bonus) => {
+        const value = character.perception - character.perceptionBonus + bonus;
+
+        setCharacter({
+            ...character,
+            perception: value,
+            perceptionBonus: bonus,
+        });
+    };
+
+    const handleSurvivalProficiencyChange = () => {
+        const proficiency = !character.survivalProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            survivalProficiency: proficiency,
+            survival: character.survival + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleSurvivalBonusChange = (bonus) => {
+        const value = character.survival - character.survivalBonus + bonus;
+
+        setCharacter({
+            ...character,
+            survival: value,
+            survivalBonus: bonus,
+        });
+    };
+
+    const handleMedicineProficiencyChange = () => {
+        const proficiency = !character.medicineProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            medicineProficiency: proficiency,
+            medicine: character.medicine + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleMedicineBonusChange = (bonus) => {
+        const value = character.medicine - character.medicineBonus + bonus;
+
+        setCharacter({
+            ...character,
+            medicine: value,
+            medicineBonus: bonus,
+        });
+    };
+
+    const handleInsightProficiencyChange = () => {
+        const proficiency = !character.insightProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            insightProficiency: proficiency,
+            insight: character.insight + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleInsightBonusChange = (bonus) => {
+        const value = character.insight - character.insightBonus + bonus;
+
+        setCharacter({
+            ...character,
+            insight: value,
+            insightBonus: bonus,
+        });
+    };
+
+    const handleAnimalHandlingProficiencyChange = () => {
+        const proficiency = !character.animalHandlingProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            animalHandlingProficiency: proficiency,
+            animalHandling:
+                character.animalHandling + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleAnimalHandlingBonusChange = (bonus) => {
+        const value =
+            character.animalHandling - character.animalHandlingBonus + bonus;
+
+        setCharacter({
+            ...character,
+            animalHandling: value,
+            animalHandlingBonus: bonus,
+        });
+    };
+
+    const wisdomSkills = [
+        {
+            name: "восприятие",
+            score: character.perception,
+            bonus: character.perceptionBonus,
+            proficiency: character.perceptionProficiency,
+        },
+        {
+            name: "выживание",
+            score: character.survival,
+            bonus: character.survivalBonus,
+            proficiency: character.survivalProficiency,
+        },
+        {
+            name: "медицина",
+            score: character.medicine,
+            bonus: character.medicineBonus,
+            proficiency: character.medicineProficiency,
+        },
+        {
+            name: "проницательность",
+            score: character.insight,
+            bonus: character.insightBonus,
+            proficiency: character.insightProficiency,
+        },
+        {
+            name: "уход за животными",
+            score: character.animalHandling,
+            bonus: character.animalHandlingBonus,
+            proficiency: character.animalHandlingProficiency,
+        },
+    ];
+
+    //#endRegion Мудрость
+
+    //#region Харизма
+
+    const handleCharismaScoreChange = (score) => {
+        const modifier = calculateModifier(score);
+        const performance =
+            modifier +
+            character.performanceBonus +
+            (character.performanceProficiency ? character.proficiencyBonus : 0);
+        const intimidation =
+            modifier +
+            character.intimidationBonus +
+            (character.intimidationProficiency
+                ? character.proficiencyBonus
+                : 0);
+        const deception =
+            modifier +
+            character.deceptionBonus +
+            (character.deceptionProficiency ? character.proficiencyBonus : 0);
+        const persuasion =
+            modifier +
+            character.persuasionBonus +
+            (character.persuasionProficiency ? character.proficiencyBonus : 0);
+
+        const savingThrow =
+            modifier +
+            character.charismaSavingThrowBonus +
+            (character.charismaSavingThrowProficiency
+                ? character.proficiencyBonus
+                : 0);
+
+        setCharacter({
+            ...character,
+            charsima: score,
+            charismaSavingThrow: savingThrow,
+            performance: performance,
+            intimidation: intimidation,
+            deception: deception,
+            persuasion: persuasion,
+        });
+    };
+
+    const handleCharismaSavingThrowProficiencyChange = () => {
+        const proficiency = !character.charismaSavingThrowProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            charismaSavingThrowProficiency: proficiency,
+            charismaSavingThrow:
+                character.charismaSavingThrow + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleCharismaSavingThrowBonusChange = (bonus) => {
+        const savingThrow =
+            character.charismaSavingThrow -
+            character.charismaSavingThrowBonus +
+            bonus;
+
+        setCharacter({
+            ...character,
+            charismaSavingThrow: savingThrow,
+            charismaSavingThrowBonus: bonus,
+        });
+    };
+
+    const handlePerformanceProficiencyChange = () => {
+        const proficiency = !character.performanceProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            performanceProficiency: proficiency,
+            performance: character.performance + k * character.proficiencyBonus,
+        });
+    };
+
+    const handlePerformanceBonusChange = (bonus) => {
+        const value =
+            character.performance - character.performanceBonus + bonus;
+
+        setCharacter({
+            ...character,
+            performance: value,
+            performanceBonus: bonus,
+        });
+    };
+
+    const handleIntimidationProficiencyChange = () => {
+        const proficiency = !character.intimidationProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            intimidationProficiency: proficiency,
+            intimidation:
+                character.intimidation + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleIntimidationBonusChange = (bonus) => {
+        const value =
+            character.intimidation - character.intimidationBonus + bonus;
+
+        setCharacter({
+            ...character,
+            intimidation: value,
+            intimidationBonus: bonus,
+        });
+    };
+
+    const handleDeceptionProficiencyChange = () => {
+        const proficiency = !character.deceptionProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            deceptionProficiency: proficiency,
+            deception: character.deception + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleDeceptionBonusChange = (bonus) => {
+        const value = character.deception - character.deceptionBonus + bonus;
+
+        setCharacter({
+            ...character,
+            deception: value,
+            deceptionBonus: bonus,
+        });
+    };
+
+    const handlePersuasionProficiencyChange = () => {
+        const proficiency = !character.persuasionProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            persuasionProficiency: proficiency,
+            persuasion: character.persuasion + k * character.proficiencyBonus,
+        });
+    };
+
+    const handlePersuasionBonusChange = (bonus) => {
+        const value = character.persuasion - character.persuasionBonus + bonus;
+
+        setCharacter({
+            ...character,
+            persuasion: value,
+            persuasionBonus: bonus,
+        });
+    };
+
+    const charismaSkills = [
+        {
+            name: "выступление",
+            score: character.performance,
+            bonus: character.performanceBonus,
+            proficiency: character.performanceProficiency,
+        },
+        {
+            name: "запугивание",
+            score: character.intimidation,
+            bonus: character.intimidationBonus,
+            proficiency: character.intimidationProficiency,
+        },
+        {
+            name: "обман",
+            score: character.deception,
+            bonus: character.deceptionBonus,
+            proficiency: character.deceptionProficiency,
+        },
+        {
+            name: "убеждение",
+            score: character.persuasion,
+            bonus: character.persuasionBonus,
+            proficiency: character.persuasionProficiency,
+        },
+    ];
+
+    //#endregion Харизма
+
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
         { value: "FEMALE", label: <span>Женский</span> },
@@ -539,15 +933,6 @@ const NewCharacterPage = () => {
             <Input />
         </Form.Item>,
     ];
-
-    const wisdomSkills = [
-        "восприятие",
-        "выживание",
-        "медицина",
-        "проницательность",
-        "уход за животными",
-    ];
-    const charismaSkills = ["выступление", "запугивание", "обман", "убеждение"];
 
     return (
         <>
@@ -682,7 +1067,7 @@ const NewCharacterPage = () => {
                                 onSavingThrowProficiencyChange:
                                     handleIntelligenceSavingThrowProficiencyChange,
                                 onSavingThrowBonusChange:
-                                    handleIntelligencehSavingThrowBonusChange,
+                                    handleIntelligenceSavingThrowBonusChange,
                                 onSkillProficiencyChange: (index) => {
                                     switch (index) {
                                         case 0:
@@ -744,21 +1129,136 @@ const NewCharacterPage = () => {
                                 skills={intelligenceSkills}
                             />
                         </AbilityContext.Provider>
-
-                        {/* <AbilityTile
-                            key="wisdom"
-                            id="wisdom"
-                            name="мудрость"
-                            score={character.wisdom}
-                            skills={wisdomSkills}
-                        />
-                        <AbilityTile
-                            key="charisma"
-                            id="charisma"
-                            name="харизма"
-                            score={character.charisma}
-                            skills={charismaSkills}
-                        /> */}
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleWisdomScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleWisdomSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleWisdomSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerceptionProficiencyChange();
+                                            break;
+                                        case 1:
+                                            handleSurvivalProficiencyChange();
+                                            break;
+                                        case 2:
+                                            handleMedicineProficiencyChange();
+                                            break;
+                                        case 3:
+                                            handleInsightProficiencyChange();
+                                            break;
+                                        case 4:
+                                            handleAnimalHandlingProficiencyChange();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerceptionBonusChange(bonus);
+                                            break;
+                                        case 1:
+                                            handleSurvivalBonusChange(bonus);
+                                            break;
+                                        case 2:
+                                            handleMedicineBonusChange(bonus);
+                                            break;
+                                        case 3:
+                                            handleInsightBonusChange(bonus);
+                                            break;
+                                        case 4:
+                                            handleAnimalHandlingBonusChange(
+                                                bonus
+                                            );
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="wisdom"
+                                id="wisdom"
+                                name="мудрость"
+                                score={character.wisdom}
+                                savingThrow={character.wisdomSavingThrow}
+                                savingThrowProficiency={
+                                    character.wisdomSavingThrowProficiency
+                                }
+                                savingThrowBonus={
+                                    character.wisdomSavingThrowBonus
+                                }
+                                skills={wisdomSkills}
+                            />
+                        </AbilityContext.Provider>
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleCharismaScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleCharismaSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleCharismaSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerformanceProficiencyChange();
+                                            break;
+                                        case 1:
+                                            handleIntimidationProficiencyChange();
+                                            break;
+                                        case 2:
+                                            handleDeceptionProficiencyChange();
+                                            break;
+                                        case 3:
+                                            handlePersuasionProficiencyChange();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerformanceBonusChange(bonus);
+                                            break;
+                                        case 1:
+                                            handleIntimidationBonusChange(
+                                                bonus
+                                            );
+                                            break;
+                                        case 2:
+                                            handleDeceptionBonusChange(bonus);
+                                            break;
+                                        case 3:
+                                            handlePersuasionBonusChange(bonus);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="charisma"
+                                id="charisma"
+                                name="харизма"
+                                score={character.charisma}
+                                savingThrow={character.charismaSavingThrow}
+                                savingThrowProficiency={
+                                    character.charismaSavingThrowProficiency
+                                }
+                                savingThrowBonus={
+                                    character.charismaSavingThrowBonus
+                                }
+                                skills={charismaSkills}
+                            />
+                        </AbilityContext.Provider>
                     </Flex>
                     <Flex className="abilities">Текст</Flex>
                 </Flex>
