@@ -5,10 +5,11 @@ import { AbilityContext } from "./AbilityContext";
 
 const SkillModal = (props) => {
     const [showPrefix, setShowPrefix] = useState(true);
-    const onValueChange = useContext(AbilityContext);
-    let plusPrefix = showPrefix && props.modifier > 0 ? "+" : <span />;
+    const { onSkillBonusChange } = useContext(AbilityContext);
+    let plusPrefix = showPrefix && props.bonus > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
+        console.log(showPrefix, plusPrefix, props.bonus)
         setShowPrefix(false);
     };
 
@@ -16,8 +17,8 @@ const SkillModal = (props) => {
         setShowPrefix(true);
     };
 
-    const handleModifierValueChange = (e) => {
-        onValueChange(e);
+    const handleSkillBonusChange = (value) => {
+        onSkillBonusChange(props.id, value);
     };
 
     return (
@@ -34,7 +35,7 @@ const SkillModal = (props) => {
                     remember: false,
                 }}
             >
-                <Form.Item name="modifier" initialValue={props.modifier}>
+                <Form.Item name="modifier" initialValue={1}>
                     <InputNumber
                         style={{ width: "100%" }}
                         placeholder="Бонус"
@@ -46,7 +47,7 @@ const SkillModal = (props) => {
                         min={-30}
                         max={30}
                         prefix={plusPrefix}
-                        onChange={(e) => handleModifierValueChange(e)}
+                        onChange={(value) => handleSkillBonusChange(value)}
                     />
                 </Form.Item>
                 <Form.Item name="value">

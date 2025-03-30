@@ -9,8 +9,9 @@ import {
 const AbilityTile = (props) => {
     const { Title } = Typography;
     const abilityModalTitle = `${props.name} ${calculateModifierAsString(
-        props.value
+        props.score
     )}`;
+    const modifier = calculateModifier(props.score);
 
     return (
         <Flex className="ability-tile" id={props.id} vertical>
@@ -25,7 +26,8 @@ const AbilityTile = (props) => {
                     skill={false}
                     modalTitle={abilityModalTitle}
                     score={props.score}
-                    modifier={calculateModifier(props.score)}
+                    modifier={modifier}
+                    bonus={props.savingThrowBonus}
                 />
                 <AbilityCheck
                     key={`${props.name} saving throw`}
@@ -33,7 +35,8 @@ const AbilityTile = (props) => {
                     skill={false}
                     modalTitle={abilityModalTitle}
                     score={props.score}
-                    modifier={calculateModifier(props.score)}
+                    modifier={props.savingThrow}
+                    bonus={props.savingThrowBonus}
                     checkable={true}
                     checked={props.savingThrowProficiency}
                 />
@@ -41,11 +44,14 @@ const AbilityTile = (props) => {
             {props.skills &&
                 props.skills.map((skill, i) => (
                     <AbilityCheck
-                        key={`${props.name} ability ${i}`}
-                        name={skill}
+                        key={skill.name}
+                        id={i}
+                        name={skill.name}
                         skill={true}
-                        value={calculateModifier(props.score)}
+                        modifier={skill.score}
+                        bonus={skill.bonus}
                         checkable={true}
+                        checked={skill.proficiency}
                     />
                 ))}
         </Flex>

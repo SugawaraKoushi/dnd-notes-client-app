@@ -1,12 +1,13 @@
 import { Flex, Form, InputNumber, Modal } from "antd";
 import { capitalize } from "../services/StringHelper";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AbilityContext } from "./AbilityContext";
 
 const AbilityModal = (props) => {
     const [showPrefix, setShowPrefix] = useState(true);
-    const { onScoreChange } = useContext(AbilityContext);
-    let plusPrefix = showPrefix && props.modifier > 0 ? "+" : <span />;
+    const { onScoreChange, onSavingThrowBonusChange } =
+        useContext(AbilityContext);
+    let plusPrefix = showPrefix && props.bonus > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
         setShowPrefix(false);
@@ -18,6 +19,10 @@ const AbilityModal = (props) => {
 
     const handleScoreChange = (value) => {
         onScoreChange(value);
+    };
+
+    const handleSavingThrowBonusChange = (value) => {
+        onSavingThrowBonusChange(value);
     };
 
     return (
@@ -47,7 +52,7 @@ const AbilityModal = (props) => {
                             onChange={(value) => handleScoreChange(value)}
                         />
                     </Form.Item>
-                    <Form.Item name="bonus" initialValue={0}>
+                    <Form.Item name="bonus" initialValue={props.bonus}>
                         <InputNumber
                             style={{ width: "auto" }}
                             placeholder="Бонус к спасброску"
@@ -59,6 +64,9 @@ const AbilityModal = (props) => {
                             min={-30}
                             max={30}
                             prefix={plusPrefix}
+                            onChange={(value) =>
+                                handleSavingThrowBonusChange(value)
+                            }
                         />
                     </Form.Item>
                 </Flex>

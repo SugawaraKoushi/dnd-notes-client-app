@@ -4,35 +4,117 @@ import { useOutletContext } from "react-router";
 import AbilityTile from "./AbilityTile";
 import CharacterHeader from "./CharacterHeader";
 import { AbilityContext } from "./AbilityContext";
-import Character from "../../entity/Character";
+import Character from "../../model/Character";
+import { calculateModifier } from "../services/ModifierService";
 
 const NewCharacterPage = () => {
     const [setBreadcrumbItems] = useOutletContext();
     const [character, setCharacter] = useState(new Character());
 
-    const handleStrengthScoreChange = (value) => {
-        setCharacter({ ...character, strength: value });
-    };
+    //#region Сила
 
-    const handleStrengthSavingThrowProficiencyChange = () => {
+    const handleStrengthScoreChange = (score) => {
+        const athletics =
+            calculateModifier(score) +
+            character.athleticsBonus +
+            (character.athleticsProficiency ? character.proficiencyBonus : 0);
+        const savingThrow =
+            calculateModifier(score) +
+            character.strengthSavingThrowBonus +
+            (character.strengthSavingThrowProficiency
+                ? character.proficiencyBonus
+                : 0);
+
         setCharacter({
             ...character,
-            strengthSavingThrowProficiency:
-                !character.strengthSavingThrowProficiency,
+            strength: score,
+            strengthSavingThrow: savingThrow,
+            athletics: athletics,
         });
     };
 
+    const handleStrengthSavingThrowProficiencyChange = () => {
+        const proficiency = !character.strengthSavingThrowProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            strengthSavingThrowProficiency: proficiency,
+            strengthSavingThrow:
+                character.strengthSavingThrow + k * character.proficiencyBonus,
+        });
+    };
+
+    const handleStrengthSavingThrowBonusChange = (bonus) => {
+        const savingThrow =
+            character.strengthSavingThrow -
+            character.strengthSavingThrowBonus +
+            bonus;
+
+        setCharacter({
+            ...character,
+            strengthSavingThrow: savingThrow,
+            strengthSavingThrowBonus: bonus,
+        });
+    };
+
+    const handleAthleticsProficiencyChange = () => {
+        const proficiency = !character.athleticsProficiency;
+        let k = proficiency ? 1 : -1;
+
+        setCharacter({
+            ...character,
+            athleticsProficiency: proficiency,
+            athletics: character.athletics + k * character.proficiencyBonus,
+        });
+        const ch = character;
+    };
+
+    const handleAthleticsBonusChange = (bonus) => {
+        const athletics =
+            character.athletics - character.athleticsBonus + bonus;
+        console.log(bonus);
+        console.log(athletics);
+
+        setCharacter({
+            ...character,
+            athletics: athletics,
+            athleticsBonus: bonus,
+        });
+    };
+
+    const strengthSkills = [
+        {
+            name: "атлетика",
+            score: character.athletics,
+            bonus: character.athleticsBonus,
+            proficiency: character.athleticsProficiency,
+        },
+    ];
+
+    //#endregion Сила
+
+    //#region Ловкость
+
     const handleDexterityValueChange = (value) => {
-        setCharacter({ ...character, strength: value });
+        setCharacter({ ...character, dexterity: value });
     };
 
     const handleDexteritySavingThrowProficiencyChange = () => {
         setCharacter({
             ...character,
-            strengthSavingThrowProficiency:
-                !character.strengthSavingThrowProficiency,
+            dexteritySavingThrowProficiency:
+                !character.dexteritySavingThrowProficiency,
         });
     };
+
+    const dexteritySkills = [
+        { name: "акробатика", bonus: character.acrobaticsBonus },
+        { name: "ловкость рук", bonus: character.sleightOfHandBonus },
+        { name: "скрытность", bonus: character.stealthBonus },
+    ];
+
+    //#endregion Ловкость
 
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
@@ -78,8 +160,6 @@ const NewCharacterPage = () => {
         </Form.Item>,
     ];
 
-    const strengthSkills = ["атлетика"];
-    const dexteritySkills = ["акробатика", "ловкость рук", "скрытность"];
     const intelligenceSkills = [
         "анализ",
         "история",
@@ -113,7 +193,20 @@ const NewCharacterPage = () => {
                         <AbilityContext.Provider
                             value={{
                                 onScoreChange: handleStrengthScoreChange,
-                                onSavingThrowProficiencyChange: handleStrengthSavingThrowProficiencyChange
+                                onSavingThrowProficiencyChange:
+                                    handleStrengthSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleStrengthSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    if (index === 0) {
+                                        handleAthleticsProficiencyChange();
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    if (index === 0) {
+                                        handleAthleticsBonusChange(bonus);
+                                    }
+                                },
                             }}
                         >
                             <AbilityTile
@@ -121,13 +214,17 @@ const NewCharacterPage = () => {
                                 id="strength"
                                 name="сила"
                                 score={character.strength}
-                                skills={strengthSkills}
+                                savingThrow={character.strengthSavingThrow}
                                 savingThrowProficiency={
                                     character.strengthSavingThrowProficiency
                                 }
+                                savingThrowBonus={
+                                    character.strengthSavingThrowBonus
+                                }
+                                skills={strengthSkills}
                             />
                         </AbilityContext.Provider>
-                        <AbilityTile
+                        {/* <AbilityTile
                             key="dexterity"
                             id="dexterity"
                             name="ловкость"
@@ -160,7 +257,7 @@ const NewCharacterPage = () => {
                             name="харизма"
                             score={character.charisma}
                             skills={charismaSkills}
-                        />
+                        /> */}
                     </Flex>
                     <Flex className="abilities">Текст</Flex>
                 </Flex>

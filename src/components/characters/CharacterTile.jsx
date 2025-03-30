@@ -27,7 +27,7 @@ const CharacterTile = (props) => {
                 <Avatar
                     size={70}
                     shape="square"
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    src="https://avatarko.ru/img/kartinka/1/Crazy_Frog.jpg"
                     style={{ margin: "0 10px 0 0", padding: 0 }}
                 />
                 <Flex vertical style={{ maxWidth: "242px", width: "100%" }}>

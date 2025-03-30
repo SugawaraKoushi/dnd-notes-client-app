@@ -7,9 +7,9 @@ import AbilityModal from "./AbilityModal";
 import { AbilityContext } from "./AbilityContext";
 
 const AbilityCheck = (props) => {
-    const { onSavingThrowProficiencyChange } = useContext(AbilityContext);
+    const { onSavingThrowProficiencyChange, onSkillProficiencyChange } =
+        useContext(AbilityContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const modifier = props.checked ? props.modifier + 2 : props.modifier;
 
     const labelClassName = props.skill
         ? "ability-check-label"
@@ -27,7 +27,11 @@ const AbilityCheck = (props) => {
     };
 
     const handleProficiencyChange = () => {
-        onSavingThrowProficiencyChange();
+        if (props.skill) {
+            onSkillProficiencyChange(props.id);
+        } else {
+            onSavingThrowProficiencyChange();
+        }
     };
 
     return (
@@ -54,15 +58,16 @@ const AbilityCheck = (props) => {
                     </Link>
                 </Flex>
                 <Button className="ability-check-button">
-                    {modifierAsString(modifier)}
+                    {modifierAsString(props.modifier)}
                 </Button>
             </Flex>
             {props.skill ? (
                 <SkillModal
+                    id={props.id}
                     title={props.name}
                     open={isModalOpen}
                     onClose={handleModalClose}
-                    modifier={props.modifier}
+                    bonus={props.bonus}
                 />
             ) : (
                 <AbilityModal
@@ -71,6 +76,7 @@ const AbilityCheck = (props) => {
                     onClose={handleModalClose}
                     score={props.score}
                     modifier={props.modifier}
+                    bonus={props.bonus}
                 />
             )}
         </>
