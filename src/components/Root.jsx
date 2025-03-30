@@ -8,13 +8,13 @@ const Root = () => {
     const navigate = useNavigate();
 
     const items = [
-        {
-            key: "/campaigns/list",
-            label: <Link to="/campaigns/list">Кампании</Link>,
-        },
+        // {
+        //     key: "/campaigns/list",
+        //     label: <Link to="/campaigns/list">Кампании</Link>,
+        // },
         {
             key: "/characters/list",
-            label: <Link to="/characters/list">Персонажи</Link>,
+            label: <Link to="/characters/list">Мои персонажи</Link>,
         },
     ];
 

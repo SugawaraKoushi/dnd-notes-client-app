@@ -5,6 +5,9 @@ import CharacterHeader from "./CharacterHeader";
 import { AbilityContext } from "./AbilityContext";
 import Character from "../../model/Character";
 import { calculateModifier } from "../services/ModifierService";
+import PassiveAbilityTile from "./PassiveAbilityTile";
+import TextBlock from "./TextBlock";
+import StatusTracker from "./StatusTracker";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -307,6 +310,7 @@ const NewCharacterPage = () => {
             modifier +
             character.religionBonus +
             (character.religionProficiency ? character.proficiencyBonus : 0);
+        const investigationPassive = 10 + investigation;
 
         const savingThrow =
             modifier +
@@ -324,6 +328,7 @@ const NewCharacterPage = () => {
             arcana: arcana,
             nature: nature,
             religion: religion,
+            investigationPassive: investigationPassive,
         });
     };
 
@@ -362,6 +367,8 @@ const NewCharacterPage = () => {
             investigationProficiency: proficiency,
             investigation:
                 character.investigation + k * character.proficiencyBonus,
+            investigationPassive:
+                character.investigationPassive + k * character.proficiencyBonus,
         });
     };
 
@@ -373,6 +380,7 @@ const NewCharacterPage = () => {
             ...character,
             investigation: value,
             investigationBonus: bonus,
+            investigationPassive: 10 + value,
         });
     };
 
@@ -521,6 +529,8 @@ const NewCharacterPage = () => {
             (character.animalHandlingProficiency
                 ? character.proficiencyBonus
                 : 0);
+        const perceptionPassive = 10 + perception;
+        const insightPassive = 10 + insight;
 
         const savingThrow =
             modifier +
@@ -538,6 +548,8 @@ const NewCharacterPage = () => {
             medicine: medicine,
             insight: insight,
             animalHandling: animalHandling,
+            perceptionPassive: perceptionPassive,
+            insightPassive: insightPassive,
         });
     };
 
@@ -574,6 +586,8 @@ const NewCharacterPage = () => {
             ...character,
             perceptionProficiency: proficiency,
             perception: character.perception + k * character.proficiencyBonus,
+            perceptionPassive:
+                character.perceptionPassive + k * character.proficiencyBonus,
         });
     };
 
@@ -584,6 +598,7 @@ const NewCharacterPage = () => {
             ...character,
             perception: value,
             perceptionBonus: bonus,
+            perceptionPassive: 10 + value,
         });
     };
 
@@ -637,6 +652,8 @@ const NewCharacterPage = () => {
             ...character,
             insightProficiency: proficiency,
             insight: character.insight + k * character.proficiencyBonus,
+            insightPassive:
+                character.insightPassive + k * character.proficiencyBonus,
         });
     };
 
@@ -647,6 +664,7 @@ const NewCharacterPage = () => {
             ...character,
             insight: value,
             insightBonus: bonus,
+            insightPassive: 10 + value,
         });
     };
 
@@ -889,6 +907,16 @@ const NewCharacterPage = () => {
     ];
 
     //#endregion Харизма
+
+    //#region Пассивные чувства
+
+    const passiveSkills = [
+        { name: "восприятие", score: character.perceptionPassive },
+        { name: "проницательность", score: character.insightPassive },
+        { name: "анализ", score: character.investigationPassive },
+    ];
+
+    //#endregion Пассивные чувства
 
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
@@ -1259,8 +1287,12 @@ const NewCharacterPage = () => {
                                 skills={charismaSkills}
                             />
                         </AbilityContext.Provider>
+                        <PassiveAbilityTile skills={passiveSkills} />
                     </Flex>
-                    <Flex className="abilities">Текст</Flex>
+                    <Flex vertical className="abilities">
+                        <StatusTracker />
+                        <TextBlock />
+                    </Flex>
                 </Flex>
             </Form>
         </>

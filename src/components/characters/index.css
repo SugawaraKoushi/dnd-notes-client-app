@@ -10,6 +10,10 @@
     .ability-tile {
         width: 99%;
     }
+
+    .passive-ability-tile {
+        width: 99%;
+    }
 }
 
 .abilities {
@@ -18,7 +22,7 @@
 
 @media (min-width: 1200px) {
     .abilities {
-        height: 777px;
+        height: 700px;
         width: 572px;
         overflow: auto;
     }
@@ -46,6 +50,11 @@
 
     #wisdom {
         order: 6;
+    }
+
+    .passive-ability-tile {
+        width: 48%;
+        order: 7;
     }
 }
 
@@ -75,10 +84,22 @@
     margin-right: 18px;
 }
 
+.passive-ability-check {
+    margin-bottom: 2px;
+}
+
 .ability-check-wrap {
     max-height: 24px;
     width: 100%;
     border-radius: 6px 0 0 6px;
+    border: 1px solid #d9d9d9;
+    padding: 4px 0;
+}
+
+.ability-check-wrap-reversed {
+    max-height: 24px;
+    width: 100%;
+    border-radius: 0 6px 6px 0;
     border: 1px solid #d9d9d9;
     padding: 4px 0;
 }
@@ -105,8 +126,18 @@
     margin-left: -1px;
     font-weight: 700;
     font-size: 19px;
-    max-width: 42.94px;
+    max-width: 43px;
     max-height: 32px;
+}
+
+.ability-check-button-reversed {
+    margin-right: -1px;
+    font-weight: 700;
+    font-size: 19px;
+    max-width: 43px;
+    max-height: 32px;
+    color: #000000 !important;
+    background: #ffffff !important;
 }
 
 .ability-check-checkbox-small {
@@ -131,4 +162,28 @@
     border-radius: 8px;
     border: 1px solid #f0f0f0;
     padding: 10px 8px 10px 14px;
+}
+
+.inspire-checkbox {
+    padding: 4px calc(59% - 16px);
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+}
+
+.inspire-checkbox * input {
+    border: none;
+}
+
+.status-tracker-item {
+    width: 58%;
+}
+
+.status-tracker-item-small {
+    width: 14%;
+}
+
+.small-description {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
 }

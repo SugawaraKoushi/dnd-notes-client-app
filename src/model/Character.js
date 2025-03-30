@@ -1,3 +1,5 @@
+import { calculateModifier } from "../components/services/ModifierService";
+
 class Character {
     constructor() {
         this.level = 1;
@@ -97,6 +99,11 @@ class Character {
         this.intimidationBonus = 0; // Запугивание
         this.performanceBonus = 0; // Выступление
         this.persuasionBonus = 0; // Убеждение
+
+        // Пасивные чувства
+        this.perceptionPassive = 10 + this.perception;
+        this.insightPassive = 10 + this.insight;
+        this.investigationPassive = 10 + this.investigation;
     }
 }
 
