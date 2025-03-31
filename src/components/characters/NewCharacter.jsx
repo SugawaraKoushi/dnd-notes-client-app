@@ -1,4 +1,4 @@
-import { Flex, Form, Input, InputNumber, Select } from "antd";
+import { Flex, Form, Input, InputNumber, Select, Grid } from "antd";
 import { useState } from "react";
 import AbilityTile from "./AbilityTile";
 import CharacterHeader from "./CharacterHeader";
@@ -12,6 +12,11 @@ import { StatusTrackerContext } from "./context/StatusTrackerContext";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
+    const { useBreakpoint } = Grid;
+    const screens = useBreakpoint();
+    const isVertical = screens.xl;
+
+
 
     //#region Сила
 
@@ -933,6 +938,13 @@ const NewCharacterPage = () => {
         });
     };
 
+    const handleExhaustChange = (value) => {
+        setCharacter({
+            ...character,
+            exhausted: value,
+        });
+    };
+
     //#endregion Прочее
 
     const sex = [
@@ -994,7 +1006,7 @@ const NewCharacterPage = () => {
                 gap="small"
             >
                 {/* <Flex justify="space-between" gap="small"> */}
-                <Flex vertical wrap className="abilities" gap="small">
+                <Flex vertical={isVertical} wrap className="abilities" gap="small">
                     <AbilityContext.Provider
                         value={{
                             onScoreChange: handleStrengthScoreChange,
@@ -1302,6 +1314,7 @@ const NewCharacterPage = () => {
                     <StatusTrackerContext.Provider
                         value={{
                             onInspirationChange: handleInspirationChange,
+                            onExhaustChange: handleExhaustChange,
                         }}
                     >
                         <StatusTracker

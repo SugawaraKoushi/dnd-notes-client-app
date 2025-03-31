@@ -4,16 +4,17 @@ import { useContext } from "react";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 
 const StatusTracker = (props) => {
-    const { onInspirationChange } = useContext(StatusTrackerContext);
+    const { onInspirationChange, onExhaustChange } =
+        useContext(StatusTrackerContext);
 
     const exhaustingLevels = [
-        { key: 1, label: <span>0</span> },
-        { key: 2, label: <span>1</span> },
-        { key: 3, label: <span>2</span> },
-        { key: 4, label: <span>3</span> },
-        { key: 5, label: <span>4</span> },
-        { key: 6, label: <span>5</span> },
-        { key: 7, label: <span>6</span> },
+        { key: 1, label: <span>0</span>, onClick: () => onExhaustChange(0) },
+        { key: 2, label: <span>1</span>, onClick: () => onExhaustChange(1) },
+        { key: 3, label: <span>2</span>, onClick: () => onExhaustChange(2) },
+        { key: 4, label: <span>3</span>, onClick: () => onExhaustChange(3) },
+        { key: 5, label: <span>4</span>, onClick: () => onExhaustChange(4) },
+        { key: 6, label: <span>5</span>, onClick: () => onExhaustChange(5) },
+        { key: 7, label: <span>6</span>, onClick: () => onExhaustChange(6) },
     ];
 
     const handleInspirationChange = () => {
@@ -42,14 +43,22 @@ const StatusTracker = (props) => {
                 <label className="small-description">вдохновение</label>
             </Flex>
             <Flex className="status-tracker-item-small" vertical align="center">
-                <Dropdown menu={{ items: exhaustingLevels }} placement="bottom">
-                    <Button style={{ width: "100%" }}>{props.exhausted}</Button>
+                <Dropdown
+                    menu={{ items: exhaustingLevels }}
+                    placement="bottom"
+                    trigger={["click"]}
+                >
+                    <Button id="exhaust-button">{props.exhausted}</Button>
                 </Dropdown>
                 <span className="small-description">истощение</span>
             </Flex>
             <Flex className="status-tracker-item" vertical align="center">
-                <Button style={{ width: "100%" }}>-</Button>
-                <span className="small-description">состояния</span>
+                <Button style={{ width: "100%", height: "44px" }}>
+                    <Flex vertical>
+                        <p style={{ padding: 0, margin: 0 }}>-</p>
+                        <span className="small-description">состояния</span>
+                    </Flex>
+                </Button>
             </Flex>
         </Flex>
     );
