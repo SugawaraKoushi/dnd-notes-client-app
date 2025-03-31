@@ -9,14 +9,13 @@ import PassiveAbilityTile from "./PassiveAbilityTile";
 import TextBlock from "./TextBlock";
 import StatusTracker from "./StatusTracker";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
+import Notification from "../notification/Notification";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
     const { useBreakpoint } = Grid;
     const screens = useBreakpoint();
     const isVertical = screens.xl;
-
-
 
     //#region Сила
 
@@ -1006,7 +1005,12 @@ const NewCharacterPage = () => {
                 gap="small"
             >
                 {/* <Flex justify="space-between" gap="small"> */}
-                <Flex vertical={isVertical} wrap className="abilities" gap="small">
+                <Flex
+                    vertical={isVertical}
+                    wrap
+                    className="abilities"
+                    gap="small"
+                >
                     <AbilityContext.Provider
                         value={{
                             onScoreChange: handleStrengthScoreChange,
@@ -1324,6 +1328,7 @@ const NewCharacterPage = () => {
                         />
                     </StatusTrackerContext.Provider>
                     <TextBlock />
+                    <Notification />
                 </Flex>
                 {/* </Flex> */}
             </Flex>

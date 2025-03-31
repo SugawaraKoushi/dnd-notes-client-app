@@ -1,7 +1,3 @@
-.ability-tile {
-    width: 100%;
-}
-
 @media (min-width: 768px) {
     .abilities {
         height: 100%;
@@ -121,7 +117,6 @@
 }
 
 .ability-check-label {
-    font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 12px;
     margin: 0 10px;
@@ -130,7 +125,6 @@
 }
 
 .ability-check-label-small {
-    font-family: "Open Sans", sans-serif;
     font-weight: 700;
     font-size: 9px;
     margin: 0 4px;
@@ -192,6 +186,9 @@
 
 .status-tracker-item-small {
     min-width: 72px;
+}
+
+.status-tracker-item {
 }
 
 .small-description {
