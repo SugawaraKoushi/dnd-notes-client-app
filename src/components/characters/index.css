@@ -5,6 +5,12 @@
 @media (min-width: 860px) {
     .abilities {
         height: 100%;
+        width: 25%;
+        overflow: auto;
+    }
+
+    .character-content {
+        width: 75%;
     }
 
     .ability-tile {
@@ -14,14 +20,15 @@
     .passive-ability-tile {
         width: 99%;
     }
-}
 
-.abilities {
-    overflow: auto;
+    .status-tracker-item {
+        width: 75%;
+    }
 }
 
 @media (min-width: 1200px) {
-    .abilities {
+    .abilities,
+    .character-content {
         height: 700px;
         width: 572px;
         overflow: auto;
@@ -55,6 +62,10 @@
     .passive-ability-tile {
         width: 48%;
         order: 7;
+    }
+
+    .status-tracker-item {
+        width: 58%;
     }
 }
 
@@ -174,16 +185,18 @@
     border: none;
 }
 
-.status-tracker-item {
-    width: 58%;
-}
-
 .status-tracker-item-small {
-    width: 14%;
+    min-width: 72px;
 }
 
 .small-description {
     font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
+}
+
+#initiative-button {
+    font-weight: 700;
+    font-size: 19px;
+    width: 100%;
 }

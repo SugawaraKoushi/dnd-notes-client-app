@@ -3,8 +3,8 @@ import { calculateModifier } from "../components/services/ModifierService";
 class Character {
     constructor() {
         this.level = 1;
-        this.name = "Безымянный";
-
+        this.name = "Безымянный персонаж";
+        
         // Характеристики
         this.strength = 10;
         this.dexterity = 10;
@@ -12,6 +12,15 @@ class Character {
         this.intelligence = 10;
         this.wisdom = 10;
         this.charisma = 10;
+
+        // Инициатива
+        this.initiative = calculateModifier(this.dexterity);
+
+        // Истощение
+        this.exhausted = 0;
+
+        // Вдохновение
+        this.inspiration = false;
 
         // Бонус мастерства
         this.proficiencyBonus = 2 + Math.floor(this.level / 4);
