@@ -8,9 +8,13 @@ const Notification = (props) => {
         <Flex className="notification-item">
             <Flex className="notification-info" vertical align="flex-start">
                 <Title className="notification-title" level={5}>
-                    <span className="notification-title highlighted">проверка</span> харизмы
+                    <span className="notification-title highlighted">
+                        проверка
+                    </span>{" "}
+                    харизмы
                 </Title>
-                <span>(15)+5</span>
+                <span className="notification-result-details">(15)+5</span>
+                <span className="notification-result-dice">(1к20)+5</span>
             </Flex>
             <span className="notification-result">15</span>
         </Flex>

@@ -10,6 +10,8 @@ import TextBlock from "./TextBlock";
 import StatusTracker from "./StatusTracker";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import Notification from "../notification/Notification";
+import NotificationShort from "../notification/NotificationShort";
+import NotificationStack from "../notification/NotificationStack";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -999,12 +1001,9 @@ const NewCharacterPage = () => {
             <Flex
                 className="content-layout"
                 style={{ lineHeight: "inherit" }}
-                // name="character"
-                // layout="vertical"
                 justify="space-between"
                 gap="small"
             >
-                {/* <Flex justify="space-between" gap="small"> */}
                 <Flex
                     vertical={isVertical}
                     wrap
@@ -1328,10 +1327,9 @@ const NewCharacterPage = () => {
                         />
                     </StatusTrackerContext.Provider>
                     <TextBlock />
-                    <Notification />
                 </Flex>
-                {/* </Flex> */}
             </Flex>
+            <NotificationStack />
         </>
     );
 };
