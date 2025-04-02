@@ -41,8 +41,8 @@ const AbilityCheck = (props) => {
     const handleRollButtonClick = () => {
         let value = rollD20();
         let result = {
+            type: props.name,
             value: value,
-            valueWithModifier: value + props.modifier,
             modifier: props.modifier,
         };
         onRollButtonClick(result);

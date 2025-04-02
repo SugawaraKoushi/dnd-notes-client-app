@@ -11,6 +11,7 @@ import StatusTracker from "./StatusTracker";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import NotificationStack from "../notification/NotificationStack";
 import "./index.css";
+import Notification from "../notification/Notification";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -950,13 +951,16 @@ const NewCharacterPage = () => {
 
     const handleRollButtonClick = (value) => {
         // setIsNotificationStackVisible(true);
-        console.log(value);
+        setNotifications((prev) => {
+            const updatedNotifications = [...prev, value].slice(-5);
+            return updatedNotifications;
+        });
     };
 
     const handleNotificationStackCloseButtonClick = () => {
         // setIsNotificationStackVisible(false);
         setNotifications([]);
-    }
+    };
 
     //#endregion Прочее
 
@@ -1342,7 +1346,11 @@ const NewCharacterPage = () => {
                     <TextBlock />
                 </Flex>
             </Flex>
-            <NotificationStack open={isNotificationStackVisible} onClose={handleNotificationStackCloseButtonClick}/>
+            <NotificationStack
+                open={isNotificationStackVisible}
+                onClose={handleNotificationStackCloseButtonClick}
+                items={notifications}
+            />
         </>
     );
 };

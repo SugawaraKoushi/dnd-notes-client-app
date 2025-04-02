@@ -73,3 +73,59 @@
     left: 20px;
     z-index: 101;
 }
+
+.notification-item {
+    opacity: 0;
+    transform: translateY(130%);
+    animation: slideInMain 0.2s 0.2s forwards;
+}
+
+@keyframes slideInMain {
+    0% {
+        opacity: 0;
+        transform: translateY(130%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-item-short {
+    animation: slideInSub 0.2s forwards;
+}
+
+@keyframes slideInSub {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.notification-stack-button {
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    bottom: 20px;
+    left: 410px;
+    border: 1px solid #d9d9d9;
+    opacity: 0;
+    transform: translateY(130%);
+    animation: slideInControl 0.5s 0.2s forwards;
+}
+
+@keyframes slideInControl {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
