@@ -1,6 +1,7 @@
 import { Breadcrumb, theme } from "antd";
 import { useState } from "react";
 import { Outlet } from "react-router";
+import "./index.css";
 
 const Characters = () => {
     const {

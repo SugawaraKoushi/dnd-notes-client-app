@@ -1,10 +1,10 @@
 import { Flex, Typography } from "antd";
-import "./index.css";
 import AbilityCheck from "./AbilityCheck";
 import {
     calculateModifier,
     calculateModifierAsString,
-} from "../services/ModifierService";
+} from "../../services/ModifierService";
+import "./index.css";
 
 const AbilityTile = (props) => {
     const { Title } = Typography;

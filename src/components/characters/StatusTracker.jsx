@@ -2,6 +2,7 @@ import { Button, Checkbox, Dropdown, Flex } from "antd";
 import { modifierAsString } from "../services/ModifierService";
 import { useContext } from "react";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
+import "./index.css";
 
 const StatusTracker = (props) => {
     const { onInspirationChange, onExhaustChange } =

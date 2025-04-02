@@ -1,17 +1,16 @@
 import { Flex, Form, Input, InputNumber, Select, Grid } from "antd";
 import { useState } from "react";
-import AbilityTile from "./AbilityTile";
+import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
-import { AbilityContext } from "./AbilityContext";
+import { AbilityContext } from "./context/AbilityContext";
 import Character from "../../model/Character";
 import { calculateModifier } from "../services/ModifierService";
-import PassiveAbilityTile from "./PassiveAbilityTile";
+import PassiveAbilityTile from "./abilities/PassiveAbilityTile";
 import TextBlock from "./TextBlock";
 import StatusTracker from "./StatusTracker";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
-import Notification from "../notification/Notification";
-import NotificationShort from "../notification/NotificationShort";
 import NotificationStack from "../notification/NotificationStack";
+import "./index.css";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());

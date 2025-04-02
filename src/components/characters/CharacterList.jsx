@@ -3,6 +3,7 @@ import CharacterTile from "./CharacterTile";
 import { PlusOutlined } from "@ant-design/icons";
 import { useOutletContext } from "react-router";
 import { useEffect } from "react";
+import "./index.css";
 
 const CharacterList = () => {
     const characters = [

@@ -1,7 +1,8 @@
 import { Form, InputNumber, Modal } from "antd";
 import { capitalize } from "../services/StringHelper";
 import { useContext, useState } from "react";
-import { AbilityContext } from "./AbilityContext";
+import { AbilityContext } from "./context/AbilityContext";
+import "./index.css";
 
 const SkillModal = (props) => {
     const [showPrefix, setShowPrefix] = useState(true);

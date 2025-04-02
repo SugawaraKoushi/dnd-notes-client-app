@@ -1,6 +1,7 @@
 import { Flex, Typography } from "antd";
 import PassiveAbilityCheck from "./PassiveAbilityCheck";
-import TextBlock from "./TextBlock";
+import TextBlock from "../TextBlock";
+import "./index.css";
 
 const PassiveAbilityTile = (props) => {
     const { Title } = Typography;

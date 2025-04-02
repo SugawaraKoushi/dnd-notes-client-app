@@ -1,5 +1,6 @@
 import { Avatar, Flex, Typography } from "antd";
 import { Link } from "react-router";
+import "./index.css";
 
 const CharacterTile = (props) => {
     const { Title } = Typography;

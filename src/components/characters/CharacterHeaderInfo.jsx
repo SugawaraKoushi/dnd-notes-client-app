@@ -1,5 +1,6 @@
 import { Avatar, Flex, Typography } from "antd";
 import { capitalize } from "../services/StringHelper";
+import "./index.css";
 
 const CharacterHeaderInfo = (props) => {
     const { Title } = Typography;

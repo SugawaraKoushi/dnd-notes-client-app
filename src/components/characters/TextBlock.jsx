@@ -1,4 +1,5 @@
 import { Flex, Input, Typography } from "antd";
+import "./index.css";
 
 const TextBlock = () => {
     const { Title } = Typography;

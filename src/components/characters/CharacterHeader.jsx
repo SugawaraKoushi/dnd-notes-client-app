@@ -1,6 +1,7 @@
 import { Checkbox, Flex } from "antd";
 import CharacterHeaderInfo from "./CharacterHeaderInfo";
 import { modifierAsString } from "../services/ModifierService";
+import "./index.css";
 
 const CharacterHeader = (props) => {
     return (

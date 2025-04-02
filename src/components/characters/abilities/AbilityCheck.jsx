@@ -1,10 +1,11 @@
 import { Button, Checkbox, Flex } from "antd";
 import { useContext, useState } from "react";
 import { Link } from "react-router";
-import { modifierAsString } from "../services/ModifierService";
-import SkillModal from "./SkillModal";
+import { modifierAsString } from "../../services/ModifierService";
+import { AbilityContext } from "../context/AbilityContext";
 import AbilityModal from "./AbilityModal";
-import { AbilityContext } from "./AbilityContext";
+import SkillModal from "../SkillModal";
+
 
 const AbilityCheck = (props) => {
     const { onSavingThrowProficiencyChange, onSkillProficiencyChange } =
