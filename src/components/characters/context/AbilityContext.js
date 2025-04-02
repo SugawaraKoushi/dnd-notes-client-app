@@ -7,5 +7,7 @@ export const AbilityContext = createContext({
     onSavingThrowBonusChange: () => {},
 
     onSkillProficiencyChange: (index) => {},
-    onSkillBonusChange: (index, bonus) => {}
+    onSkillBonusChange: (index, bonus) => {},
+
+    onRollButtonClick: (result) => {},
 });

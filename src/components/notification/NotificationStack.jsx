@@ -2,17 +2,17 @@ import { Flex, FloatButton } from "antd";
 import Notification from "./Notification";
 import NotificationShort from "./NotificationShort";
 import { CloseOutlined } from "@ant-design/icons";
-import { useState } from "react";
 
 const NotificationStack = (props) => {
-    const [notifications, setNotifications] = useState(props.items);
+    const { onClose, items } = props;
 
     const handleCloseButtonClick = () => {
-        setNotifications([]);
+        onClose();
     };
 
     return (
-        notifications && notifications.length > 0 && (
+        props.items &&
+        props.items.length > 0 && (
             <Flex className="notification-stack" vertical>
                 <NotificationShort />
                 <NotificationShort />

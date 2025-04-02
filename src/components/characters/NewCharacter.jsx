@@ -14,6 +14,9 @@ import "./index.css";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
+    const [isNotificationStackVisible, setIsNotificationStackVisible] =
+        useState(true);
+    const [notifications, setNotifications] = useState([]);
     const { useBreakpoint } = Grid;
     const screens = useBreakpoint();
     const isVertical = screens.xl;
@@ -291,7 +294,7 @@ const NewCharacterPage = () => {
         });
     };
 
-    //#endRegion Телосложение
+    //#endregion Телосложение
 
     //#region Интеллект
 
@@ -510,7 +513,7 @@ const NewCharacterPage = () => {
         },
     ];
 
-    //#endRegion Интеллект
+    //#endregion Интеллект
 
     //#region Мудрость
 
@@ -733,7 +736,7 @@ const NewCharacterPage = () => {
         },
     ];
 
-    //#endRegion Мудрость
+    //#endregion Мудрость
 
     //#region Харизма
 
@@ -945,6 +948,16 @@ const NewCharacterPage = () => {
         });
     };
 
+    const handleRollButtonClick = (value) => {
+        // setIsNotificationStackVisible(true);
+        console.log(value);
+    };
+
+    const handleNotificationStackCloseButtonClick = () => {
+        // setIsNotificationStackVisible(false);
+        setNotifications([]);
+    }
+
     //#endregion Прочее
 
     const sex = [
@@ -1026,6 +1039,7 @@ const NewCharacterPage = () => {
                                     handleAthleticsBonusChange(bonus);
                                 }
                             },
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <AbilityTile
@@ -1328,7 +1342,7 @@ const NewCharacterPage = () => {
                     <TextBlock />
                 </Flex>
             </Flex>
-            <NotificationStack />
+            <NotificationStack open={isNotificationStackVisible} onClose={handleNotificationStackCloseButtonClick}/>
         </>
     );
 };

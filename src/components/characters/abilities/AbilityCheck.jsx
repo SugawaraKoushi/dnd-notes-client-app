@@ -5,11 +5,14 @@ import { modifierAsString } from "../../services/ModifierService";
 import { AbilityContext } from "../context/AbilityContext";
 import AbilityModal from "./AbilityModal";
 import SkillModal from "../SkillModal";
-
+import { rollD20 } from "../../services/RollDiceService";
 
 const AbilityCheck = (props) => {
-    const { onSavingThrowProficiencyChange, onSkillProficiencyChange } =
-        useContext(AbilityContext);
+    const {
+        onSavingThrowProficiencyChange,
+        onSkillProficiencyChange,
+        onRollButtonClick,
+    } = useContext(AbilityContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const labelClassName = props.skill
@@ -35,6 +38,16 @@ const AbilityCheck = (props) => {
         }
     };
 
+    const handleRollButtonClick = () => {
+        let value = rollD20();
+        let result = {
+            value: value,
+            valueWithModifier: value + props.modifier,
+            modifier: props.modifier,
+        };
+        onRollButtonClick(result);
+    };
+
     return (
         <>
             <Flex
@@ -58,7 +71,10 @@ const AbilityCheck = (props) => {
                         {props.name.toUpperCase()}
                     </Link>
                 </Flex>
-                <Button className="ability-check-button">
+                <Button
+                    className="ability-check-button"
+                    onClick={handleRollButtonClick}
+                >
                     {modifierAsString(props.modifier)}
                 </Button>
             </Flex>
