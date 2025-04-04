@@ -3,9 +3,10 @@ import { modifierAsString } from "../services/ModifierService";
 import { useContext } from "react";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import "./index.css";
+import { rollDice } from "../services/RollDiceService";
 
 const StatusTracker = (props) => {
-    const { onInspirationChange, onExhaustChange } =
+    const { onInspirationChange, onExhaustChange, onRollButtonClick } =
         useContext(StatusTrackerContext);
 
     const exhaustingLevels = [
@@ -17,6 +18,23 @@ const StatusTracker = (props) => {
         { key: 6, label: <span>5</span>, onClick: () => onExhaustChange(5) },
         { key: 7, label: <span>6</span>, onClick: () => onExhaustChange(6) },
     ];
+
+    const handleIniativeButtonClick = () => {
+        let dice = 20;
+        let times = 1;
+        let value = rollDice(times, dice);
+
+        let result = {
+            type: "проверка",
+            value: value,
+            modifier: props.initiative,
+            dice: dice,
+            times: times,
+            ability: "инициативы",
+        };
+
+        onRollButtonClick(result);
+    };
 
     const handleInspirationChange = () => {
         onInspirationChange();
@@ -30,7 +48,10 @@ const StatusTracker = (props) => {
             style={{ width: "100%" }}
         >
             <Flex className="status-tracker-item-small" vertical align="center">
-                <Button id="initiative-button">
+                <Button
+                    id="initiative-button"
+                    onClick={handleIniativeButtonClick}
+                >
                     {modifierAsString(props.initiative)}
                 </Button>
                 <span className="small-description">инициатива</span>

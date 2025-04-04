@@ -1359,6 +1359,7 @@ const NewCharacterPage = () => {
                         value={{
                             onInspirationChange: handleInspirationChange,
                             onExhaustChange: handleExhaustChange,
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <StatusTracker
