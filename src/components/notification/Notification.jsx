@@ -4,6 +4,8 @@ import { modifierAsString } from "../services/ModifierService";
 
 const Notification = (props) => {
     const { Title } = Typography;
+    const modifier =
+        props.modifier === 0 ? "" : modifierAsString(props.modifier);
 
     return (
         <Flex className="notification-item">
@@ -15,10 +17,10 @@ const Notification = (props) => {
                     {props.ability}
                 </Title>
                 <span className="notification-result-details">
-                    ({props.value}){modifierAsString(props.modifier)}
+                    ({props.value}){modifier}
                 </span>
                 <span className="notification-result-dice">
-                    (1к20){modifierAsString(props.modifier)}
+                    {props.times}к{props.dice}{modifier}
                 </span>
             </Flex>
             <span className="notification-result">

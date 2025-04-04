@@ -23,6 +23,7 @@ const AbilityTile = (props) => {
                 <AbilityCheck
                     key={`${props.name} check`}
                     name="проверка"
+                    notificationName={props.notificationName}
                     skill={false}
                     modalTitle={abilityModalTitle}
                     score={props.score}
@@ -32,6 +33,7 @@ const AbilityTile = (props) => {
                 <AbilityCheck
                     key={`${props.name} saving throw`}
                     name="спасбросок"
+                    notificationName={props.notificationName}
                     skill={false}
                     modalTitle={abilityModalTitle}
                     score={props.score}
@@ -47,6 +49,7 @@ const AbilityTile = (props) => {
                         key={skill.name}
                         id={i}
                         name={skill.name}
+                        notificationName={skill .notificationName}
                         skill={true}
                         modifier={skill.score}
                         bonus={skill.bonus}

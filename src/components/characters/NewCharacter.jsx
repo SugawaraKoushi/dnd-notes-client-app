@@ -11,12 +11,9 @@ import StatusTracker from "./StatusTracker";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import NotificationStack from "../notification/NotificationStack";
 import "./index.css";
-import Notification from "../notification/Notification";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
-    const [isNotificationStackVisible, setIsNotificationStackVisible] =
-        useState(true);
     const [notifications, setNotifications] = useState([]);
     const { useBreakpoint } = Grid;
     const screens = useBreakpoint();
@@ -94,6 +91,7 @@ const NewCharacterPage = () => {
     const strengthSkills = [
         {
             name: "атлетика",
+            notificationName: "атлетики",
             score: character.athletics,
             bonus: character.athleticsBonus,
             proficiency: character.athleticsProficiency,
@@ -232,18 +230,21 @@ const NewCharacterPage = () => {
     const dexteritySkills = [
         {
             name: "акробатика",
+            notificationName: "акробатики",
             score: character.acrobatics,
             bonus: character.acrobaticsBonus,
             proficiency: character.acrobaticsProficiency,
         },
         {
             name: "ловкость рук",
+            notificationName: "ловкости рук",
             score: character.sleightOfHand,
             bonus: character.sleightOfHandBonus,
             proficiency: character.sleightOfHandProficiency,
         },
         {
             name: "скрытность",
+            notificationName: "скрытности",
             score: character.stealth,
             bonus: character.stealthBonus,
             proficiency: character.stealthProficiency,
@@ -484,30 +485,35 @@ const NewCharacterPage = () => {
     const intelligenceSkills = [
         {
             name: "анализ",
+            notificationName: "анализа",
             score: character.investigation,
             bonus: character.investigationBonus,
             proficiency: character.investigationProficiency,
         },
         {
             name: "история",
+            notificationName: "истории",
             score: character.history,
             bonus: character.historyBonus,
             proficiency: character.historyProficiency,
         },
         {
             name: "магия",
+            notificationName: "магии",
             score: character.arcana,
             bonus: character.arcanaBonus,
             proficiency: character.arcanaProficiency,
         },
         {
             name: "природа",
+            notificationName: "природы",
             score: character.nature,
             bonus: character.natureBonus,
             proficiency: character.natureProficiency,
         },
         {
             name: "религия",
+            notificationName: "религии",
             score: character.religion,
             bonus: character.religionBonus,
             proficiency: character.religionProficiency,
@@ -707,30 +713,35 @@ const NewCharacterPage = () => {
     const wisdomSkills = [
         {
             name: "восприятие",
+            notificationName: "восприятия",
             score: character.perception,
             bonus: character.perceptionBonus,
             proficiency: character.perceptionProficiency,
         },
         {
             name: "выживание",
+            notificationName: "выживания",
             score: character.survival,
             bonus: character.survivalBonus,
             proficiency: character.survivalProficiency,
         },
         {
             name: "медицина",
+            notificationName: "медицины",
             score: character.medicine,
             bonus: character.medicineBonus,
             proficiency: character.medicineProficiency,
         },
         {
             name: "проницательность",
+            notificationName: "проницательности",
             score: character.insight,
             bonus: character.insightBonus,
             proficiency: character.insightProficiency,
         },
         {
             name: "уход за животными",
+            notificationName: "ухода за животными",
             score: character.animalHandling,
             bonus: character.animalHandlingBonus,
             proficiency: character.animalHandlingProficiency,
@@ -895,24 +906,28 @@ const NewCharacterPage = () => {
     const charismaSkills = [
         {
             name: "выступление",
+            notificationName: "выступления",
             score: character.performance,
             bonus: character.performanceBonus,
             proficiency: character.performanceProficiency,
         },
         {
             name: "запугивание",
+            notificationName: "запугивания",
             score: character.intimidation,
             bonus: character.intimidationBonus,
             proficiency: character.intimidationProficiency,
         },
         {
             name: "обман",
+            notificationName: "обмана",
             score: character.deception,
             bonus: character.deceptionBonus,
             proficiency: character.deceptionProficiency,
         },
         {
             name: "убеждение",
+            notificationName: "убеждения",
             score: character.persuasion,
             bonus: character.persuasionBonus,
             proficiency: character.persuasionProficiency,
@@ -950,7 +965,6 @@ const NewCharacterPage = () => {
     };
 
     const handleRollButtonClick = (value) => {
-        // setIsNotificationStackVisible(true);
         setNotifications((prev) => {
             const updatedNotifications = [...prev, value].slice(-5);
             return updatedNotifications;
@@ -958,7 +972,6 @@ const NewCharacterPage = () => {
     };
 
     const handleNotificationStackCloseButtonClick = () => {
-        // setIsNotificationStackVisible(false);
         setNotifications([]);
     };
 
@@ -1050,6 +1063,7 @@ const NewCharacterPage = () => {
                             key="strength"
                             id="strength"
                             name="сила"
+                            notificationName="силы"
                             score={character.strength}
                             savingThrow={character.strengthSavingThrow}
                             savingThrowProficiency={
@@ -1098,12 +1112,14 @@ const NewCharacterPage = () => {
                                         break;
                                 }
                             },
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <AbilityTile
                             key="dexterity"
                             id="dexterity"
                             name="ловкость"
+                            notificationName="ловкости"
                             score={character.dexterity}
                             savingThrow={character.dexteritySavingThrow}
                             savingThrowProficiency={
@@ -1122,12 +1138,14 @@ const NewCharacterPage = () => {
                                 handleConstitutionSavingThrowProficiencyChange,
                             onSavingThrowBonusChange:
                                 handleConstitutionSavingThrowBonusChange,
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <AbilityTile
                             key="constitution"
                             id="constitution"
                             name="телосложение"
+                            notificationName="телосложения"
                             score={character.constitution}
                             savingThrow={character.constitutionSavingThrow}
                             savingThrowProficiency={
@@ -1187,12 +1205,14 @@ const NewCharacterPage = () => {
                                         break;
                                 }
                             },
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <AbilityTile
                             key="intelligence"
                             id="intelligence"
                             name="интеллект"
+                            notificationName="интеллекта"
                             score={character.intelligence}
                             savingThrow={character.intelligenceSavingThrow}
                             savingThrowProficiency={
@@ -1253,12 +1273,14 @@ const NewCharacterPage = () => {
                                         break;
                                 }
                             },
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <AbilityTile
                             key="wisdom"
                             id="wisdom"
                             name="мудрость"
+                            notificationName="мудрости"
                             score={character.wisdom}
                             savingThrow={character.wisdomSavingThrow}
                             savingThrowProficiency={
@@ -1311,12 +1333,14 @@ const NewCharacterPage = () => {
                                         break;
                                 }
                             },
+                            onRollButtonClick: handleRollButtonClick,
                         }}
                     >
                         <AbilityTile
                             key="charisma"
                             id="charisma"
                             name="харизма"
+                            notificationName="харизмы"
                             score={character.charisma}
                             savingThrow={character.charismaSavingThrow}
                             savingThrowProficiency={
@@ -1347,7 +1371,6 @@ const NewCharacterPage = () => {
                 </Flex>
             </Flex>
             <NotificationStack
-                open={isNotificationStackVisible}
                 onClose={handleNotificationStackCloseButtonClick}
                 items={notifications}
             />

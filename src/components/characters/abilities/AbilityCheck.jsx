@@ -5,7 +5,7 @@ import { modifierAsString } from "../../services/ModifierService";
 import { AbilityContext } from "../context/AbilityContext";
 import AbilityModal from "./AbilityModal";
 import SkillModal from "../SkillModal";
-import { rollD20 } from "../../services/RollDiceService";
+import { rollDice } from "../../services/RollDiceService";
 
 const AbilityCheck = (props) => {
     const {
@@ -39,12 +39,21 @@ const AbilityCheck = (props) => {
     };
 
     const handleRollButtonClick = () => {
-        let value = rollD20();
+        let dice = 20;
+        let times = 1;
+        let value = rollDice(times, dice);
+
+        let type = props.skill ? "проверка" : props.name;
+
         let result = {
-            type: props.name,
+            type: type,
             value: value,
             modifier: props.modifier,
+            dice: dice,
+            times: times,
+            ability: props.notificationName,
         };
+
         onRollButtonClick(result);
     };
 
