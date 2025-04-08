@@ -1025,7 +1025,14 @@ const NewCharacterPage = () => {
         <>
             <CharacterHeader
                 name={character.name}
+                race={character.race}
+                class={character.class}
+                armorClass={character.armorClass}
+                speed={character.speed}
                 proficiencyBonus={character.proficiencyBonus}
+                currentHP={character.currentHP}
+                maxHP={character.maxHP}
+                bonusHP={character.bonusHP}
             />
             <Flex
                 className="content-layout"

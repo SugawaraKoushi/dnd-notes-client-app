@@ -5,42 +5,42 @@ import "./index.css";
 
 const CharacterHeader = (props) => {
     return (
-        <div className="character-header">
+        <Flex
+            className="character-header"
+            align="center"
+            justify="space-between"
+        >
+            <CharacterHeaderInfo name={props.name} />
             <Flex
                 align="center"
                 justify="space-between"
-                style={{
-                    maxWidth: "1200px",
-                    width: "100%",
-                    height: "100%",
-                    margin: "auto",
-                }}
+                style={{ width: "595px" }}
             >
-                <CharacterHeaderInfo name={props.name} />
-                <Flex
-                    align="center"
-                    justify="space-between"
-                    style={{ width: "592px" }}
-                >
-                    <Flex justify="space-between" style={{ width: "224px" }}>
-                        <Flex align="center">10</Flex>
-                        <Flex vertical align="center">
-                            25
-                            <div>скорость</div>
-                        </Flex>
-                        <Flex vertical align="center">
-                            {modifierAsString(props.proficiencyBonus)}
-                            <div>владение</div>
-                        </Flex>
+                <Flex justify="space-between" style={{ width: "224px" }}>
+                    <Flex vertical align="center">
+                        <div className="stat-values">{props.armorClass}</div>
+                        <div className="description">КЗ</div>
                     </Flex>
-                    <Flex>
-                        <div>371.1</div>
-                        <Checkbox />
-                        <div>0 / 100</div>
+                    <Flex vertical align="center">
+                        <div className="stat-values">{props.speed}</div>
+                        <div className="description">скорость</div>
+                    </Flex>
+                    <Flex vertical align="center">
+                        <div className="stat-values">
+                            {modifierAsString(props.proficiencyBonus)}
+                        </div>
+                        <div className="description">владение</div>
                     </Flex>
                 </Flex>
+                <Flex>
+                    <div>371.1</div>
+                    <Checkbox />
+                    <div>{`${props.currentHP} / ${
+                        props.maxHP + props.bonusHP
+                    }`}</div>
+                </Flex>
             </Flex>
-        </div>
+        </Flex>
     );
 };
 

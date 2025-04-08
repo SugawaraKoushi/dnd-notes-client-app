@@ -4,7 +4,16 @@ class Character {
     constructor() {
         this.level = 1;
         this.name = "Безымянный персонаж";
-        
+        this.race = "Дварф";
+        this.class = "Воин, Рыцарь Эхо";
+        this.speed = 25;
+        this.armorClass = 10;
+
+        // Здоровье
+        this.maxHP = 100;
+        this.currentHP = 100;
+        this.bonusHP = 0;
+
         // Характеристики
         this.strength = 10;
         this.dexterity = 10;
@@ -45,7 +54,7 @@ class Character {
         this.strengthSavingThrowProficiency = false;
         this.dexteritySavingThrowProficiency = false;
         this.constitutionSavingThrowProficiency = false;
-        this.intelligenceSavingThrowProficiency = false
+        this.intelligenceSavingThrowProficiency = false;
         this.wisdomSavingThrowProficiency = false;
         this.charismaSavingThrowProficiency = false;
 
