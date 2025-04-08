@@ -1,7 +1,8 @@
 import { Flex, FloatButton } from "antd";
-import Notification from "./Notification";
-import NotificationShort from "./NotificationShort";
 import { CloseOutlined } from "@ant-design/icons";
+import { useMemo } from "react";
+import MemoizedNotification from "./MemoizedNotification";
+import MemoizedNotificationShort from "./MemoizedNotificationShort";
 
 const NotificationStack = (props) => {
     const { onClose } = props;
@@ -10,31 +11,37 @@ const NotificationStack = (props) => {
         onClose();
     };
 
+    const shortNotifications = useMemo(
+        () => props.items.slice(0, -1),
+        [props.items]
+    );
+
+    const lastNotification = useMemo(
+        () => props.items[props.items.length - 1],
+        [props.items]
+    );
+
     return (
         props.items &&
         props.items.length > 0 && (
             <Flex className="notification-stack" vertical>
-                {props.items.slice(0, -1).map((item, i) => (
-                    <NotificationShort
-                        key={
-                            Date.now() +
-                            `${item.type}-${item.value}-${item.modifier}-${i}` +
-                            Date.now()
-                        }
+                {shortNotifications.map((item, i) => (
+                    <MemoizedNotificationShort
+                        key={`short_${item.id}_${i}`}
                         type={item.type}
                         ability={item.ability}
                         value={item.value}
                         modifier={item.modifier}
                     />
                 ))}
-                <Notification
-                    key={props.items[props.items.length - 1].type + Date.now()}
-                    type={props.items[props.items.length - 1].type}
-                    ability={props.items[props.items.length - 1].ability}
-                    value={props.items[props.items.length - 1].value}
-                    modifier={props.items[props.items.length - 1].modifier}
-                    dice={props.items[props.items.length - 1].dice}
-                    times={props.items[props.items.length - 1].times}
+                <MemoizedNotification
+                    key={`main_${lastNotification.id}`}
+                    type={lastNotification.type}
+                    ability={lastNotification.ability}
+                    value={lastNotification.value}
+                    modifier={lastNotification.modifier}
+                    dice={lastNotification.dice}
+                    times={lastNotification.times}
                 />
                 <FloatButton
                     className="notification-stack-button"
