@@ -4,8 +4,21 @@ import { modifierAsString } from "../services/ModifierService";
 import "./index.css";
 import { Link } from "react-router";
 import HealthInfo from "./hp/HealthInfo";
+import CharacterSettingsDrawer from "./drawer/CharacterSettingsDrawer";
+import { useState } from "react";
+import { DrawerContext } from "./context/DrawerContext";
 
 const CharacterHeader = (props) => {
+    const [settingsDrawerIsOpen, setSettingsDrawerIsOpen] = useState(false);
+
+    const handleStatsClick = () => {
+        setSettingsDrawerIsOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setSettingsDrawerIsOpen(false);
+    };
+
     return (
         <Flex
             className="character-header"
@@ -19,7 +32,10 @@ const CharacterHeader = (props) => {
                 style={{ width: "595px" }}
             >
                 <Flex justify="space-between" style={{ width: "224px" }}>
-                    <Link className="link-no-highlight">
+                    <Link
+                        className="link-no-highlight"
+                        onClick={handleStatsClick}
+                    >
                         <Flex vertical align="center">
                             <div className="stat-values">
                                 {props.armorClass}
@@ -27,13 +43,19 @@ const CharacterHeader = (props) => {
                             <div className="description">КЗ</div>
                         </Flex>
                     </Link>
-                    <Link className="link-no-highlight">
+                    <Link
+                        className="link-no-highlight"
+                        onClick={handleStatsClick}
+                    >
                         <Flex vertical align="center">
                             <div className="stat-values">{props.speed}</div>
                             <div className="description">скорость</div>
                         </Flex>
                     </Link>
-                    <Link className="link-no-highlight">
+                    <Link
+                        className="link-no-highlight"
+                        onClick={handleStatsClick}
+                    >
                         <Flex vertical align="center">
                             <div className="stat-values">
                                 {modifierAsString(props.proficiencyBonus)}
@@ -51,6 +73,13 @@ const CharacterHeader = (props) => {
                         temporary={props.temporaryHP}
                     />
                 </Flex>
+                <DrawerContext.Provider
+                    value={{
+                        onClose: handleDrawerClose,
+                    }}
+                >
+                    <CharacterSettingsDrawer open={settingsDrawerIsOpen} />
+                </DrawerContext.Provider>
             </Flex>
         </Flex>
     );
