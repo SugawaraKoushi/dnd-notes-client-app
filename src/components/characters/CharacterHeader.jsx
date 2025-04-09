@@ -3,6 +3,7 @@ import CharacterHeaderInfo from "./CharacterHeaderInfo";
 import { modifierAsString } from "../services/ModifierService";
 import "./index.css";
 import { Link } from "react-router";
+import HealthInfo from "./hp/HealthInfo";
 
 const CharacterHeader = (props) => {
     return (
@@ -44,9 +45,11 @@ const CharacterHeader = (props) => {
                 <Flex>
                     <div>371.1</div>
                     <Checkbox />
-                    <div>{`${props.currentHP} / ${
-                        props.maxHP + props.bonusHP
-                    }`}</div>
+                    <HealthInfo
+                        current={props.currentHP}
+                        max={props.maxHP}
+                        temporary={props.temporaryHP}
+                    />
                 </Flex>
             </Flex>
         </Flex>

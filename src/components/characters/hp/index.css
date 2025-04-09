@@ -1,0 +1,11 @@
+.health-info {
+    padding: 8px;
+    border: 2px solid;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.health-icon {
+    padding-right: 8px;
+}

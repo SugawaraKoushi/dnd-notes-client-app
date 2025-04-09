@@ -12,7 +12,7 @@ class Character {
         // Здоровье
         this.maxHP = 100;
         this.currentHP = 100;
-        this.bonusHP = 0;
+        this.temporaryHP = 0;
 
         // Характеристики
         this.strength = 10;

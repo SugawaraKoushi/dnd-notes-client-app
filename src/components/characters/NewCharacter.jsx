@@ -1032,7 +1032,7 @@ const NewCharacterPage = () => {
                 proficiencyBonus={character.proficiencyBonus}
                 currentHP={character.currentHP}
                 maxHP={character.maxHP}
-                bonusHP={character.bonusHP}
+                temporaryHP={character.temporaryHP}
             />
             <Flex
                 className="content-layout"
