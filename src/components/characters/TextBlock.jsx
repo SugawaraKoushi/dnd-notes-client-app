@@ -3,14 +3,14 @@ import "./index.css";
 
 const TextBlock = () => {
     const { Title } = Typography;
-    const {TextArea } = Input;
+    const { TextArea } = Input;
 
     return (
         <Flex vertical>
             <Title level={5} style={{ margin: "0" }}>
                 ПРОЧИЕ ВЛАДЕНИЯ И ЯЗЫКИ
             </Title>
-            <TextArea />
+            <TextArea style={{ height: "68px", resize: "none" }} />
         </Flex>
     );
 };

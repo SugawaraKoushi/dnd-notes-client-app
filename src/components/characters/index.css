@@ -18,7 +18,7 @@
 @media (min-width: 1200px) {
     .abilities,
     .character-content {
-        height: 700px;
+        height: 684px;
         width: 572px;
         overflow: auto;
     }
@@ -105,4 +105,8 @@
 .stat-values {
     font-weight: 700;
     font-size: 19px;
+}
+
+.link-no-highlight {
+    color: inherit;
 }
