@@ -50,20 +50,20 @@ const CharacterSettingsDrawer = (props) => {
         onArmorClassChange(value);
     };
 
-    const handleNameValueChange = (value) => {
-        onNameChange(value);
+    const handleNameValueChange = (event) => {
+        onNameChange(event.target.value);
     };
 
-    const handleRaceValueChange = (value) => {
-        onRaceChange(value);
+    const handleRaceValueChange = (event) => {
+        onRaceChange(event.target.value);
     };
 
-    const handleClassValueChange = (value) => {
-        onClassChange(value);
+    const handleClassValueChange = (event) => {
+        onClassChange(event.target.value);
     };
 
-    const handleSubclassValueChange = (value) => {
-        onSubclassChange(value);
+    const handleSubclassValueChange = (event) => {
+        onSubclassChange(event.target.value);
     };
 
     return (
@@ -81,7 +81,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="name"
                             style={{ width: "60%" }}
                             initialValue={name}
-                            onChange={(value) => handleNameValueChange(value)}
+                            onChange={handleNameValueChange}
                         >
                             <Input placeholder="Имя" />
                         </Form.Item>
@@ -90,7 +90,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="race"
                             style={{ width: "40%" }}
                             initialValue={race}
-                            onChange={(value) => handleRaceValueChange(value)}
+                            onChange={handleRaceValueChange}
                         >
                             <Input placeholder="Раса" />
                         </Form.Item>
@@ -101,7 +101,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="class"
                             style={{ width: "50%" }}
                             initialValue={className}
-                            onChange={(value) => handleClassValueChange(value)}
+                            onChange={handleClassValueChange}
                         >
                             <Input placeholder="Класс" />
                         </Form.Item>
@@ -110,9 +110,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="subclass"
                             style={{ width: "50%" }}
                             initialValue={subclass}
-                            onChange={(value) =>
-                                handleSubclassValueChange(value)
-                            }
+                            onChange={handleSubclassValueChange}
                         >
                             <Input placeholder="Подкласс" />
                         </Form.Item>
