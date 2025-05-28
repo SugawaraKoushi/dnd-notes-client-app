@@ -2,12 +2,20 @@ import { Drawer, Flex, Form, Input, InputNumber } from "antd";
 import { useContext, useState } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
+import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
 
 const CharacterSettingsDrawer = (props) => {
     const [form] = useForm();
     const [showPrefix, setShowPrefix] = useState(true);
+    const { onClose } = useContext(DrawerContext);
     const {
-        onClose,
+        onInitiativeChange,
+        onArmorClassChange,
+        onSpeedChange,
+        onNameChange,
+        onRaceChange,
+        onClassChange,
+        onSubclassChange,
         name,
         race,
         className,
@@ -15,7 +23,7 @@ const CharacterSettingsDrawer = (props) => {
         armorClass,
         speed,
         initiative,
-    } = useContext(DrawerContext);
+    } = useContext(CharacterHeaderContext);
     let plusPrefix = showPrefix && initiative > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
@@ -28,6 +36,34 @@ const CharacterSettingsDrawer = (props) => {
 
     const handleClose = () => {
         onClose();
+    };
+
+    const handleSpeedValueChange = (value) => {
+        onSpeedChange(value);
+    };
+
+    const handleInitiativeValueChange = (value) => {
+        onInitiativeChange(value);
+    };
+
+    const handleArmorClassValueChange = (value) => {
+        onArmorClassChange(value);
+    };
+
+    const handleNameValueChange = (value) => {
+        onNameChange(value);
+    };
+
+    const handleRaceValueChange = (value) => {
+        onRaceChange(value);
+    };
+
+    const handleClassValueChange = (value) => {
+        onClassChange(value);
+    };
+
+    const handleSubclassValueChange = (value) => {
+        onSubclassChange(value);
     };
 
     return (
@@ -45,6 +81,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="name"
                             style={{ width: "60%" }}
                             initialValue={name}
+                            onChange={(value) => handleNameValueChange(value)}
                         >
                             <Input placeholder="Имя" />
                         </Form.Item>
@@ -53,6 +90,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="race"
                             style={{ width: "40%" }}
                             initialValue={race}
+                            onChange={(value) => handleRaceValueChange(value)}
                         >
                             <Input placeholder="Раса" />
                         </Form.Item>
@@ -63,6 +101,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="class"
                             style={{ width: "50%" }}
                             initialValue={className}
+                            onChange={(value) => handleClassValueChange(value)}
                         >
                             <Input placeholder="Класс" />
                         </Form.Item>
@@ -71,6 +110,9 @@ const CharacterSettingsDrawer = (props) => {
                             name="subclass"
                             style={{ width: "50%" }}
                             initialValue={subclass}
+                            onChange={(value) =>
+                                handleSubclassValueChange(value)
+                            }
                         >
                             <Input placeholder="Подкласс" />
                         </Form.Item>
@@ -87,6 +129,9 @@ const CharacterSettingsDrawer = (props) => {
                                 min={0}
                                 changeOnWheel
                                 style={{ width: "100%" }}
+                                onChange={(value) =>
+                                    handleArmorClassValueChange(value)
+                                }
                             />
                         </Form.Item>
                         <Form.Item
@@ -100,6 +145,9 @@ const CharacterSettingsDrawer = (props) => {
                                 min={0}
                                 changeOnWheel
                                 style={{ width: "100%" }}
+                                onChange={(value) =>
+                                    handleSpeedValueChange(value)
+                                }
                             />
                         </Form.Item>
                         <Form.Item
@@ -107,6 +155,9 @@ const CharacterSettingsDrawer = (props) => {
                             name="initiative"
                             style={{ width: "33%" }}
                             initialValue={initiative}
+                            onChange={(value) =>
+                                handleInitiativeValueChange(value)
+                            }
                         >
                             <InputNumber
                                 placeholder="Инициатива"

@@ -5,12 +5,18 @@ import "./index.css";
 import { Link } from "react-router";
 import HealthInfo from "./hp/HealthInfo";
 import CharacterSettingsDrawer from "./drawer/CharacterSettingsDrawer";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DrawerContext } from "./context/DrawerContext";
+import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 
 const CharacterHeader = (props) => {
     const [settingsDrawerIsOpen, setSettingsDrawerIsOpen] = useState(false);
     const { Title } = Typography;
+    const {
+        armorClass,
+        speed,
+        proficiencyBonus,
+    } = useContext(CharacterHeaderContext);
 
     const handleStatsClick = () => {
         setSettingsDrawerIsOpen(true);
@@ -26,7 +32,7 @@ const CharacterHeader = (props) => {
             align="center"
             justify="space-between"
         >
-            <CharacterHeaderInfo name={props.name} />
+            <CharacterHeaderInfo />
             <Flex
                 align="center"
                 justify="space-between"
@@ -38,9 +44,7 @@ const CharacterHeader = (props) => {
                         onClick={handleStatsClick}
                     >
                         <Flex vertical align="center">
-                            <div className="stat-values">
-                                {props.armorClass}
-                            </div>
+                            <div className="stat-values">{armorClass}</div>
                             <div className="description">КЗ</div>
                         </Flex>
                     </Link>
@@ -49,7 +53,7 @@ const CharacterHeader = (props) => {
                         onClick={handleStatsClick}
                     >
                         <Flex vertical align="center">
-                            <div className="stat-values">{props.speed}</div>
+                            <div className="stat-values">{speed}</div>
                             <div className="description">скорость</div>
                         </Flex>
                     </Link>
@@ -59,7 +63,7 @@ const CharacterHeader = (props) => {
                     >
                         <Flex vertical align="center">
                             <div className="stat-values">
-                                {modifierAsString(props.proficiencyBonus)}
+                                {modifierAsString(proficiencyBonus)}
                             </div>
                             <div className="description">владение</div>
                         </Flex>
@@ -69,22 +73,11 @@ const CharacterHeader = (props) => {
                     <Title className="money" level={5}>
                         371.1
                     </Title>
-                    <HealthInfo
-                        current={props.currentHP}
-                        max={props.maxHP}
-                        temporary={props.temporaryHP}
-                    />
+                    <HealthInfo />
                 </Flex>
                 <DrawerContext.Provider
                     value={{
                         onClose: handleDrawerClose,
-                        name: props.name,
-                        race: props.race,
-                        className: props.class,
-                        subclass: props.subclass,
-                        armorClass: props.armorClass,
-                        speed: props.speed,
-                        initiative: props.initiative,
                     }}
                 >
                     <CharacterSettingsDrawer open={settingsDrawerIsOpen} />

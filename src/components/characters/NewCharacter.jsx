@@ -11,6 +11,7 @@ import StatusTracker from "./StatusTracker";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import NotificationStack from "../notification/NotificationStack";
 import "./index.css";
+import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -250,6 +251,13 @@ const NewCharacterPage = () => {
             proficiency: character.stealthProficiency,
         },
     ];
+
+    const handleInitiativeChange = (value) => {
+        setCharacter({
+            ...character,
+            initiative: value,
+        });
+    };
 
     //#endregion Ловкость
 
@@ -975,6 +983,48 @@ const NewCharacterPage = () => {
         setNotifications([]);
     };
 
+    const handleSpeedChange = (value) => {
+        setCharacter({
+            ...character,
+            speed: value,
+        });
+    };
+
+    const handleArmorClassChange = (value) => {
+        setCharacter({
+            ...character,
+            armorClass: value,
+        });
+    };
+
+    const handleNameChange = (value) => {
+        setCharacter({
+            ...character,
+            name: value,
+        });
+    };
+
+    const handleClassChange = (value) => {
+        setCharacter({
+            ...character,
+            class: value,
+        });
+    };
+
+    const handleSubclassChange = (value) => {
+        setCharacter({
+            ...character,
+            subclass: value,
+        });
+    };
+
+    const handleRaceChange = (value) => {
+        setCharacter({
+            ...character,
+            race: value,
+        });
+    };
+
     //#endregion Прочее
 
     const sex = [
@@ -1023,19 +1073,30 @@ const NewCharacterPage = () => {
 
     return (
         <>
-            <CharacterHeader
-                name={character.name}
-                race={character.race}
-                class={character.class}
-                subclass={character.subclass}
-                armorClass={character.armorClass}
-                speed={character.speed}
-                proficiencyBonus={character.proficiencyBonus}
-                initiative={character.initiative}
-                currentHP={character.currentHP}
-                maxHP={character.maxHP}
-                temporaryHP={character.temporaryHP}
-            />
+            <CharacterHeaderContext.Provider
+                value={{
+                    onInitiativeChange: handleInitiativeChange,
+                    onArmorClassChange: handleArmorClassChange,
+                    onSpeedChange: handleSpeedChange,
+                    onNameChange: handleNameChange,
+                    onRaceChange: handleRaceChange,
+                    onClassChange: handleClassChange,
+                    onSubclassChange: handleSubclassChange,
+                    name: character.name,
+                    race: character.race,
+                    className: character.class,
+                    subclass: character.subclass,
+                    armorClass: character.armorClass,
+                    speed: character.speed,
+                    proficiencyBonus: character.proficiencyBonus,
+                    initiative: character.initiative,
+                    currentHP: character.currentHP,
+                    maxHP: character.maxHP,
+                    temporaryHP: character.temporaryHP,
+                }}
+            >
+                <CharacterHeader />
+            </CharacterHeaderContext.Provider>
             <Flex
                 className="content-layout"
                 style={{ lineHeight: "inherit" }}
