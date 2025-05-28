@@ -1,4 +1,4 @@
-import { Checkbox, Flex } from "antd";
+import { Flex, Typography } from "antd";
 import CharacterHeaderInfo from "./CharacterHeaderInfo";
 import { modifierAsString } from "../services/ModifierService";
 import "./index.css";
@@ -10,6 +10,7 @@ import { DrawerContext } from "./context/DrawerContext";
 
 const CharacterHeader = (props) => {
     const [settingsDrawerIsOpen, setSettingsDrawerIsOpen] = useState(false);
+    const { Title } = Typography;
 
     const handleStatsClick = () => {
         setSettingsDrawerIsOpen(true);
@@ -64,9 +65,10 @@ const CharacterHeader = (props) => {
                         </Flex>
                     </Link>
                 </Flex>
-                <Flex>
-                    <div>371.1</div>
-                    <Checkbox />
+                <Flex align="center" gap={12}>
+                    <Title className="money" level={5}>
+                        371.1
+                    </Title>
                     <HealthInfo
                         current={props.currentHP}
                         max={props.maxHP}
@@ -76,6 +78,13 @@ const CharacterHeader = (props) => {
                 <DrawerContext.Provider
                     value={{
                         onClose: handleDrawerClose,
+                        name: props.name,
+                        race: props.race,
+                        className: props.class,
+                        subclass: props.subclass,
+                        armorClass: props.armorClass,
+                        speed: props.speed,
+                        initiative: props.initiative,
                     }}
                 >
                     <CharacterSettingsDrawer open={settingsDrawerIsOpen} />

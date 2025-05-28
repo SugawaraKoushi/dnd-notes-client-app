@@ -1027,9 +1027,11 @@ const NewCharacterPage = () => {
                 name={character.name}
                 race={character.race}
                 class={character.class}
+                subclass={character.subclass}
                 armorClass={character.armorClass}
                 speed={character.speed}
                 proficiencyBonus={character.proficiencyBonus}
+                initiative={character.initiative}
                 currentHP={character.currentHP}
                 maxHP={character.maxHP}
                 temporaryHP={character.temporaryHP}
