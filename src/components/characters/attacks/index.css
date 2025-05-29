@@ -1,0 +1,25 @@
+.table-tool-btn {
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    font-size: 13px;
+}
+
+.attack-table {
+    border: 1px solid #d9d9d9;
+    outline-offset: 1px;
+    border-radius: 8px;
+    width: 100%;
+    min-height: 186px;
+}
+
+.ant-table-body {
+    border-radius: 8px !important;
+}
+
+.bonus-attack-button {
+    font-weight: 700;
+    font-size: 19px;
+    max-width: 43px;
+    max-height: 32px;
+}

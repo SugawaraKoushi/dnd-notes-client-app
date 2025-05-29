@@ -8,6 +8,7 @@
 
     .character-content {
         width: 75%;
+        overflow: hidden !important;
     }
 
     .status-tracker-item {

@@ -1,4 +1,13 @@
-import { Flex, Form, Input, InputNumber, Select, Grid } from "antd";
+import {
+    Flex,
+    Form,
+    Input,
+    InputNumber,
+    Select,
+    Grid,
+    Table,
+    Button,
+} from "antd";
 import { useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
@@ -12,6 +21,7 @@ import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import NotificationStack from "../notification/NotificationStack";
 import "./index.css";
 import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
+import AttacksTable from "./attacks/AttacksTable";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -1027,6 +1037,18 @@ const NewCharacterPage = () => {
 
     //#endregion Прочее
 
+    //#region Атаки
+    const attacks = [
+        {
+            key: "0",
+            name: "Меч",
+            bonus: 0,
+            damage: "1к12",
+        },
+    ];
+
+    //#endregion Атаки
+
     const sex = [
         { value: "MALE", label: <span>Мужской</span> },
         { value: "FEMALE", label: <span>Женский</span> },
@@ -1424,7 +1446,7 @@ const NewCharacterPage = () => {
                     </AbilityContext.Provider>
                     <PassiveAbilityTile skills={passiveSkills} />
                 </Flex>
-                <Flex vertical className="character-content">
+                <Flex vertical className="character-content" gap={6}>
                     <StatusTrackerContext.Provider
                         value={{
                             onInspirationChange: handleInspirationChange,
@@ -1438,8 +1460,10 @@ const NewCharacterPage = () => {
                             inspiration={character.inspiration}
                         />
                     </StatusTrackerContext.Provider>
+                    <AttacksTable attacks={attacks} />
                     <TextBlock />
                 </Flex>
+                
             </Flex>
             <NotificationStack
                 onClose={handleNotificationStackCloseButtonClick}
