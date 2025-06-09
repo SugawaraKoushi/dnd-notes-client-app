@@ -13,3 +13,8 @@ body {
     border-radius: 8px;
     height: fit-content;
 }
+
+.menu-toolbar {
+    max-width: calc(100% - 106px);
+    width: fit-content;
+}

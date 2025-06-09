@@ -1,6 +1,7 @@
 import { Button, Flex, Table } from "antd";
 import { useState } from "react";
 import "./index.css";
+import { Link } from "react-router";
 
 const AttacksTable = (props) => {
     const [attacks, setAttacks] = useState(props.attacks);
@@ -21,11 +22,19 @@ const AttacksTable = (props) => {
         setAttacks([...attacks]);
     };
 
+    const handleAttackSettingsModalOpen = (row) => {
+        console.log(row);
+    };
+
     const columns = [
         {
             title: "Название",
             dataIndex: "name",
             width: "40%",
+            render: (text) => <Link>{text}</Link>,
+            onCell: (record) => ({
+                onClick: () => handleAttackSettingsModalOpen(record),
+            }),
         },
         {
             title: "Бонус",
@@ -34,13 +43,7 @@ const AttacksTable = (props) => {
             render: (
                 _,
                 record // `_` заменяет неиспользуемый параметр `text`
-            ) => (
-                <Button
-                    className="bonus-attack-button"
-                >
-                    0
-                </Button>
-            ),
+            ) => <Button className="bonus-attack-button">0</Button>,
         },
         {
             title: "Урон",

@@ -8,10 +8,6 @@ const Root = () => {
     const navigate = useNavigate();
 
     const items = [
-        // {
-        //     key: "/campaigns/list",
-        //     label: <Link to="/campaigns/list">Кампании</Link>,
-        // },
         {
             key: "/characters/list",
             label: <Link to="/characters/list">Мои персонажи</Link>,
@@ -36,13 +32,7 @@ const Root = () => {
                     align="center"
                     justify="space-between"
                 >
-                    <div
-                        style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            margin: "0",
-                        }}
-                    >
+                    <Flex align="center">
                         <Link
                             to="/"
                             style={{ display: "flex", marginRight: "20px" }}
@@ -54,8 +44,14 @@ const Root = () => {
                                 style={{ height: "40px" }}
                             />
                         </Link>
-                        <Menu theme="dark" items={items} mode="horizontal" />
-                    </div>
+                        <Menu
+                            className="menu-toolbar"
+                            theme="dark"
+                            items={items}
+                            mode="horizontal"   
+                            disabledOverflow={true}
+                        />
+                    </Flex>
                     <Button
                         id="logout"
                         type="link"
