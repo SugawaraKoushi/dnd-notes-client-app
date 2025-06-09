@@ -2,28 +2,37 @@ import { Button, Flex, Table } from "antd";
 import { useState } from "react";
 import "./index.css";
 import { Link } from "react-router";
+import Attack from "../../../model/Attack";
 
 const AttacksTable = (props) => {
     const [attacks, setAttacks] = useState(props.attacks);
+    const [attacksTableContent, setAttacksTableContent] = useState(
+        props.attacksTableContent
+    );
 
     const handleAddAttack = () => {
+        const attack = new Attack();
         const newAttack = {
             key: attacks.length,
-            name: "Меч",
-            bonus: 0,
-            damage: "1к12",
+            name: attack.name,
+            bonus: attack.proficiency,
+            damage: attack.damage,
         };
 
-        setAttacks([...attacks, newAttack]);
+        setAttacks([...attacks, attack]);
+        setAttacksTableContent([...attacksTableContent, newAttack]);
     };
 
     const handleDeleteLastAttack = () => {
         attacks.pop();
+        attacksTableContent.pop();
         setAttacks([...attacks]);
+        setAttacksTableContent([...attacksTableContent]);
     };
 
     const handleAttackSettingsModalOpen = (row) => {
         console.log(row);
+        console.log(attacks[row.key]);
     };
 
     const columns = [
@@ -67,7 +76,7 @@ const AttacksTable = (props) => {
             </Flex>
             <Table
                 className="attack-table"
-                dataSource={attacks}
+                dataSource={attacksTableContent}
                 columns={columns}
                 size="small"
                 pagination={false}

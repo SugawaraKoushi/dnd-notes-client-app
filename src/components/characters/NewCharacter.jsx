@@ -22,6 +22,7 @@ import NotificationStack from "../notification/NotificationStack";
 import "./index.css";
 import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 import AttacksTable from "./attacks/AttacksTable";
+import Attack from "../../model/Attack";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -1036,14 +1037,23 @@ const NewCharacterPage = () => {
     };
 
     //#endregion Прочее
+    const attack = new Attack(
+        character.strength,
+        character.dexterity,
+        character.constitution,
+        character.intelligence,
+        character.wisdom,
+        character.charisma,
+        character.proficiencyBonus
+    );
 
     //#region Атаки
     const attacks = [
         {
             key: "0",
-            name: "Меч",
-            bonus: 0,
-            damage: "1к12",
+            name: attack.name,
+            bonus: attack.proficiency,
+            damage: attack.damage,
         },
     ];
 
@@ -1460,10 +1470,12 @@ const NewCharacterPage = () => {
                             inspiration={character.inspiration}
                         />
                     </StatusTrackerContext.Provider>
-                    <AttacksTable attacks={attacks} />
+                    <AttacksTable
+                        attacks={[attack]}
+                        attacksTableContent={attacks}
+                    />
                     <TextBlock />
                 </Flex>
-                
             </Flex>
             <NotificationStack
                 onClose={handleNotificationStackCloseButtonClick}
