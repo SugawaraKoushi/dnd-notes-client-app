@@ -3,12 +3,15 @@ import { useState } from "react";
 import "./index.css";
 import { Link } from "react-router";
 import Attack from "../../../model/Attack";
+import AttackModal from "./AttackModal";
 
 const AttacksTable = (props) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [attacks, setAttacks] = useState(props.attacks);
     const [attacksTableContent, setAttacksTableContent] = useState(
         props.attacksTableContent
     );
+    const [selectedAttack, setSelectedAttack] = useState(null);
 
     const handleAddAttack = () => {
         const attack = new Attack();
@@ -30,9 +33,13 @@ const AttacksTable = (props) => {
         setAttacksTableContent([...attacksTableContent]);
     };
 
-    const handleAttackSettingsModalOpen = (row) => {
-        console.log(row);
-        console.log(attacks[row.key]);
+    const handleModalOpen = (index) => {
+        setSelectedAttack(attacks[index]);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
     };
 
     const columns = [
@@ -41,8 +48,8 @@ const AttacksTable = (props) => {
             dataIndex: "name",
             width: "40%",
             render: (text) => <Link>{text}</Link>,
-            onCell: (record) => ({
-                onClick: () => handleAttackSettingsModalOpen(record),
+            onCell: (_, index) => ({
+                onClick: () => handleModalOpen(index),
             }),
         },
         {
@@ -81,6 +88,11 @@ const AttacksTable = (props) => {
                 size="small"
                 pagination={false}
                 scroll={{ y: 147 }}
+            />
+            <AttackModal
+                open={isModalOpen}
+                onClose={handleModalClose}
+                attack={selectedAttack}
             />
         </Flex>
     );
