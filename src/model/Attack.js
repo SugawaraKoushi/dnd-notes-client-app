@@ -12,7 +12,7 @@ class Attack {
         // proficiency
     ) {
         this.name = "Настроить";
-        this.proficiency = false;
+        this.proficiency = true;
         this.ability = AttackAbilityEnum.EMPTY;
         this.damage = "1к4";
     }
