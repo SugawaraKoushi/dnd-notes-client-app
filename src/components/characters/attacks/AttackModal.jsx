@@ -1,12 +1,20 @@
 import { Checkbox, Flex, Form, Input, InputNumber, Modal, Select } from "antd";
 import "./index.css";
 import { useState } from "react";
+
 import AttackAbilityEnum from "../../../model/enum/AttackAbilityEnum";
 
-const AttackModal = (props) => {
+const AttackModal = ({
+    open,
+    onClose,
+    attack: initialAttack,
+    proficiencyBonus,
+}) => {
+    const [attack, setAttack] = useState(initialAttack);
+
     const [showPrefix, setShowPrefix] = useState(true);
-    const [attack, setAttack] = useState(props.attack);
-    let plusPrefix = showPrefix && props.bonus > 0 ? "+" : <span />;
+    let plusPrefix = showPrefix && attack.additionalBonus > 0 ? "+" : <span />;
+
     const abilityOptions = [
         { value: AttackAbilityEnum.EMPTY, label: "Без характеристики" },
         { value: AttackAbilityEnum.STRENGTH, label: "Сила" },
@@ -17,15 +25,44 @@ const AttackModal = (props) => {
         { value: AttackAbilityEnum.CHARISMA, label: "Харизма" },
     ];
 
+    const handleAttackNameChange = (event) => {
+        setAttack({ ...attack, name: event.target.value });
+    };
+
+    const handleAttackAbilityChange = (value) => {
+        setAttack((prevAttack) => prevAttack.setAbility(value));
+    };
+
     const handleProficiencyToggle = () => {
-        setAttack({ ...attack, proficiency: !attack.proficiency });
+        const proficiency = !attack.proficiency;
+        setAttack({
+            ...attack,
+            proficiency: proficiency,
+            proficiencyBonus: proficiency ? proficiencyBonus : 0,
+        });
+    };
+
+    const handleAttackDamageChange = (event) => {
+        setAttack({ ...attack, damage: event.target.value });
+    };
+
+    const handleAttackAdditionalBonusChange = (value) => {
+        setAttack({ ...attack, additionalBonus: value });
+    };
+
+    const handleAdditionalBonusInputClick = () => {
+        setShowPrefix(false);
+    };
+
+    const handleAdditionalBonusInputBlur = () => {
+        setShowPrefix(true);
     };
 
     return (
         <Modal
             centered
-            open={props.open}
-            onCancel={props.onClose}
+            open={open}
+            onCancel={() => onClose(attack)}
             footer={null}
         >
             <Form
@@ -35,23 +72,56 @@ const AttackModal = (props) => {
                 }}
             >
                 <Flex vertical>
-                    <Form.Item
-                        name="name"
-                        initialValue={attack?.name}
-                        style={{ width: "70%" }}
-                    >
-                        <Input size="large" />
+                    <Form.Item name="name" initialValue={attack.name}>
+                        <Input
+                            size="large"
+                            style={{ width: "70%" }}
+                            onChange={handleAttackNameChange}
+                        />
                     </Form.Item>
                     <Flex align="center" gap={12}>
                         <Form.Item
                             name="ability"
                             style={{ width: "50%" }}
-                            initialValue={attack?.ability}
+                            initialValue={attack.ability}
                         >
-                            <Select options={abilityOptions} size="large" />
+                            <Select
+                                options={abilityOptions}
+                                size="large"
+                                onChange={handleAttackAbilityChange}
+                            />
                         </Form.Item>
                         <Form.Item name="proficiency" label="Бонус владения">
-                            <Checkbox checked={attack?.proficiency} />
+                            <Checkbox
+                                checked={attack?.proficiency}
+                                onChange={handleProficiencyToggle}
+                            />
+                        </Form.Item>
+                    </Flex>
+                    <Flex justify="space-between">
+                        <Form.Item name="damage" initialValue={attack.damage}>
+                            <Input
+                                size="large"
+                                style={{ width: "auto" }}
+                                onChange={handleAttackDamageChange}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            name="bonus"
+                            initialValue={attack.additionalBonus}
+                        >
+                            <InputNumber
+                                size="large"
+                                placeholder="доп. бонус"
+                                style={{ width: "auto" }}
+                                prefix={plusPrefix}
+                                onChange={(value) =>
+                                    handleAttackAdditionalBonusChange(value)
+                                }
+                                onClick={handleAdditionalBonusInputClick}
+                                onBlur={handleAdditionalBonusInputBlur}
+                                changeOnWheel
+                            />
                         </Form.Item>
                     </Flex>
                 </Flex>

@@ -1,45 +1,57 @@
 import { Button, Flex, Table } from "antd";
-import { useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import "./index.css";
 import { Link } from "react-router";
 import Attack from "../../../model/Attack";
 import AttackModal from "./AttackModal";
+import { modifierAsString } from "../../services/ModifierService";
+import { AttackContext } from "../context/AttackContext";
 
-const AttacksTable = (props) => {
+const AttacksTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [attacks, setAttacks] = useState(props.attacks);
-    const [attacksTableContent, setAttacksTableContent] = useState(
-        props.attacksTableContent
-    );
-    const [selectedAttack, setSelectedAttack] = useState(null);
+    const { attacks, character, onAttacksChange } = useContext(AttackContext);
+    const [selectedAttackIndex, setSelectedAttackIndex] = useState(null);
+
+    const datasource = useMemo(() => {
+        return attacks.map((attack, index) => ({
+            key: index,
+            name: attack.name,
+            bonus: attack.proficiencyBonus + attack.additionalBonus + attack.abilityBonus,
+            damage: attack.damage,
+        }));
+    }, [attacks]);
 
     const handleAddAttack = () => {
-        const attack = new Attack();
-        const newAttack = {
-            key: attacks.length,
-            name: attack.name,
-            bonus: attack.proficiency,
-            damage: attack.damage,
-        };
+        const attack = new Attack(
+            character.strength,
+            character.dexterity,
+            character.constitution,
+            character.intelligence,
+            character.wisdom,
+            character.charisma,
+            character.proficiencyBonus
+        );
 
-        setAttacks([...attacks, attack]);
-        setAttacksTableContent([...attacksTableContent, newAttack]);
+        onAttacksChange([...attacks, attack]);
     };
 
     const handleDeleteLastAttack = () => {
-        attacks.pop();
-        attacksTableContent.pop();
-        setAttacks([...attacks]);
-        setAttacksTableContent([...attacksTableContent]);
+        if (attacks.length === 0) return;
+        onAttacksChange(attacks.slice(0, -1));
     };
 
     const handleModalOpen = (index) => {
-        setSelectedAttack(attacks[index]);
+        setSelectedAttackIndex(index);
         setIsModalOpen(true);
     };
 
-    const handleModalClose = () => {
+    const handleModalClose = (updatedAttack) => {
         setIsModalOpen(false);
+        console.log(updatedAttack);
+        
+        const newAttacks = [...attacks];
+        newAttacks[selectedAttackIndex] = updatedAttack;
+        onAttacksChange(newAttacks);
     };
 
     const columns = [
@@ -56,10 +68,11 @@ const AttacksTable = (props) => {
             title: "Бонус",
             dataIndex: "bonus",
             width: "20%",
-            render: (
-                _,
-                record // `_` заменяет неиспользуемый параметр `text`
-            ) => <Button className="bonus-attack-button">0</Button>,
+            render: (bonus) => (
+                <Button className="bonus-attack-button">
+                    {modifierAsString(bonus)}
+                </Button>
+            ),
         },
         {
             title: "Урон",
@@ -83,17 +96,20 @@ const AttacksTable = (props) => {
             </Flex>
             <Table
                 className="attack-table"
-                dataSource={attacksTableContent}
+                dataSource={datasource}
                 columns={columns}
                 size="small"
                 pagination={false}
                 scroll={{ y: 147 }}
             />
-            <AttackModal
-                open={isModalOpen}
-                onClose={handleModalClose}
-                attack={selectedAttack}
-            />
+            {selectedAttackIndex != null && (
+                <AttackModal
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    attack={attacks[selectedAttackIndex]}
+                    proficiencyBonus={character.proficiencyBonus}
+                />
+            )}
         </Flex>
     );
 };

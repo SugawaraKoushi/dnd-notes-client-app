@@ -5,8 +5,6 @@ import {
     InputNumber,
     Select,
     Grid,
-    Table,
-    Button,
 } from "antd";
 import { useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
@@ -23,6 +21,7 @@ import "./index.css";
 import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 import AttacksTable from "./attacks/AttacksTable";
 import Attack from "../../model/Attack";
+import { AttackContext } from "./context/AttackContext";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -1037,71 +1036,70 @@ const NewCharacterPage = () => {
     };
 
     //#endregion Прочее
-    const attack = new Attack(
-        character.strength,
-        character.dexterity,
-        character.constitution,
-        character.intelligence,
-        character.wisdom,
-        character.charisma,
-        character.proficiencyBonus
-    );
 
     //#region Атаки
-    const attacks = [
-        {
-            key: "0",
-            name: attack.name,
-            bonus: attack.proficiency,
-            damage: attack.damage,
-        },
-    ];
+
+    const [attacks, setAttacks] = useState([
+        new Attack(
+            character.strength,
+            character.dexterity,
+            character.constitution,
+            character.intelligence,
+            character.wisdom,
+            character.charisma,
+            character.proficiencyBonus
+        ),
+    ]);
+
+    const handleAttacksChange = (newAttacks) => {
+        setAttacks(newAttacks);
+    }
 
     //#endregion Атаки
 
-    const sex = [
-        { value: "MALE", label: <span>Мужской</span> },
-        { value: "FEMALE", label: <span>Женский</span> },
-        { value: "OTHER", label: <span>Другое</span> },
-    ];
+    // const sex = [
+    //     { value: "MALE", label: <span>Мужской</span> },
+    //     { value: "FEMALE", label: <span>Женский</span> },
+    //     { value: "OTHER", label: <span>Другое</span> },
+    // ];
 
-    const alignments = [
-        { value: "LAWFUL_GOOD", label: <span>Законно-добрый</span> },
-        { value: "NEUTRAL_GOOD", label: <span>Нейтрально-добрый</span> },
-        { value: "CHAOTIC_GOOD", label: <span>Хаотично-добрый</span> },
-        { value: "LAWFUL_NEUTRAL", label: <span>Законно-нейтральный</span> },
-        { value: "NEUTRAL", label: <span>Нейтральный</span> },
-        { value: "CHAOTIC_NEUTRAL", label: <span>Хаотично-добрый</span> },
-        { value: "LAWFUL_EVIL", label: <span>Законно-злой</span> },
-        { value: "NEUTRAL_EVIL", label: <span>Нейтрально-злой</span> },
-        { value: "CHAOTIC_EVIL", label: <span>Хаотично-злой</span> },
-    ];
+    // const alignments = [
+    //     { value: "LAWFUL_GOOD", label: <span>Законно-добрый</span> },
+    //     { value: "NEUTRAL_GOOD", label: <span>Нейтрально-добрый</span> },
+    //     { value: "CHAOTIC_GOOD", label: <span>Хаотично-добрый</span> },
+    //     { value: "LAWFUL_NEUTRAL", label: <span>Законно-нейтральный</span> },
+    //     { value: "NEUTRAL", label: <span>Нейтральный</span> },
+    //     { value: "CHAOTIC_NEUTRAL", label: <span>Хаотично-добрый</span> },
+    //     { value: "LAWFUL_EVIL", label: <span>Законно-злой</span> },
+    //     { value: "NEUTRAL_EVIL", label: <span>Нейтрально-злой</span> },
+    //     { value: "CHAOTIC_EVIL", label: <span>Хаотично-злой</span> },
+    // ];
 
-    const characterDetails = [
-        <Form.Item name="name" label="Имя:" required>
-            <Input />
-        </Form.Item>,
-        <Form.Item name="sex" label="Пол:" required>
-            <Select options={sex} />
-        </Form.Item>,
-        <Form.Item name="alignment" label="Мировоззрение:" required>
-            <Select options={alignments} />
-        </Form.Item>,
-        <Form.Item name="author" label="Игрок:" required>
-            <Input disabled />
-        </Form.Item>,
-        <Form.Item name="EXP" label="Текущий опыт:" required>
-            <InputNumber
-                style={{ width: "100%" }}
-                prefix="EXP"
-                min={0}
-                precision={0}
-            />
-        </Form.Item>,
-        <Form.Item name="deity" label="Божество:" required>
-            <Input />
-        </Form.Item>,
-    ];
+    // const characterDetails = [
+    //     <Form.Item name="name" label="Имя:" required>
+    //         <Input />
+    //     </Form.Item>,
+    //     <Form.Item name="sex" label="Пол:" required>
+    //         <Select options={sex} />
+    //     </Form.Item>,
+    //     <Form.Item name="alignment" label="Мировоззрение:" required>
+    //         <Select options={alignments} />
+    //     </Form.Item>,
+    //     <Form.Item name="author" label="Игрок:" required>
+    //         <Input disabled />
+    //     </Form.Item>,
+    //     <Form.Item name="EXP" label="Текущий опыт:" required>
+    //         <InputNumber
+    //             style={{ width: "100%" }}
+    //             prefix="EXP"
+    //             min={0}
+    //             precision={0}
+    //         />
+    //     </Form.Item>,
+    //     <Form.Item name="deity" label="Божество:" required>
+    //         <Input />
+    //     </Form.Item>,
+    // ];
 
     return (
         <>
@@ -1470,10 +1468,19 @@ const NewCharacterPage = () => {
                             inspiration={character.inspiration}
                         />
                     </StatusTrackerContext.Provider>
-                    <AttacksTable
-                        attacks={[attack]}
-                        attacksTableContent={attacks}
-                    />
+                    <AttackContext.Provider
+                        value={{
+                            attacks: attacks,
+                            character: character,
+                            onAttacksChange: handleAttacksChange
+                        }}
+                    >
+                        <AttacksTable
+                            attacksTableContent={attacks}
+                            character={character}
+                        />
+                    </AttackContext.Provider>
+
                     <TextBlock />
                 </Flex>
             </Flex>
