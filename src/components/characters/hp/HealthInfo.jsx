@@ -9,9 +9,11 @@ import { DrawerContext } from "../context/DrawerContext";
 import HealthPointsDrawer from "./HealthPointsDrawer";
 
 const HealthInfo = (props) => {
-    const color = getHealthBarColor(props.current, props.max, props.temporary);
     const { currentHP, maxHP, temporaryHP } = useContext(
         CharacterHeaderContext
+    );
+    const [color, setColor] = useState(
+        getHealthBarColor(currentHP, maxHP, temporaryHP)
     );
     const [healthPointsDrawerIsOpen, setHealthPointsDrawerIsOpen] =
         useState(false);
@@ -22,6 +24,7 @@ const HealthInfo = (props) => {
 
     const handleHealthPointsDrawerClose = () => {
         setHealthPointsDrawerIsOpen(false);
+        setColor(getHealthBarColor(currentHP, maxHP, temporaryHP));
     };
 
     return (
@@ -46,7 +49,10 @@ const HealthInfo = (props) => {
             <DrawerContext.Provider
                 value={{ onClose: handleHealthPointsDrawerClose }}
             >
-                <HealthPointsDrawer open={healthPointsDrawerIsOpen} />
+                <HealthPointsDrawer
+                    open={healthPointsDrawerIsOpen}
+                    color={color}
+                />
             </DrawerContext.Provider>
         </>
     );

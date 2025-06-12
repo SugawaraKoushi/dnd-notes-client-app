@@ -1,6 +1,6 @@
 export const getHealthBarColor = (current, max, temp) => {
-    let percentage = (current / (max + temp)) * 100;
-
+    let percentage = (current / max) * 100;
+    console.log(percentage);
     if (percentage <= 25) {
         return "#e64747";
     }

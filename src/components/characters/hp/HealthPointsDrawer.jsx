@@ -1,26 +1,21 @@
-import {
-    Button,
-    Drawer,
-    Flex,
-    Form,
-    Input,
-    InputNumber,
-    Typography,
-} from "antd";
+import { Button, Drawer, Flex, Form, InputNumber, Typography } from "antd";
 import { useContext, useState } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
 import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
+import { getHealthBarColor } from "../../services/HealthService";
 
-const HealthPointsDrawer = (props) => {
+const HealthPointsDrawer = ({ open }) => {
     const { Title } = Typography;
     const [form] = useForm();
     const { onClose } = useContext(DrawerContext);
     const { currentHP, maxHP, temporaryHP, onHPChange } = useContext(
         CharacterHeaderContext
     );
-
-    const [hpValue, setHPValue] = useState(null);
+    const [hpValue, setHPValue] = useState(0);
+    const [color, setColor] = useState(
+        getHealthBarColor(currentHP, maxHP, temporaryHP)
+    );
 
     const handleClose = () => {
         onClose();
@@ -36,6 +31,7 @@ const HealthPointsDrawer = (props) => {
             temporaryHP: temporaryHP,
             maxHP: value,
         });
+        setColor(getHealthBarColor(currentHP, value, temporaryHP));
     };
 
     const handleAddTemporaryHPButtonClick = () => {
@@ -50,20 +46,28 @@ const HealthPointsDrawer = (props) => {
         let damagedTemporaryHP = temporaryHP - hpValue;
         let damagedCurrentHP =
             damagedTemporaryHP < 0 ? currentHP + damagedTemporaryHP : currentHP;
+
+        damagedCurrentHP = damagedCurrentHP < 0 ? 0 : damagedCurrentHP;
+        damagedTemporaryHP = damagedTemporaryHP < 0 ? 0 : damagedTemporaryHP;
         onHPChange({
-            currentHP: damagedCurrentHP < 0 ? 0 : damagedCurrentHP,
+            currentHP: damagedCurrentHP,
             temporaryHP: damagedTemporaryHP,
             maxHP: maxHP,
         });
+        setColor(
+            getHealthBarColor(damagedCurrentHP, maxHP, damagedTemporaryHP)
+        );
     };
 
     const handleHealButtonClick = () => {
+        let healedCurrentHP =
+            currentHP + hpValue >= maxHP ? maxHP : currentHP + hpValue;
         onHPChange({
-            currentHP:
-                currentHP + hpValue >= maxHP ? maxHP : currentHP + hpValue,
+            currentHP: healedCurrentHP,
             temporaryHP: temporaryHP,
             maxHP: maxHP,
         });
+        setColor(getHealthBarColor(healedCurrentHP, maxHP, temporaryHP));
     };
 
     return (
@@ -73,8 +77,9 @@ const HealthPointsDrawer = (props) => {
                 (temporaryHP > 0 ? ` (${temporaryHP})` : "")
             }
             width={580}
-            open={props.open}
+            open={open}
             onClose={handleClose}
+            style={{ color: `${color}` }}
         >
             <Form form={form} name="character-settings" className="drawer-form">
                 <Flex vertical gap={0} style={{ margin: 0, padding: 0 }}>
