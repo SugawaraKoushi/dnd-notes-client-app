@@ -3,13 +3,9 @@ import "./index.css";
 import { useState } from "react";
 
 import AttackAbilityEnum from "../../../model/enum/AttackAbilityEnum";
+import { calculateModifier } from "../../services/ModifierService";
 
-const AttackModal = ({
-    open,
-    onClose,
-    attack: initialAttack,
-    proficiencyBonus,
-}) => {
+const AttackModal = ({ open, onClose, attack: initialAttack, character }) => {
     const [attack, setAttack] = useState(initialAttack);
 
     const [showPrefix, setShowPrefix] = useState(true);
@@ -29,8 +25,38 @@ const AttackModal = ({
         setAttack({ ...attack, name: event.target.value });
     };
 
-    const handleAttackAbilityChange = (value) => {
-        setAttack((prevAttack) => prevAttack.setAbility(value));
+    const handleAttackAbilityChange = (ability) => {
+        let abilityModifier;
+
+        switch (ability) {
+            case AttackAbilityEnum.STRENGTH:
+                abilityModifier = calculateModifier(character.strength);
+                break;
+            case AttackAbilityEnum.DEXTERITY:
+                abilityModifier = calculateModifier(character.dexterity);
+                break;
+            case AttackAbilityEnum.CONSTITUTION:
+                abilityModifier = calculateModifier(character.constitution);
+                break;
+            case AttackAbilityEnum.INTELLIGENCE:
+                abilityModifier = calculateModifier(character.intelligence);
+                break;
+            case AttackAbilityEnum.WISDOM:
+                abilityModifier = calculateModifier(character.wisdom);
+                break;
+            case AttackAbilityEnum.CHARISMA:
+                abilityModifier = calculateModifier(character.charisma);
+                break;
+            case AttackAbilityEnum.EMPTY:
+            default:
+                abilityModifier = 0;
+        }
+
+        setAttack({
+            ...attack,
+            ability: ability,
+            abilityBonus: abilityModifier,
+        });
     };
 
     const handleProficiencyToggle = () => {
@@ -38,7 +64,7 @@ const AttackModal = ({
         setAttack({
             ...attack,
             proficiency: proficiency,
-            proficiencyBonus: proficiency ? proficiencyBonus : 0,
+            proficiencyBonus: proficiency ? character.proficiencyBonus : 0,
         });
     };
 

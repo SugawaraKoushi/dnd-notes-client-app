@@ -107,7 +107,7 @@ const AttacksTable = () => {
                     open={isModalOpen}
                     onClose={handleModalClose}
                     attack={attacks[selectedAttackIndex]}
-                    proficiencyBonus={character.proficiencyBonus}
+                    character={character}
                 />
             )}
         </Flex>
