@@ -27,7 +27,7 @@ const NotificationStack = (props) => {
             <Flex className="notification-stack" vertical>
                 {shortNotifications.map((item, i) => (
                     <MemoizedNotificationShort
-                        key={`short_${item.id}_${i}`}
+                        key={`short_${item.id}_${i}_${Date.now()}`}
                         type={item.type}
                         ability={item.ability}
                         value={item.value}
@@ -35,7 +35,7 @@ const NotificationStack = (props) => {
                     />
                 ))}
                 <MemoizedNotification
-                    key={`main_${lastNotification.id}`}
+                    key={`main_${lastNotification.id}_${Date.now()}`}
                     type={lastNotification.type}
                     ability={lastNotification.ability}
                     value={lastNotification.value}
