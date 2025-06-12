@@ -1029,6 +1029,15 @@ const NewCharacterPage = () => {
         });
     };
 
+    const handleHPChange = (hp) => {
+                setCharacter({
+            ...character,
+            currentHP: hp.currentHP,
+            maxHP: hp.maxHP,
+            temporaryHP: hp.temporaryHP,
+        });
+    }
+
     //#endregion Прочее
 
     //#region Атаки
@@ -1106,6 +1115,7 @@ const NewCharacterPage = () => {
                     onRaceChange: handleRaceChange,
                     onClassChange: handleClassChange,
                     onSubclassChange: handleSubclassChange,
+                    onHPChange: handleHPChange,
                     name: character.name,
                     race: character.race,
                     className: character.class,

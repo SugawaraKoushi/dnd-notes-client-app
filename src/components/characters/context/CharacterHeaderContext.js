@@ -8,6 +8,7 @@ export const CharacterHeaderContext = createContext({
     onRaceChange: () => {},
     onClassChange: () => {},
     onSubclassChange: () => {},
+    onHPChange: () => {},
     name: "",
     race: "",
     className: "",
