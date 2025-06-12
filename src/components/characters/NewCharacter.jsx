@@ -1,11 +1,4 @@
-import {
-    Flex,
-    Form,
-    Input,
-    InputNumber,
-    Select,
-    Grid,
-} from "antd";
+import { Flex, Form, Input, InputNumber, Select, Grid } from "antd";
 import { useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
@@ -22,6 +15,7 @@ import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 import AttacksTable from "./attacks/AttacksTable";
 import Attack from "../../model/Attack";
 import { AttackContext } from "./context/AttackContext";
+import { NotificationContext } from "./context/NotificationContext";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -1053,7 +1047,7 @@ const NewCharacterPage = () => {
 
     const handleAttacksChange = (newAttacks) => {
         setAttacks(newAttacks);
-    }
+    };
 
     //#endregion Атаки
 
@@ -1127,363 +1121,370 @@ const NewCharacterPage = () => {
             >
                 <CharacterHeader />
             </CharacterHeaderContext.Provider>
-            <Flex
-                className="content-layout"
-                style={{ lineHeight: "inherit" }}
-                justify="space-between"
-                gap="small"
+            <NotificationContext.Provider
+                value={{ onRollButtonClick: handleRollButtonClick }}
             >
                 <Flex
-                    vertical={isVertical}
-                    wrap
-                    className="abilities"
+                    className="content-layout"
+                    style={{ lineHeight: "inherit" }}
+                    justify="space-between"
                     gap="small"
                 >
-                    <AbilityContext.Provider
-                        value={{
-                            onScoreChange: handleStrengthScoreChange,
-                            onSavingThrowProficiencyChange:
-                                handleStrengthSavingThrowProficiencyChange,
-                            onSavingThrowBonusChange:
-                                handleStrengthSavingThrowBonusChange,
-                            onSkillProficiencyChange: (index) => {
-                                if (index === 0) {
-                                    handleAthleticsProficiencyChange();
-                                }
-                            },
-                            onSkillBonusChange: (index, bonus) => {
-                                if (index === 0) {
-                                    handleAthleticsBonusChange(bonus);
-                                }
-                            },
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
+                    <Flex
+                        vertical={isVertical}
+                        wrap
+                        className="abilities"
+                        gap="small"
                     >
-                        <AbilityTile
-                            key="strength"
-                            id="strength"
-                            name="сила"
-                            notificationName="силы"
-                            score={character.strength}
-                            savingThrow={character.strengthSavingThrow}
-                            savingThrowProficiency={
-                                character.strengthSavingThrowProficiency
-                            }
-                            savingThrowBonus={
-                                character.strengthSavingThrowBonus
-                            }
-                            skills={strengthSkills}
-                        />
-                    </AbilityContext.Provider>
-                    <AbilityContext.Provider
-                        value={{
-                            onScoreChange: handleDexterityScoreChange,
-                            onSavingThrowProficiencyChange:
-                                handleDexteritySavingThrowProficiencyChange,
-                            onSavingThrowBonusChange:
-                                handleDexterityhSavingThrowBonusChange,
-                            onSkillProficiencyChange: (index) => {
-                                switch (index) {
-                                    case 0:
-                                        handleAcrobaticsProficiencyChange();
-                                        break;
-                                    case 1:
-                                        handleSleightOfHandProficiencyChange();
-                                        break;
-                                    case 2:
-                                        handleStealthProficiencyChange();
-                                        break;
-                                    default:
-                                        break;
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleStrengthScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleStrengthSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleStrengthSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    if (index === 0) {
+                                        handleAthleticsProficiencyChange();
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    if (index === 0) {
+                                        handleAthleticsBonusChange(bonus);
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="strength"
+                                id="strength"
+                                name="сила"
+                                notificationName="силы"
+                                score={character.strength}
+                                savingThrow={character.strengthSavingThrow}
+                                savingThrowProficiency={
+                                    character.strengthSavingThrowProficiency
                                 }
-                            },
-                            onSkillBonusChange: (index, bonus) => {
-                                switch (index) {
-                                    case 0:
-                                        handleAcrobaticsBonusChange(bonus);
-                                        break;
-                                    case 1:
-                                        handleSleightOfHandBonusChange(bonus);
-                                        break;
-                                    case 2:
-                                        handleStealthBonusChange(bonus);
-                                        break;
-                                    default:
-                                        break;
+                                savingThrowBonus={
+                                    character.strengthSavingThrowBonus
                                 }
-                            },
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
-                    >
-                        <AbilityTile
-                            key="dexterity"
-                            id="dexterity"
-                            name="ловкость"
-                            notificationName="ловкости"
-                            score={character.dexterity}
-                            savingThrow={character.dexteritySavingThrow}
-                            savingThrowProficiency={
-                                character.dexteritySavingThrowProficiency
-                            }
-                            savingThrowBonus={
-                                character.dexteritySavingThrowBonus
-                            }
-                            skills={dexteritySkills}
-                        />
-                    </AbilityContext.Provider>
-                    <AbilityContext.Provider
-                        value={{
-                            onScoreChange: handleConstitutionScoreChange,
-                            onSavingThrowProficiencyChange:
-                                handleConstitutionSavingThrowProficiencyChange,
-                            onSavingThrowBonusChange:
-                                handleConstitutionSavingThrowBonusChange,
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
-                    >
-                        <AbilityTile
-                            key="constitution"
-                            id="constitution"
-                            name="телосложение"
-                            notificationName="телосложения"
-                            score={character.constitution}
-                            savingThrow={character.constitutionSavingThrow}
-                            savingThrowProficiency={
-                                character.constitutionSavingThrowProficiency
-                            }
-                            savingThrowBonus={
-                                character.constitutionSavingThrowBonus
-                            }
-                        />
-                    </AbilityContext.Provider>
-                    <AbilityContext.Provider
-                        value={{
-                            onScoreChange: handleIntelligenceScoreChange,
-                            onSavingThrowProficiencyChange:
-                                handleIntelligenceSavingThrowProficiencyChange,
-                            onSavingThrowBonusChange:
-                                handleIntelligenceSavingThrowBonusChange,
-                            onSkillProficiencyChange: (index) => {
-                                switch (index) {
-                                    case 0:
-                                        handleInvestigationProficiencyChange();
-                                        break;
-                                    case 1:
-                                        handleHistoryProficiencyChange();
-                                        break;
-                                    case 2:
-                                        handleArcanaProficiencyChange();
-                                        break;
-                                    case 3:
-                                        handleNatureProficiencyChange();
-                                        break;
-                                    case 4:
-                                        handleReligionProficiencyChange();
-                                        break;
-                                    default:
-                                        break;
+                                skills={strengthSkills}
+                            />
+                        </AbilityContext.Provider>
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleDexterityScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleDexteritySavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleDexterityhSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    switch (index) {
+                                        case 0:
+                                            handleAcrobaticsProficiencyChange();
+                                            break;
+                                        case 1:
+                                            handleSleightOfHandProficiencyChange();
+                                            break;
+                                        case 2:
+                                            handleStealthProficiencyChange();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    switch (index) {
+                                        case 0:
+                                            handleAcrobaticsBonusChange(bonus);
+                                            break;
+                                        case 1:
+                                            handleSleightOfHandBonusChange(
+                                                bonus
+                                            );
+                                            break;
+                                        case 2:
+                                            handleStealthBonusChange(bonus);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="dexterity"
+                                id="dexterity"
+                                name="ловкость"
+                                notificationName="ловкости"
+                                score={character.dexterity}
+                                savingThrow={character.dexteritySavingThrow}
+                                savingThrowProficiency={
+                                    character.dexteritySavingThrowProficiency
                                 }
-                            },
-                            onSkillBonusChange: (index, bonus) => {
-                                switch (index) {
-                                    case 0:
-                                        handleInvestigationBonusChange(bonus);
-                                        break;
-                                    case 1:
-                                        handleHistoryBonusChange(bonus);
-                                        break;
-                                    case 2:
-                                        handleArcanaBonusChange(bonus);
-                                        break;
-                                    case 3:
-                                        handleNatureBonusChange(bonus);
-                                        break;
-                                    case 4:
-                                        handleReligionBonusChange(bonus);
-                                        break;
-                                    default:
-                                        break;
+                                savingThrowBonus={
+                                    character.dexteritySavingThrowBonus
                                 }
-                            },
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
-                    >
-                        <AbilityTile
-                            key="intelligence"
-                            id="intelligence"
-                            name="интеллект"
-                            notificationName="интеллекта"
-                            score={character.intelligence}
-                            savingThrow={character.intelligenceSavingThrow}
-                            savingThrowProficiency={
-                                character.intelligenceSavingThrowProficiency
-                            }
-                            savingThrowBonus={
-                                character.intelligenceSavingThrowBonus
-                            }
-                            skills={intelligenceSkills}
-                        />
-                    </AbilityContext.Provider>
-                    <AbilityContext.Provider
-                        value={{
-                            onScoreChange: handleWisdomScoreChange,
-                            onSavingThrowProficiencyChange:
-                                handleWisdomSavingThrowProficiencyChange,
-                            onSavingThrowBonusChange:
-                                handleWisdomSavingThrowBonusChange,
-                            onSkillProficiencyChange: (index) => {
-                                switch (index) {
-                                    case 0:
-                                        handlePerceptionProficiencyChange();
-                                        break;
-                                    case 1:
-                                        handleSurvivalProficiencyChange();
-                                        break;
-                                    case 2:
-                                        handleMedicineProficiencyChange();
-                                        break;
-                                    case 3:
-                                        handleInsightProficiencyChange();
-                                        break;
-                                    case 4:
-                                        handleAnimalHandlingProficiencyChange();
-                                        break;
-                                    default:
-                                        break;
+                                skills={dexteritySkills}
+                            />
+                        </AbilityContext.Provider>
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleConstitutionScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleConstitutionSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleConstitutionSavingThrowBonusChange,
+                            }}
+                        >
+                            <AbilityTile
+                                key="constitution"
+                                id="constitution"
+                                name="телосложение"
+                                notificationName="телосложения"
+                                score={character.constitution}
+                                savingThrow={character.constitutionSavingThrow}
+                                savingThrowProficiency={
+                                    character.constitutionSavingThrowProficiency
                                 }
-                            },
-                            onSkillBonusChange: (index, bonus) => {
-                                switch (index) {
-                                    case 0:
-                                        handlePerceptionBonusChange(bonus);
-                                        break;
-                                    case 1:
-                                        handleSurvivalBonusChange(bonus);
-                                        break;
-                                    case 2:
-                                        handleMedicineBonusChange(bonus);
-                                        break;
-                                    case 3:
-                                        handleInsightBonusChange(bonus);
-                                        break;
-                                    case 4:
-                                        handleAnimalHandlingBonusChange(bonus);
-                                        break;
-                                    default:
-                                        break;
+                                savingThrowBonus={
+                                    character.constitutionSavingThrowBonus
                                 }
-                            },
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
-                    >
-                        <AbilityTile
-                            key="wisdom"
-                            id="wisdom"
-                            name="мудрость"
-                            notificationName="мудрости"
-                            score={character.wisdom}
-                            savingThrow={character.wisdomSavingThrow}
-                            savingThrowProficiency={
-                                character.wisdomSavingThrowProficiency
-                            }
-                            savingThrowBonus={character.wisdomSavingThrowBonus}
-                            skills={wisdomSkills}
-                        />
-                    </AbilityContext.Provider>
-                    <AbilityContext.Provider
-                        value={{
-                            onScoreChange: handleCharismaScoreChange,
-                            onSavingThrowProficiencyChange:
-                                handleCharismaSavingThrowProficiencyChange,
-                            onSavingThrowBonusChange:
-                                handleCharismaSavingThrowBonusChange,
-                            onSkillProficiencyChange: (index) => {
-                                switch (index) {
-                                    case 0:
-                                        handlePerformanceProficiencyChange();
-                                        break;
-                                    case 1:
-                                        handleIntimidationProficiencyChange();
-                                        break;
-                                    case 2:
-                                        handleDeceptionProficiencyChange();
-                                        break;
-                                    case 3:
-                                        handlePersuasionProficiencyChange();
-                                        break;
-                                    default:
-                                        break;
+                            />
+                        </AbilityContext.Provider>
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleIntelligenceScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleIntelligenceSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleIntelligenceSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    switch (index) {
+                                        case 0:
+                                            handleInvestigationProficiencyChange();
+                                            break;
+                                        case 1:
+                                            handleHistoryProficiencyChange();
+                                            break;
+                                        case 2:
+                                            handleArcanaProficiencyChange();
+                                            break;
+                                        case 3:
+                                            handleNatureProficiencyChange();
+                                            break;
+                                        case 4:
+                                            handleReligionProficiencyChange();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    switch (index) {
+                                        case 0:
+                                            handleInvestigationBonusChange(
+                                                bonus
+                                            );
+                                            break;
+                                        case 1:
+                                            handleHistoryBonusChange(bonus);
+                                            break;
+                                        case 2:
+                                            handleArcanaBonusChange(bonus);
+                                            break;
+                                        case 3:
+                                            handleNatureBonusChange(bonus);
+                                            break;
+                                        case 4:
+                                            handleReligionBonusChange(bonus);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="intelligence"
+                                id="intelligence"
+                                name="интеллект"
+                                notificationName="интеллекта"
+                                score={character.intelligence}
+                                savingThrow={character.intelligenceSavingThrow}
+                                savingThrowProficiency={
+                                    character.intelligenceSavingThrowProficiency
                                 }
-                            },
-                            onSkillBonusChange: (index, bonus) => {
-                                switch (index) {
-                                    case 0:
-                                        handlePerformanceBonusChange(bonus);
-                                        break;
-                                    case 1:
-                                        handleIntimidationBonusChange(bonus);
-                                        break;
-                                    case 2:
-                                        handleDeceptionBonusChange(bonus);
-                                        break;
-                                    case 3:
-                                        handlePersuasionBonusChange(bonus);
-                                        break;
-                                    default:
-                                        break;
+                                savingThrowBonus={
+                                    character.intelligenceSavingThrowBonus
                                 }
-                            },
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
-                    >
-                        <AbilityTile
-                            key="charisma"
-                            id="charisma"
-                            name="харизма"
-                            notificationName="харизмы"
-                            score={character.charisma}
-                            savingThrow={character.charismaSavingThrow}
-                            savingThrowProficiency={
-                                character.charismaSavingThrowProficiency
-                            }
-                            savingThrowBonus={
-                                character.charismaSavingThrowBonus
-                            }
-                            skills={charismaSkills}
-                        />
-                    </AbilityContext.Provider>
-                    <PassiveAbilityTile skills={passiveSkills} />
-                </Flex>
-                <Flex vertical className="character-content" gap={6}>
-                    <StatusTrackerContext.Provider
-                        value={{
-                            onInspirationChange: handleInspirationChange,
-                            onExhaustChange: handleExhaustChange,
-                            onRollButtonClick: handleRollButtonClick,
-                        }}
-                    >
-                        <StatusTracker
-                            initiative={character.initiative}
-                            exhausted={character.exhausted}
-                            inspiration={character.inspiration}
-                        />
-                    </StatusTrackerContext.Provider>
-                    <AttackContext.Provider
-                        value={{
-                            attacks: attacks,
-                            character: character,
-                            onAttacksChange: handleAttacksChange
-                        }}
-                    >
-                        <AttacksTable
-                            attacksTableContent={attacks}
-                            character={character}
-                        />
-                    </AttackContext.Provider>
+                                skills={intelligenceSkills}
+                            />
+                        </AbilityContext.Provider>
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleWisdomScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleWisdomSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleWisdomSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerceptionProficiencyChange();
+                                            break;
+                                        case 1:
+                                            handleSurvivalProficiencyChange();
+                                            break;
+                                        case 2:
+                                            handleMedicineProficiencyChange();
+                                            break;
+                                        case 3:
+                                            handleInsightProficiencyChange();
+                                            break;
+                                        case 4:
+                                            handleAnimalHandlingProficiencyChange();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerceptionBonusChange(bonus);
+                                            break;
+                                        case 1:
+                                            handleSurvivalBonusChange(bonus);
+                                            break;
+                                        case 2:
+                                            handleMedicineBonusChange(bonus);
+                                            break;
+                                        case 3:
+                                            handleInsightBonusChange(bonus);
+                                            break;
+                                        case 4:
+                                            handleAnimalHandlingBonusChange(
+                                                bonus
+                                            );
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="wisdom"
+                                id="wisdom"
+                                name="мудрость"
+                                notificationName="мудрости"
+                                score={character.wisdom}
+                                savingThrow={character.wisdomSavingThrow}
+                                savingThrowProficiency={
+                                    character.wisdomSavingThrowProficiency
+                                }
+                                savingThrowBonus={
+                                    character.wisdomSavingThrowBonus
+                                }
+                                skills={wisdomSkills}
+                            />
+                        </AbilityContext.Provider>
+                        <AbilityContext.Provider
+                            value={{
+                                onScoreChange: handleCharismaScoreChange,
+                                onSavingThrowProficiencyChange:
+                                    handleCharismaSavingThrowProficiencyChange,
+                                onSavingThrowBonusChange:
+                                    handleCharismaSavingThrowBonusChange,
+                                onSkillProficiencyChange: (index) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerformanceProficiencyChange();
+                                            break;
+                                        case 1:
+                                            handleIntimidationProficiencyChange();
+                                            break;
+                                        case 2:
+                                            handleDeceptionProficiencyChange();
+                                            break;
+                                        case 3:
+                                            handlePersuasionProficiencyChange();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                                onSkillBonusChange: (index, bonus) => {
+                                    switch (index) {
+                                        case 0:
+                                            handlePerformanceBonusChange(bonus);
+                                            break;
+                                        case 1:
+                                            handleIntimidationBonusChange(
+                                                bonus
+                                            );
+                                            break;
+                                        case 2:
+                                            handleDeceptionBonusChange(bonus);
+                                            break;
+                                        case 3:
+                                            handlePersuasionBonusChange(bonus);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                },
+                            }}
+                        >
+                            <AbilityTile
+                                key="charisma"
+                                id="charisma"
+                                name="харизма"
+                                notificationName="харизмы"
+                                score={character.charisma}
+                                savingThrow={character.charismaSavingThrow}
+                                savingThrowProficiency={
+                                    character.charismaSavingThrowProficiency
+                                }
+                                savingThrowBonus={
+                                    character.charismaSavingThrowBonus
+                                }
+                                skills={charismaSkills}
+                            />
+                        </AbilityContext.Provider>
+                        <PassiveAbilityTile skills={passiveSkills} />
+                    </Flex>
+                    <Flex vertical className="character-content" gap={6}>
+                        <StatusTrackerContext.Provider
+                            value={{
+                                onInspirationChange: handleInspirationChange,
+                                onExhaustChange: handleExhaustChange,
+                            }}
+                        >
+                            <StatusTracker
+                                initiative={character.initiative}
+                                exhausted={character.exhausted}
+                                inspiration={character.inspiration}
+                            />
+                        </StatusTrackerContext.Provider>
+                        <AttackContext.Provider
+                            value={{
+                                attacks: attacks,
+                                character: character,
+                                onAttacksChange: handleAttacksChange,
+                            }}
+                        >
+                            <AttacksTable
+                                attacksTableContent={attacks}
+                                character={character}
+                            />
+                        </AttackContext.Provider>
 
-                    <TextBlock />
+                        <TextBlock />
+                    </Flex>
                 </Flex>
-            </Flex>
+            </NotificationContext.Provider>
             <NotificationStack
                 onClose={handleNotificationStackCloseButtonClick}
                 items={notifications}

@@ -6,13 +6,12 @@ import { AbilityContext } from "../context/AbilityContext";
 import AbilityModal from "./AbilityModal";
 import SkillModal from "../SkillModal";
 import { rollDice } from "../../services/RollDiceService";
+import { NotificationContext } from "../context/NotificationContext";
 
 const AbilityCheck = (props) => {
-    const {
-        onSavingThrowProficiencyChange,
-        onSkillProficiencyChange,
-        onRollButtonClick,
-    } = useContext(AbilityContext);
+    const { onSavingThrowProficiencyChange, onSkillProficiencyChange } =
+        useContext(AbilityContext);
+    const { onRollButtonClick } = useContext(NotificationContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const labelClassName = props.skill

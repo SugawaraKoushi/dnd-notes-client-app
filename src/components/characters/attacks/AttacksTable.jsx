@@ -6,17 +6,23 @@ import Attack from "../../../model/Attack";
 import AttackModal from "./AttackModal";
 import { modifierAsString } from "../../services/ModifierService";
 import { AttackContext } from "../context/AttackContext";
+import { NotificationContext } from "../context/NotificationContext";
+import { rollDice } from "../../services/RollDiceService";
 
 const AttacksTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { attacks, character, onAttacksChange } = useContext(AttackContext);
+    const { onRollButtonClick } = useContext(NotificationContext);
     const [selectedAttackIndex, setSelectedAttackIndex] = useState(null);
 
     const datasource = useMemo(() => {
         return attacks.map((attack, index) => ({
             key: index,
             name: attack.name,
-            bonus: attack.proficiencyBonus + attack.additionalBonus + attack.abilityBonus,
+            bonus:
+                attack.proficiencyBonus +
+                attack.additionalBonus +
+                attack.abilityBonus,
             damage: attack.damage,
         }));
     }, [attacks]);
@@ -48,10 +54,50 @@ const AttacksTable = () => {
     const handleModalClose = (updatedAttack) => {
         setIsModalOpen(false);
         console.log(updatedAttack);
-        
+
         const newAttacks = [...attacks];
         newAttacks[selectedAttackIndex] = updatedAttack;
         onAttacksChange(newAttacks);
+    };
+
+    const handleRollAttackButtonClick = (bonus, attackName) => {
+        console.log(attackName);
+
+        const dice = 20;
+        const times = 1;
+        const value = rollDice(times, dice);
+
+        let result = {
+            type: "бросок",
+            value: value,
+            modifier: bonus,
+            dice: dice,
+            times: times,
+            ability: `атаки ${attackName}`,
+        };
+
+        onRollButtonClick(result);
+    };
+
+    const handleRollDamageButtonClick = (damage, attackName) => {
+        const numbers = damage.match(/-?\d+/g).map(Number);
+
+        const times = numbers[0];
+        const dice = numbers[1];
+        const modifier = numbers.length > 2 ? numbers[2] : 0;
+
+        const value = rollDice(times, dice);
+
+        let result = {
+            type: "бросок",
+            value: value,
+            modifier: modifier,
+            dice: dice,
+            times: times,
+            ability: `урона ${attackName}`,
+        };
+
+        onRollButtonClick(result);
     };
 
     const columns = [
@@ -68,8 +114,13 @@ const AttacksTable = () => {
             title: "Бонус",
             dataIndex: "bonus",
             width: "20%",
-            render: (bonus) => (
-                <Button className="bonus-attack-button">
+            render: (bonus, attack) => (
+                <Button
+                    className="bonus-attack-button"
+                    onClick={() =>
+                        handleRollAttackButtonClick(bonus, attack.name)
+                    }
+                >
                     {modifierAsString(bonus)}
                 </Button>
             ),
@@ -78,6 +129,16 @@ const AttacksTable = () => {
             title: "Урон",
             dataIndex: "damage",
             width: "40%",
+            render: (damage, attack) => (
+                <Button
+                    className="damage-attack-button"
+                    onClick={() =>
+                        handleRollDamageButtonClick(damage, attack.name)
+                    }
+                >
+                    {damage}
+                </Button>
+            ),
         },
     ];
 

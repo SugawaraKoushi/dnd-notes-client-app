@@ -8,6 +8,4 @@ export const AbilityContext = createContext({
 
     onSkillProficiencyChange: (index) => {},
     onSkillBonusChange: (index, bonus) => {},
-
-    onRollButtonClick: (result) => {},
 });

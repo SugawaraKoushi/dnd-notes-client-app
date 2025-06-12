@@ -4,10 +4,12 @@ import { useContext } from "react";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import "./index.css";
 import { rollDice } from "../services/RollDiceService";
+import { NotificationContext } from "./context/NotificationContext";
 
 const StatusTracker = (props) => {
-    const { onInspirationChange, onExhaustChange, onRollButtonClick } =
+    const { onInspirationChange, onExhaustChange } =
         useContext(StatusTrackerContext);
+    const { onRollButtonClick } = useContext(NotificationContext);
 
     const exhaustingLevels = [
         { key: 1, label: <span>0</span>, onClick: () => onExhaustChange(0) },
