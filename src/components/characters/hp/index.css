@@ -9,3 +9,18 @@
 .health-icon {
     padding-right: 8px;
 }
+
+.tremporary-hp-button {
+    background-color: #6681a9;
+    color: white;
+}
+
+.damage-hp-button {
+    background-color: #e64747;
+    color: white;
+}
+
+.heal-hp-button {
+    background-color: green;
+    color: white;
+}
