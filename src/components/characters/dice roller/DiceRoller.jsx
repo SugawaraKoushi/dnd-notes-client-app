@@ -1,7 +1,8 @@
-import Icon from "@ant-design/icons";
+import Icon, { CloseOutlined } from "@ant-design/icons";
 import { FloatButton } from "antd";
 import { D20Outlined } from "../../../icons/D20Outlined";
 import { useState } from "react";
+import { D2Outlined } from "../../../icons/D2Outlined";
 
 const DiceRoller = () => {
     const [diceRollerMenuIsOpen, setDiceRollerMenuIsOpen] = useState(false);
@@ -13,8 +14,14 @@ const DiceRoller = () => {
     return (
         <>
             <FloatButton
-                className="dice-roll-button"
-                icon={<Icon component={() => <D20Outlined />} />}
+                className={diceRollerMenuIsOpen ? "" : "dice-roll-button"}
+                icon={
+                    diceRollerMenuIsOpen ? (
+                        <CloseOutlined />
+                    ) : (
+                        <Icon component={() => <D20Outlined />} />
+                    )
+                }
                 onClick={handleDiceRollerMenuButtonClick}
                 style={{
                     width: "50px",
@@ -29,7 +36,7 @@ const DiceRoller = () => {
                 <div>
                     <FloatButton
                         className="dice-roll-button"
-                        icon={<Icon component={() => <D20Outlined />} />}
+                        icon={<Icon component={() => <D2Outlined />} />}
                         style={{
                             width: "50px",
                             height: "50px",
