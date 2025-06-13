@@ -53,16 +53,12 @@ const AttacksTable = () => {
 
     const handleModalClose = (updatedAttack) => {
         setIsModalOpen(false);
-        console.log(updatedAttack);
-
         const newAttacks = [...attacks];
         newAttacks[selectedAttackIndex] = updatedAttack;
         onAttacksChange(newAttacks);
     };
 
     const handleRollAttackButtonClick = (bonus, attackName) => {
-        console.log(attackName);
-
         const dice = 20;
         const times = 1;
         const value = rollDice(times, dice);

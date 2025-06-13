@@ -6,7 +6,7 @@ const Registration = () => {
     const { Title } = Typography;
     const navigate = useNavigate();
 
-    const onFinish = async (values) => {
+    const handleFinish = async (values) => {
         const url = "http://localhost:8080/api/users/create";
 
         try {
@@ -54,7 +54,7 @@ const Registration = () => {
             <Form
                 layout="horizontal"
                 name="register"
-                onFinish={onFinish}
+                onFinish={handleFinish}
                 scrollToFirstError
                 labelCol={{ span: 6 }}
             >

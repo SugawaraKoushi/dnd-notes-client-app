@@ -1,4 +1,12 @@
-import { Flex, Form, Input, InputNumber, Select, Grid } from "antd";
+import {
+    Flex,
+    Form,
+    Input,
+    InputNumber,
+    Select,
+    Grid,
+    FloatButton,
+} from "antd";
 import { useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
@@ -16,6 +24,8 @@ import AttacksTable from "./attacks/AttacksTable";
 import Attack from "../../model/Attack";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
+import Icon, { PlusOutlined } from "@ant-design/icons";
+import { D20Outlined } from "../../icons/D20Outlined";
 
 const NewCharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
@@ -1030,13 +1040,13 @@ const NewCharacterPage = () => {
     };
 
     const handleHPChange = (hp) => {
-                setCharacter({
+        setCharacter({
             ...character,
             currentHP: hp.currentHP,
             maxHP: hp.maxHP,
             temporaryHP: hp.temporaryHP,
         });
-    }
+    };
 
     //#endregion Прочее
 
@@ -1498,6 +1508,18 @@ const NewCharacterPage = () => {
             <NotificationStack
                 onClose={handleNotificationStackCloseButtonClick}
                 items={notifications}
+            />
+            <FloatButton
+                className="dice-roll-button"
+                icon={<Icon component={() => <D20Outlined />} />}
+                style={{
+                    width: "50px",
+                    height: "50px",
+                    padding: 0,
+                    margin: 0,
+                    bottom: "100px",
+                    right: "100px",
+                }}
             />
         </>
     );
