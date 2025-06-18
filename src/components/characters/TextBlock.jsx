@@ -1,16 +1,17 @@
 import { Flex, Input, Typography } from "antd";
 import "./index.css";
 
-const TextBlock = () => {
+const TextBlock = (props) => {
+    const { title } = props;
     const { Title } = Typography;
     const { TextArea } = Input;
 
     return (
-        <Flex vertical>
+        <Flex vertical style={{flexGrow: 1}}>
             <Title level={5} style={{ margin: "0" }}>
-                ПРОЧИЕ ВЛАДЕНИЯ И ЯЗЫКИ
+                {title.toUpperCase()}
             </Title>
-            <TextArea style={{ height: "68px", resize: "none" }} />
+            <TextArea style={{ minHeight: "68px", height: "93%", resize: "none" }} />
         </Flex>
     );
 };

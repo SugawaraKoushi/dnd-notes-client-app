@@ -16,8 +16,6 @@ import AttacksTable from "./attacks/AttacksTable";
 import Attack from "../../model/Attack";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
-import Icon from "@ant-design/icons";
-import { D20Outlined } from "../../icons/D20Outlined";
 import DiceRoller from "./dice roller/DiceRoller";
 
 const NewCharacterPage = () => {
@@ -961,6 +959,21 @@ const NewCharacterPage = () => {
 
     //#endregion Пассивные чувства
 
+    //#region Уведомления
+
+    //#endregion Уведомления
+
+    const handleRollButtonClick = (value) => {
+        setNotifications((prev) => {
+            const updatedNotifications = [...prev, value].slice(-5);
+            return updatedNotifications;
+        });
+    };
+
+    const handleNotificationStackCloseButtonClick = () => {
+        setNotifications([]);
+    };
+
     //#region Прочее
 
     const handleInspirationChange = () => {
@@ -977,17 +990,6 @@ const NewCharacterPage = () => {
             ...character,
             exhausted: value,
         });
-    };
-
-    const handleRollButtonClick = (value) => {
-        setNotifications((prev) => {
-            const updatedNotifications = [...prev, value].slice(-5);
-            return updatedNotifications;
-        });
-    };
-
-    const handleNotificationStackCloseButtonClick = () => {
-        setNotifications([]);
     };
 
     const handleSpeedChange = (value) => {
@@ -1119,17 +1121,7 @@ const NewCharacterPage = () => {
                     onClassChange: handleClassChange,
                     onSubclassChange: handleSubclassChange,
                     onHPChange: handleHPChange,
-                    name: character.name,
-                    race: character.race,
-                    className: character.class,
-                    subclass: character.subclass,
-                    armorClass: character.armorClass,
-                    speed: character.speed,
-                    proficiencyBonus: character.proficiencyBonus,
-                    initiative: character.initiative,
-                    currentHP: character.currentHP,
-                    maxHP: character.maxHP,
-                    temporaryHP: character.temporaryHP,
+                    character: character,
                 }}
             >
                 <CharacterHeader />
@@ -1473,6 +1465,7 @@ const NewCharacterPage = () => {
                             value={{
                                 onInspirationChange: handleInspirationChange,
                                 onExhaustChange: handleExhaustChange,
+                                character: character,
                             }}
                         >
                             <StatusTracker
@@ -1494,7 +1487,7 @@ const NewCharacterPage = () => {
                             />
                         </AttackContext.Provider>
 
-                        <TextBlock />
+                        <TextBlock title={"заметки"}/>
                     </Flex>
                 </Flex>
             </NotificationContext.Provider>

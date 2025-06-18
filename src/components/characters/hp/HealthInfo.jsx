@@ -9,11 +9,11 @@ import { DrawerContext } from "../context/DrawerContext";
 import HealthPointsDrawer from "./HealthPointsDrawer";
 
 const HealthInfo = (props) => {
-    const { currentHP, maxHP, temporaryHP } = useContext(
+    const { character } = useContext(
         CharacterHeaderContext
     );
     const [color, setColor] = useState(
-        getHealthBarColor(currentHP, maxHP, temporaryHP)
+        getHealthBarColor(character.currentHP, character.maxHP, character.temporaryHP)
     );
     const [healthPointsDrawerIsOpen, setHealthPointsDrawerIsOpen] =
         useState(false);
@@ -24,7 +24,7 @@ const HealthInfo = (props) => {
 
     const handleHealthPointsDrawerClose = () => {
         setHealthPointsDrawerIsOpen(false);
-        setColor(getHealthBarColor(currentHP, maxHP, temporaryHP));
+        setColor(getHealthBarColor(character.currentHP, character.maxHP, character.temporaryHP));
     };
 
     return (
@@ -41,8 +41,8 @@ const HealthInfo = (props) => {
                 >
                     <HeartOutlined className="health-icon" />
                     <span>
-                        {`${currentHP} / ${maxHP}`}{" "}
-                        {temporaryHP > 0 ? `(${temporaryHP})` : ""}
+                        {`${character.currentHP} / ${character.maxHP}`}{" "}
+                        {character.temporaryHP > 0 ? `(${character.temporaryHP})` : ""}
                     </span>
                 </Flex>
             </Link>

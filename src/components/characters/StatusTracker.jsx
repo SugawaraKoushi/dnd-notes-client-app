@@ -6,6 +6,7 @@ import "./index.css";
 import { rollDice } from "../services/RollDiceService";
 import { NotificationContext } from "./context/NotificationContext";
 import StatesDrawer from "./drawer/StatesDrawer";
+import { DrawerContext } from "./context/DrawerContext";
 
 const StatusTracker = (props) => {
     const { onInspirationChange, onExhaustChange } =
@@ -97,10 +98,14 @@ const StatusTracker = (props) => {
                     </Flex>
                 </Button>
             </Flex>
-            <StatesDrawer
-                open={statesDrawerIsOpen}
-                onClose={handleStatesDrawerClose}
-            />
+            <DrawerContext.Provider
+                value={{ onClose: handleStatesDrawerClose }}
+            >
+                <StatesDrawer
+                    open={statesDrawerIsOpen}
+                    onClose={handleStatesDrawerClose}
+                />
+            </DrawerContext.Provider>
         </Flex>
     );
 };

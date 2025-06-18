@@ -1,30 +1,14 @@
-import { Checkbox, Drawer, Flex, Form, Input, InputNumber } from "antd";
-import { useContext, useState } from "react";
+import { Checkbox, Drawer, Flex, Form } from "antd";
+import { useContext } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
 import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
 
 const StatesDrawer = (props) => {
     const [form] = useForm();
-    const [showPrefix, setShowPrefix] = useState(true);
     const { onClose } = useContext(DrawerContext);
-    const {
-        onInitiativeChange,
-        onArmorClassChange,
-        onSpeedChange,
-        onNameChange,
-        onRaceChange,
-        onClassChange,
-        onSubclassChange,
-        name,
-        race,
-        className,
-        subclass,
-        armorClass,
-        speed,
-        initiative,
-    } = useContext(CharacterHeaderContext);
-    let plusPrefix = showPrefix && initiative > 0 ? "+" : <span />;
+    const { name } = useContext(CharacterHeaderContext);
+    
 
     const handleClose = () => {
         onClose();
@@ -87,7 +71,7 @@ const StatesDrawer = (props) => {
                     </Form.Item>
                     <Form.Item
                         label="Оглохший"
-                        name="Defeaned"
+                        name="defeaned"
                         style={{ width: "60%", margin: 0 }}
                         initialValue={name}
                     >
@@ -127,7 +111,7 @@ const StatesDrawer = (props) => {
                     </Form.Item>
                     <Form.Item
                         label="Очарованный"
-                        name="Charmed"
+                        name="charmed"
                         style={{ width: "60%", margin: 0 }}
                         initialValue={name}
                     >

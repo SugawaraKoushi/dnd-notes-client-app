@@ -9,16 +9,6 @@ export const CharacterHeaderContext = createContext({
     onClassChange: () => {},
     onSubclassChange: () => {},
     onHPChange: () => {},
-    name: "",
-    race: "",
-    className: "",
-    subclass: "",
-    armorClass: 10,
-    speed: 30,
-    proficiencyBonus: 0,
-    initiative: 0,
-    currentHP: 0,
-    maxHP: 0,
-    temporaryHP: 0,
+    character: {}, 
 });
 

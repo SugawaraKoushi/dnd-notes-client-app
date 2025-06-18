@@ -16,15 +16,9 @@ const CharacterSettingsDrawer = (props) => {
         onRaceChange,
         onClassChange,
         onSubclassChange,
-        name,
-        race,
-        className,
-        subclass,
-        armorClass,
-        speed,
-        initiative,
+        character,
     } = useContext(CharacterHeaderContext);
-    let plusPrefix = showPrefix && initiative > 0 ? "+" : <span />;
+    let plusPrefix = showPrefix && character.initiative > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
         setShowPrefix(false);
@@ -80,7 +74,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="Имя"
                             name="name"
                             style={{ width: "60%" }}
-                            initialValue={name}
+                            initialValue={character.name}
                             onChange={handleNameValueChange}
                         >
                             <Input placeholder="Имя" />
@@ -89,7 +83,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="Раса"
                             name="race"
                             style={{ width: "40%" }}
-                            initialValue={race}
+                            initialValue={character.race}
                             onChange={handleRaceValueChange}
                         >
                             <Input placeholder="Раса" />
@@ -100,7 +94,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="Класс"
                             name="class"
                             style={{ width: "50%" }}
-                            initialValue={className}
+                            initialValue={character.class}
                             onChange={handleClassValueChange}
                         >
                             <Input placeholder="Класс" />
@@ -109,7 +103,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="Подкласс"
                             name="subclass"
                             style={{ width: "50%" }}
-                            initialValue={subclass}
+                            initialValue={character.subclass}
                             onChange={handleSubclassValueChange}
                         >
                             <Input placeholder="Подкласс" />
@@ -120,7 +114,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="КЗ"
                             name="armor-class"
                             style={{ width: "33%" }}
-                            initialValue={armorClass}
+                            initialValue={character.armorClass}
                         >
                             <InputNumber
                                 placeholder="КЗ"
@@ -136,7 +130,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="Скорость"
                             name="speed"
                             style={{ width: "33%" }}
-                            initialValue={speed}
+                            initialValue={character.speed}
                         >
                             <InputNumber
                                 placeholder="Скорость"
@@ -152,7 +146,7 @@ const CharacterSettingsDrawer = (props) => {
                             label="Инициатива"
                             name="initiative"
                             style={{ width: "33%" }}
-                            initialValue={initiative}
+                            initialValue={character.initiative}
                             onChange={(value) =>
                                 handleInitiativeValueChange(value)
                             }

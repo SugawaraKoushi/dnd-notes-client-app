@@ -123,6 +123,23 @@ class Character {
         this.perceptionPassive = 10 + this.perception;
         this.insightPassive = 10 + this.insight;
         this.investigationPassive = 10 + this.investigation;
+
+        // Состояния
+        this.unconscious = false; // Бессознательный
+        this.frightened = false; // Испуганный
+        this.exhaustion = false; // Истощенный
+        this.invisible = false; // Невидимый
+        this.incapasitated = false; // Недееспособный
+        this.defeaned = false; // Оглохший
+        this.petrified = false; // Окаменевший
+        this.restrained = false; // Опутанный
+        this.blinded = false; // Ослеплённый
+        this.poisoned = false; // Отравленный
+        this.charmed = false; // Очарованный
+        this.stunned = false; // Ошеломлённый
+        this.paralyzed = false; // Парализованный
+        this.prone = false; // Сбитый с ног
+        this.grappled = false; // Схваченный
     }
 }
 

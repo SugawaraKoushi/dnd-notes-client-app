@@ -6,9 +6,7 @@ import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 
 const CharacterHeaderInfo = () => {
     const { Title } = Typography;
-    const { name, race, className, subclass } = useContext(
-        CharacterHeaderContext
-    );
+    const { character } = useContext(CharacterHeaderContext);
 
     return (
         <Flex
@@ -24,7 +22,7 @@ const CharacterHeaderInfo = () => {
             />
             <Flex vertical style={{ minWidth: "300px", width: "300px" }}>
                 <Title level={4} style={{ margin: "0 0 3px 0", padding: "0" }}>
-                    {capitalize(name)}
+                    {capitalize(character.name)}
                 </Title>
                 <p
                     style={{
@@ -33,7 +31,7 @@ const CharacterHeaderInfo = () => {
                         whiteSpace: "nowrap",
                     }}
                 >
-                    {`${race} — ${className}, ${subclass}`}
+                    {`${character.race} — ${character.class}, ${character.subclass}`}
                 </p>
             </Flex>
         </Flex>

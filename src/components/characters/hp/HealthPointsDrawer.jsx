@@ -9,12 +9,14 @@ const HealthPointsDrawer = ({ open }) => {
     const { Title } = Typography;
     const [form] = useForm();
     const { onClose } = useContext(DrawerContext);
-    const { currentHP, maxHP, temporaryHP, onHPChange } = useContext(
-        CharacterHeaderContext
-    );
+    const { character, onHPChange } = useContext(CharacterHeaderContext);
     const [hpValue, setHPValue] = useState(0);
     const [color, setColor] = useState(
-        getHealthBarColor(currentHP, maxHP, temporaryHP)
+        getHealthBarColor(
+            character.currentHP,
+            character.maxHP,
+            character.temporaryHP
+        )
     );
 
     const handleClose = () => {
@@ -27,54 +29,71 @@ const HealthPointsDrawer = ({ open }) => {
 
     const handleMaxHPChange = (value) => {
         onHPChange({
-            currentHP: currentHP > value ? value : currentHP,
-            temporaryHP: temporaryHP,
+            currentHP:
+                character.currentHP > value ? value : character.currentHP,
+            temporaryHP: character.temporaryHP,
             maxHP: value,
         });
-        setColor(getHealthBarColor(currentHP, value, temporaryHP));
+        setColor(
+            getHealthBarColor(character.currentHP, value, character.temporaryHP)
+        );
     };
 
     const handleAddTemporaryHPButtonClick = () => {
         onHPChange({
-            currentHP: currentHP,
-            temporaryHP: temporaryHP + hpValue,
-            maxHP: maxHP,
+            currentHP: character.currentHP,
+            temporaryHP: character.temporaryHP + hpValue,
+            maxHP: character.maxHP,
         });
     };
 
     const handleDamageButtonClick = () => {
-        let damagedTemporaryHP = temporaryHP - hpValue;
+        let damagedTemporaryHP = character.temporaryHP - hpValue;
         let damagedCurrentHP =
-            damagedTemporaryHP < 0 ? currentHP + damagedTemporaryHP : currentHP;
+            damagedTemporaryHP < 0
+                ? character.currentHP + damagedTemporaryHP
+                : character.currentHP;
 
         damagedCurrentHP = damagedCurrentHP < 0 ? 0 : damagedCurrentHP;
         damagedTemporaryHP = damagedTemporaryHP < 0 ? 0 : damagedTemporaryHP;
         onHPChange({
             currentHP: damagedCurrentHP,
             temporaryHP: damagedTemporaryHP,
-            maxHP: maxHP,
+            maxHP: character.maxHP,
         });
         setColor(
-            getHealthBarColor(damagedCurrentHP, maxHP, damagedTemporaryHP)
+            getHealthBarColor(
+                damagedCurrentHP,
+                character.maxHP,
+                damagedTemporaryHP
+            )
         );
     };
 
     const handleHealButtonClick = () => {
         let healedCurrentHP =
-            currentHP + hpValue >= maxHP ? maxHP : currentHP + hpValue;
+            character.currentHP + hpValue >= character.maxHP
+                ? character.maxHP
+                : character.currentHP + hpValue;
         onHPChange({
             currentHP: healedCurrentHP,
-            temporaryHP: temporaryHP,
-            maxHP: maxHP,
+            temporaryHP: character.temporaryHP,
+            maxHP: character.maxHP,
         });
-        setColor(getHealthBarColor(healedCurrentHP, maxHP, temporaryHP));
+        setColor(
+            getHealthBarColor(
+                healedCurrentHP,
+                character.maxHP,
+                character.temporaryHP
+            )
+        );
     };
 
     return (
         <Drawer
             title={
-                `${currentHP} / ${maxHP}` +
-                (temporaryHP > 0 ? ` (${temporaryHP})` : "")
+                `${character.currentHP} / ${character.maxHP}` +
+                (character.temporaryHP > 0 ? ` (${character.temporaryHP})` : "")
             }
             width={580}
             open={open}
@@ -115,7 +134,7 @@ const HealthPointsDrawer = ({ open }) => {
                     <Form.Item
                         name="maxHP"
                         style={{ width: "60%" }}
-                        initialValue={maxHP}
+                        initialValue={character.maxHP}
                     >
                         <InputNumber
                             placeholder="Максимальное значение"

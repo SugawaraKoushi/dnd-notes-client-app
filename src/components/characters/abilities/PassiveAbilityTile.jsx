@@ -19,7 +19,7 @@ const PassiveAbilityTile = (props) => {
                         score={skill.score}
                     />
                 ))}
-            <TextBlock />
+            <TextBlock title="прочие владения и языки"/>
         </Flex>
     );
 };

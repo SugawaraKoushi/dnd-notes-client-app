@@ -4,7 +4,6 @@ import Notification from "./Notification";
 const MemoizedNotification = React.memo((props) => {
     return (
         <Notification
-            key={Math.random().toString(36)}
             type={props.type}
             ability={props.ability}
             value={props.value}

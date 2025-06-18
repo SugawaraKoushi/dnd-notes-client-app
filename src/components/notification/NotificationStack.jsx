@@ -5,29 +5,36 @@ import MemoizedNotification from "./MemoizedNotification";
 import MemoizedNotificationShort from "./MemoizedNotificationShort";
 
 const NotificationStack = (props) => {
-    const { onClose } = props;
+    const { onClose, items } = props;
 
     const handleCloseButtonClick = () => {
         onClose();
     };
 
+    const notificationsWithKeys = useMemo(() => {
+        return items.map((item) => ({
+            ...item,
+            stableKey: item.id || Math.random().toString(36),
+        }));
+    }, [items]);
+
     const shortNotifications = useMemo(
-        () => props.items.slice(0, -1),
-        [props.items]
+        () => notificationsWithKeys.slice(0, -1),
+        [notificationsWithKeys]
     );
 
     const lastNotification = useMemo(
-        () => props.items[props.items.length - 1],
-        [props.items]
+        () => notificationsWithKeys[notificationsWithKeys.length - 1],
+        [notificationsWithKeys]
     );
 
     return (
-        props.items &&
-        props.items.length > 0 && (
+        notificationsWithKeys &&
+        notificationsWithKeys.length > 0 && (
             <Flex className="notification-stack" vertical>
                 {shortNotifications.map((item, i) => (
                     <MemoizedNotificationShort
-                        key={`short_${item.id}_${i}_${Date.now()}`}
+                        key={`short_${item.stableKey}`}
                         type={item.type}
                         ability={item.ability}
                         value={item.value}
@@ -35,7 +42,7 @@ const NotificationStack = (props) => {
                     />
                 ))}
                 <MemoizedNotification
-                    key={`main_${lastNotification.id}_${Date.now()}`}
+                    key={`main_${lastNotification.stableKey}`}
                     type={lastNotification.type}
                     ability={lastNotification.ability}
                     value={lastNotification.value}

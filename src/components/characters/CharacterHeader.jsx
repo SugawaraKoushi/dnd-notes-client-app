@@ -1,4 +1,4 @@
-import { Flex, Typography } from "antd";
+import { Flex } from "antd";
 import CharacterHeaderInfo from "./CharacterHeaderInfo";
 import { modifierAsString } from "../services/ModifierService";
 import "./index.css";
@@ -9,14 +9,9 @@ import { useContext, useState } from "react";
 import { DrawerContext } from "./context/DrawerContext";
 import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
 
-const CharacterHeader = (props) => {
+const CharacterHeader = () => {
     const [settingsDrawerIsOpen, setSettingsDrawerIsOpen] = useState(false);
-    const { Title } = Typography;
-    const {
-        armorClass,
-        speed,
-        proficiencyBonus,
-    } = useContext(CharacterHeaderContext);
+    const { character } = useContext(CharacterHeaderContext);
 
     const handleStatsClick = () => {
         setSettingsDrawerIsOpen(true);
@@ -32,7 +27,15 @@ const CharacterHeader = (props) => {
             align="center"
             justify="space-between"
         >
-            <CharacterHeaderInfo />
+            <DrawerContext.Provider
+                value={{
+                    onClose: handleDrawerClose,
+                }}
+            >
+                <Flex onClick={handleStatsClick} style={{ cursor: "pointer" }}>
+                    <CharacterHeaderInfo />
+                </Flex>
+            </DrawerContext.Provider>
             <Flex
                 align="center"
                 justify="space-between"
@@ -44,7 +47,9 @@ const CharacterHeader = (props) => {
                         onClick={handleStatsClick}
                     >
                         <Flex vertical align="center">
-                            <div className="stat-values">{armorClass}</div>
+                            <div className="stat-values">
+                                {character.armorClass}
+                            </div>
                             <div className="description">КЗ</div>
                         </Flex>
                     </Link>
@@ -53,7 +58,7 @@ const CharacterHeader = (props) => {
                         onClick={handleStatsClick}
                     >
                         <Flex vertical align="center">
-                            <div className="stat-values">{speed}</div>
+                            <div className="stat-values">{character.speed}</div>
                             <div className="description">скорость</div>
                         </Flex>
                     </Link>
@@ -63,18 +68,13 @@ const CharacterHeader = (props) => {
                     >
                         <Flex vertical align="center">
                             <div className="stat-values">
-                                {modifierAsString(proficiencyBonus)}
+                                {modifierAsString(character.proficiencyBonus)}
                             </div>
                             <div className="description">владение</div>
                         </Flex>
                     </Link>
                 </Flex>
-                <Flex align="center" gap={12}>
-                    <Title className="money" level={5}>
-                        371.1
-                    </Title>
-                    <HealthInfo />
-                </Flex>
+                <HealthInfo />
                 <DrawerContext.Provider
                     value={{
                         onClose: handleDrawerClose,
