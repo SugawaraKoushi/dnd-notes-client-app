@@ -46,6 +46,14 @@ const AttacksTable = () => {
         onAttacksChange(attacks.slice(0, -1));
     };
 
+    const handleDeleteAttack = () => {
+        let newAttacks = [...attacks];
+        newAttacks.splice(selectedAttackIndex, 1);
+        
+        onAttacksChange(newAttacks);
+        setIsModalOpen(false);
+    }
+
     const handleModalOpen = (index) => {
         setSelectedAttackIndex(index);
         setIsModalOpen(true);
@@ -163,6 +171,7 @@ const AttacksTable = () => {
                 <AttackModal
                     open={isModalOpen}
                     onClose={handleModalClose}
+                    onDelete={handleDeleteAttack}
                     attack={attacks[selectedAttackIndex]}
                     character={character}
                 />

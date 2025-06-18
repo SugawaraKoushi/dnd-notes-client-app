@@ -1,16 +1,30 @@
-import { Checkbox, Flex, Form, Input, InputNumber, Modal, Select } from "antd";
+import {
+    Button,
+    Checkbox,
+    Flex,
+    Form,
+    Input,
+    InputNumber,
+    Modal,
+    Select,
+} from "antd";
 import "./index.css";
 import { useState } from "react";
 
 import AttackAbilityEnum from "../../../model/enum/AttackAbilityEnum";
 import { calculateModifier } from "../../services/ModifierService";
 
-const AttackModal = ({ open, onClose, attack: initialAttack, character }) => {
+const AttackModal = ({
+    open,
+    onClose,
+    onDelete,
+    attack: initialAttack,
+    character,
+}) => {
     const [attack, setAttack] = useState(initialAttack);
-
     const [showPrefix, setShowPrefix] = useState(true);
+    const [deleteButtonText, setDeleteButtonText] = useState("Удалить");
     let plusPrefix = showPrefix && attack.additionalBonus > 0 ? "+" : <span />;
-
     const abilityOptions = [
         { value: AttackAbilityEnum.EMPTY, label: "Без характеристики" },
         { value: AttackAbilityEnum.STRENGTH, label: "Сила" },
@@ -84,11 +98,26 @@ const AttackModal = ({ open, onClose, attack: initialAttack, character }) => {
         setShowPrefix(true);
     };
 
+    const handleDeleteButtonClick = () => {
+        if (deleteButtonText !== "Точно?") {
+            setDeleteButtonText("Точно?");
+            return;
+        }
+
+        setDeleteButtonText("Удалить");
+        onDelete();
+    };
+
+    const handleModalClose = () => {
+        setDeleteButtonText("Удалить");
+        onClose(attack);
+    };
+
     return (
         <Modal
             centered
             open={open}
-            onCancel={() => onClose(attack)}
+            onCancel={() => handleModalClose()}
             footer={null}
         >
             <Form
@@ -149,6 +178,17 @@ const AttackModal = ({ open, onClose, attack: initialAttack, character }) => {
                                 changeOnWheel
                             />
                         </Form.Item>
+                    </Flex>
+                    <Flex justify="end">
+                        <Button
+                            onClick={handleDeleteButtonClick}
+                            variant="outlined"
+                            color="danger"
+                            size="large"
+                            style={{ width: "95px" }}
+                        >
+                            {deleteButtonText}
+                        </Button>
                     </Flex>
                 </Flex>
             </Form>
