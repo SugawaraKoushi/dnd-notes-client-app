@@ -1,6 +1,6 @@
 @media (min-width: 768px) {
     .abilities {
-        height: 100%;
+        height: 684px;
         width: 274px;
         min-width: 274px;
         overflow: auto;
@@ -12,7 +12,9 @@
     }
 
     .status-tracker-item {
-        width: 75%;
+        /* width: 75%; */
+        flex-grow: 1;
+        min-width: 0;
     }
 }
 
@@ -46,10 +48,6 @@
 
     .status-tracker-item {
         width: 58%;
-    }
-
-    .status-tracker-item {
-        width: 75%;
     }
 }
 

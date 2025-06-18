@@ -1,4 +1,4 @@
-import { Flex, Grid, FloatButton } from "antd";
+import { Flex, Grid } from "antd";
 import { useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
@@ -976,6 +976,10 @@ const NewCharacterPage = () => {
 
     //#region Прочее
 
+    const handleCharacterChange = (value) => {
+        setCharacter({ ...value });
+    };
+
     const handleInspirationChange = () => {
         const value = !character.inspiration;
 
@@ -1465,14 +1469,11 @@ const NewCharacterPage = () => {
                             value={{
                                 onInspirationChange: handleInspirationChange,
                                 onExhaustChange: handleExhaustChange,
+                                onCharacterChange: handleCharacterChange,
                                 character: character,
                             }}
                         >
-                            <StatusTracker
-                                initiative={character.initiative}
-                                exhausted={character.exhausted}
-                                inspiration={character.inspiration}
-                            />
+                            <StatusTracker />
                         </StatusTrackerContext.Provider>
                         <AttackContext.Provider
                             value={{
@@ -1487,7 +1488,7 @@ const NewCharacterPage = () => {
                             />
                         </AttackContext.Provider>
 
-                        <TextBlock title={"заметки"}/>
+                        <TextBlock title={"заметки"} />
                     </Flex>
                 </Flex>
             </NotificationContext.Provider>

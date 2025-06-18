@@ -12,6 +12,7 @@ body {
     padding: 24px;
     border-radius: 8px;
     height: fit-content;
+    max-height: calc(684px + 24px + 24px);
 }
 
 .menu-toolbar {

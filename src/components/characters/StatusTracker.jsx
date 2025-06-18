@@ -8,11 +8,16 @@ import { NotificationContext } from "./context/NotificationContext";
 import StatesDrawer from "./drawer/StatesDrawer";
 import { DrawerContext } from "./context/DrawerContext";
 
-const StatusTracker = (props) => {
-    const { onInspirationChange, onExhaustChange } =
-        useContext(StatusTrackerContext);
+const StatusTracker = () => {
+    const {
+        onInspirationChange,
+        onExhaustChange,
+        onCharacterChange,
+        character,
+    } = useContext(StatusTrackerContext);
     const { onRollButtonClick } = useContext(NotificationContext);
     const [statesDrawerIsOpen, setStatesDrawerIsOpen] = useState(false);
+    const [statesString, setStatesString] = useState("-");
 
     const exhaustingLevels = [
         { key: 1, label: <span>0</span>, onClick: () => onExhaustChange(0) },
@@ -32,7 +37,7 @@ const StatusTracker = (props) => {
         let result = {
             type: "проверка",
             value: value,
-            modifier: props.initiative,
+            modifier: character.initiative,
             dice: dice,
             times: times,
             ability: "инициативы",
@@ -53,6 +58,73 @@ const StatusTracker = (props) => {
         setStatesDrawerIsOpen(false);
     };
 
+    const handleChangeStates = (updatedCharacter) => {
+        let states = [];
+
+        if (updatedCharacter.unconscious) {
+            states.push("Бессознательный");
+        }
+
+        if (updatedCharacter.frightened) {
+            states.push("Испуганный");
+        }
+
+        if (updatedCharacter.exhaustion) {
+            states.push("Истощенный");
+        }
+
+        if (updatedCharacter.invisible) {
+            states.push("Невидимый");
+        }
+
+        if (updatedCharacter.incapasitated) {
+            states.push("Недееспособный");
+        }
+
+        if (updatedCharacter.defeaned) {
+            states.push("Оглохший");
+        }
+
+        if (updatedCharacter.petrified) {
+            states.push("Окаменевший");
+        }
+
+        if (updatedCharacter.restrained) {
+            states.push("Опутанный");
+        }
+
+        if (updatedCharacter.blinded) {
+            states.push("Ослеплённый");
+        }
+
+        if (updatedCharacter.poisoned) {
+            states.push("Отравленный");
+        }
+
+        if (updatedCharacter.charmed) {
+            states.push("Очарованный");
+        }
+
+        if (updatedCharacter.stunned) {
+            states.push("Ошеломлённый");
+        }
+
+        if (updatedCharacter.paralyzed) {
+            states.push("Парализованный");
+        }
+
+        if (updatedCharacter.prone) {
+            states.push("Сбитый с ног");
+        }
+
+        if (updatedCharacter.grappled) {
+            states.push("Схваченный");
+        }
+
+        setStatesString(states.length > 0 ? states.join(", ") : "-");
+        onCharacterChange(updatedCharacter);
+    };
+
     return (
         <Flex
             justify="space-between"
@@ -65,14 +137,14 @@ const StatusTracker = (props) => {
                     id="initiative-button"
                     onClick={handleIniativeButtonClick}
                 >
-                    {modifierAsString(props.initiative)}
+                    {modifierAsString(character.initiative)}
                 </Button>
                 <span className="small-description">инициатива</span>
             </Flex>
             <Flex className="status-tracker-item-small" vertical align="center">
                 <Checkbox
                     className="inspire-checkbox"
-                    checked={props.inspiration}
+                    checked={character.inspiration}
                     onChange={handleInspirationChange}
                 />
                 <label className="small-description">вдохновение</label>
@@ -83,7 +155,7 @@ const StatusTracker = (props) => {
                     placement="bottom"
                     trigger={["click"]}
                 >
-                    <Button id="exhaust-button">{props.exhausted}</Button>
+                    <Button id="exhaust-button">{character.exhausted}</Button>
                 </Dropdown>
                 <span className="small-description">истощение</span>
             </Flex>
@@ -92,19 +164,30 @@ const StatusTracker = (props) => {
                     onClick={handleStatesButtonClick}
                     style={{ width: "100%", height: "44px" }}
                 >
-                    <Flex vertical>
-                        <p style={{ padding: 0, margin: 0 }}>-</p>
+                    <Flex vertical style={{ width: "100%" }}>
+                        <p
+                            style={{
+                                padding: 0,
+                                margin: 0,
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                textOverflow: "ellipsis",
+                                width: "100%",
+                            }}
+                        >
+                            {statesString}
+                        </p>
                         <span className="small-description">состояния</span>
                     </Flex>
                 </Button>
             </Flex>
             <DrawerContext.Provider
-                value={{ onClose: handleStatesDrawerClose }}
+                value={{
+                    onClose: handleStatesDrawerClose,
+                    onCharacterChange: handleChangeStates,
+                }}
             >
-                <StatesDrawer
-                    open={statesDrawerIsOpen}
-                    onClose={handleStatesDrawerClose}
-                />
+                <StatesDrawer open={statesDrawerIsOpen} />
             </DrawerContext.Provider>
         </Flex>
     );

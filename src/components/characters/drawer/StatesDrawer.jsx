@@ -2,16 +2,25 @@ import { Checkbox, Drawer, Flex, Form } from "antd";
 import { useContext } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
-import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
+import { StatusTrackerContext } from "../context/StatusTrackerContext";
 
 const StatesDrawer = (props) => {
     const [form] = useForm();
-    const { onClose } = useContext(DrawerContext);
-    const { name } = useContext(CharacterHeaderContext);
-    
+    const { onClose, onCharacterChange } = useContext(DrawerContext);
+    const { character } = useContext(StatusTrackerContext);
 
     const handleClose = () => {
         onClose();
+    };
+
+    const handleStateChange = (event) => {
+        const stateName = event.target.id.split("_")[1];
+        const updatedCharacter = {
+            ...character,
+            [stateName]: event.target.checked,
+        };
+
+        onCharacterChange(updatedCharacter);
     };
 
     return (
@@ -33,121 +42,121 @@ const StatesDrawer = (props) => {
                         label="Бессознательный"
                         name="unconscious"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.unconscious}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Испуганный"
                         name="frightened"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.frightened}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Истощённый"
                         name="exhaustion"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.exhaustion}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Невидимый"
                         name="invisible"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.invisible}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Недееспособный"
                         name="incapasitated"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.incapasitated}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Оглохший"
                         name="defeaned"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.defeaned}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Окаменевший"
                         name="petrified"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.petrified}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Опутанный"
                         name="restrained"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.restrained}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Ослеплённый"
                         name="blinded"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.blinded}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Отравленный"
                         name="poisoned"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.poisoned}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Очарованный"
                         name="charmed"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.charmed}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Ошеломлённый"
                         name="stunned"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.stunned}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Парализованный"
                         name="paralyzed"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.paralyzed}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Сбитый с ног"
                         name="prone"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.prone}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                     <Form.Item
                         label="Схваченный"
                         name="grappled"
                         style={{ width: "60%", margin: 0 }}
-                        initialValue={name}
+                        initialValue={character.grappled}
                     >
-                        <Checkbox />
+                        <Checkbox onChange={handleStateChange} />
                     </Form.Item>
                 </Flex>
             </Form>
