@@ -1,8 +1,4 @@
-import {
-    Flex,
-    Grid,
-    FloatButton,
-} from "antd";
+import { Flex, Grid, FloatButton } from "antd";
 import { useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
@@ -1506,7 +1502,11 @@ const NewCharacterPage = () => {
                 onClose={handleNotificationStackCloseButtonClick}
                 items={notifications}
             />
-            <DiceRoller />
+            <NotificationContext.Provider
+                value={{ onRollButtonClick: handleRollButtonClick }}
+            >
+                <DiceRoller />
+            </NotificationContext.Provider>
         </>
     );
 };
