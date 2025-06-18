@@ -1,15 +1,17 @@
 import { Button, Checkbox, Dropdown, Flex } from "antd";
 import { modifierAsString } from "../services/ModifierService";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import "./index.css";
 import { rollDice } from "../services/RollDiceService";
 import { NotificationContext } from "./context/NotificationContext";
+import StatesDrawer from "./drawer/StatesDrawer";
 
 const StatusTracker = (props) => {
     const { onInspirationChange, onExhaustChange } =
         useContext(StatusTrackerContext);
     const { onRollButtonClick } = useContext(NotificationContext);
+    const [statesDrawerIsOpen, setStatesDrawerIsOpen] = useState(false);
 
     const exhaustingLevels = [
         { key: 1, label: <span>0</span>, onClick: () => onExhaustChange(0) },
@@ -40,6 +42,14 @@ const StatusTracker = (props) => {
 
     const handleInspirationChange = () => {
         onInspirationChange();
+    };
+
+    const handleStatesButtonClick = () => {
+        setStatesDrawerIsOpen(true);
+    };
+
+    const handleStatesDrawerClose = () => {
+        setStatesDrawerIsOpen(false);
     };
 
     return (
@@ -77,13 +87,20 @@ const StatusTracker = (props) => {
                 <span className="small-description">истощение</span>
             </Flex>
             <Flex className="status-tracker-item" vertical align="center">
-                <Button style={{ width: "100%", height: "44px" }}>
+                <Button
+                    onClick={handleStatesButtonClick}
+                    style={{ width: "100%", height: "44px" }}
+                >
                     <Flex vertical>
                         <p style={{ padding: 0, margin: 0 }}>-</p>
                         <span className="small-description">состояния</span>
                     </Flex>
                 </Button>
             </Flex>
+            <StatesDrawer
+                open={statesDrawerIsOpen}
+                onClose={handleStatesDrawerClose}
+            />
         </Flex>
     );
 };
