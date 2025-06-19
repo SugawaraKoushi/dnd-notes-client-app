@@ -10,7 +10,7 @@ const Registration = () => {
         const url = "http://localhost:8080/api/users/create";
 
         try {
-            await axios.post(url, values).then(() => navigate("/login"));
+            await axios.post(url, values).then(() => navigate("/characters/list"));
         } catch (e) {
             console.log(e);
         }
@@ -82,7 +82,6 @@ const Registration = () => {
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
                     name="username"
                     label="Логин:"

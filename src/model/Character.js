@@ -26,9 +26,6 @@ class Character {
         // Инициатива
         this.initiative = calculateModifier(this.dexterity);
 
-        // Истощение
-        this.exhausted = 0;
-
         // Вдохновение
         this.inspiration = false;
 
@@ -119,12 +116,13 @@ class Character {
         this.performanceBonus = 0; // Выступление
         this.persuasionBonus = 0; // Убеждение
 
-        // Пасивные чувства
+        // Пассивные чувства
         this.perceptionPassive = 10 + this.perception;
         this.insightPassive = 10 + this.insight;
         this.investigationPassive = 10 + this.investigation;
 
         // Состояния
+        this.exhausted = 0;     // Истощение
         this.unconscious = false; // Бессознательный
         this.frightened = false; // Испуганный
         this.exhaustion = false; // Истощенный

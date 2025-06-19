@@ -76,7 +76,7 @@ const Login = () => {
                     <Button block type="primary" htmlType="submit">
                         Войти
                     </Button>
-                    или <Link to="">Зарегистрироваться!</Link>
+                    или <Link to="/register">Зарегистрироваться!</Link>
                 </Form.Item>
             </Form>
         </div>
