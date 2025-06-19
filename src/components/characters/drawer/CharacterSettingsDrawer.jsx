@@ -16,6 +16,7 @@ const CharacterSettingsDrawer = (props) => {
         onRaceChange,
         onClassChange,
         onSubclassChange,
+        onLevelChange,
         character,
     } = useContext(CharacterHeaderContext);
     let plusPrefix = showPrefix && character.initiative > 0 ? "+" : <span />;
@@ -60,6 +61,10 @@ const CharacterSettingsDrawer = (props) => {
         onSubclassChange(event.target.value);
     };
 
+    const handleLevelChange = (value) => {
+        onLevelChange(value);
+    };
+
     return (
         <Drawer
             title="Настройки"
@@ -73,7 +78,7 @@ const CharacterSettingsDrawer = (props) => {
                         <Form.Item
                             label="Имя"
                             name="name"
-                            style={{ width: "60%" }}
+                            style={{ width: "50%" }}
                             initialValue={character.name}
                             onChange={handleNameValueChange}
                         >
@@ -82,7 +87,7 @@ const CharacterSettingsDrawer = (props) => {
                         <Form.Item
                             label="Раса"
                             name="race"
-                            style={{ width: "40%" }}
+                            style={{ width: "50%" }}
                             initialValue={character.race}
                             onChange={handleRaceValueChange}
                         >
@@ -111,9 +116,24 @@ const CharacterSettingsDrawer = (props) => {
                     </Flex>
                     <Flex justify="space-between" gap={24}>
                         <Form.Item
+                            label="Уровень"
+                            name="level"
+                            style={{ width: "50%" }}
+                            initialValue={character.level}
+                        >
+                            <InputNumber
+                                placeholder="Уровень"
+                                min={0}
+                                max={20}
+                                changeOnWheel
+                                style={{ width: "100%" }}
+                                onChange={(value) => handleLevelChange(value)}
+                            />
+                        </Form.Item>
+                        <Form.Item
                             label="КЗ"
                             name="armor-class"
-                            style={{ width: "33%" }}
+                            style={{ width: "50%" }}
                             initialValue={character.armorClass}
                         >
                             <InputNumber
@@ -126,10 +146,12 @@ const CharacterSettingsDrawer = (props) => {
                                 }
                             />
                         </Form.Item>
+                    </Flex>
+                    <Flex justify="space-between" gap={24}>
                         <Form.Item
                             label="Скорость"
                             name="speed"
-                            style={{ width: "33%" }}
+                            style={{ width: "50%" }}
                             initialValue={character.speed}
                         >
                             <InputNumber
@@ -145,7 +167,7 @@ const CharacterSettingsDrawer = (props) => {
                         <Form.Item
                             label="Инициатива"
                             name="initiative"
-                            style={{ width: "33%" }}
+                            style={{ width: "50%" }}
                             initialValue={character.initiative}
                             onChange={(value) =>
                                 handleInitiativeValueChange(value)

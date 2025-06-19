@@ -20,19 +20,25 @@ const CharacterHeaderInfo = () => {
                 src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                 style={{ margin: "0 10px 0 0", padding: "0" }}
             />
-            <Flex vertical style={{ minWidth: "300px", width: "300px" }}>
+            <Flex gap={2} vertical style={{ minWidth: "300px", width: "300px" }}>
                 <Title level={4} style={{ margin: "0 0 3px 0", padding: "0" }}>
                     {capitalize(character.name)}
                 </Title>
                 <p
                     style={{
                         maxWidth: "100%",
-                        margin: "0 0 0 0",
+                        margin: 0,
                         whiteSpace: "nowrap",
                     }}
                 >
                     {`${character.race} — ${character.class}, ${character.subclass}`}
                 </p>
+                <p
+                    style={{
+                        maxWidth: "100%",
+                        margin: 0
+                    }}
+                >{`${character.level} уровень`}</p>
             </Flex>
         </Flex>
     );

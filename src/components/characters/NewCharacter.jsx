@@ -1047,6 +1047,14 @@ const NewCharacterPage = () => {
         });
     };
 
+    const handleLevelChange = (level) => {
+        setCharacter({
+            ...character,
+            level: level,
+            proficiencyBonus: 2 + Math.floor(level / 4),
+        });
+    };
+
     //#endregion Прочее
 
     //#region Атаки
@@ -1125,6 +1133,7 @@ const NewCharacterPage = () => {
                     onClassChange: handleClassChange,
                     onSubclassChange: handleSubclassChange,
                     onHPChange: handleHPChange,
+                    onLevelChange: handleLevelChange,
                     character: character,
                 }}
             >

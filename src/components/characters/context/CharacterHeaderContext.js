@@ -9,6 +9,7 @@ export const CharacterHeaderContext = createContext({
     onClassChange: () => {},
     onSubclassChange: () => {},
     onHPChange: () => {},
+    onLevelChange: () => {},
     character: {}, 
 });
 
