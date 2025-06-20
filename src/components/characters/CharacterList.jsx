@@ -1,54 +1,78 @@
-import { Breadcrumb, FloatButton, List } from "antd";
+import { FloatButton, List } from "antd";
 import CharacterTile from "./CharacterTile";
 import { PlusOutlined } from "@ant-design/icons";
-import { useOutletContext } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const CharacterList = () => {
-    const characters = [
-        <CharacterTile className="character-tile-list-item" name="Дундобород железный" hp="100" currentHp="25" />,
-        <CharacterTile className="character-tile-list-item" name="Дундобород железный" hp="100" currentHp="75" />,
-        <CharacterTile className="character-tile-list-item" name="Дундобород железный" hp="100" currentHp="100" />,
-    ];
-
-    const [setBreadcrumbItems] = useOutletContext();
-    const items = [{ title: "Персонажи" }, { title: "Мои персонажи" }];
+    const [characters, setCharacters] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const items = [{ title: "Персонажи" }, { title: "Мои персонажи" }];
-        setBreadcrumbItems(items);
+        const fetchData = async () => {
+            const data = await getCharacters();
+            setCharacters(data);
+        };
+
+        fetchData();
     }, []);
+
+    const getCharacters = async () => {
+        try {
+            let url = "/characters/list";
+            const response = await axios.get(url);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleNewCharacterButtonClick = async () => {
+        const characterId = await createCharacter();
+        console.log(characterId);
+        navigate(`/characters/${characterId}`);
+    };
+
+    const createCharacter = async () => {
+        const url = "/characters/create";
+        const response = await axios.post(url);
+        return response.data.id;
+    };
 
     return (
         <>
-            <Breadcrumb
-                style={{
-                    margin: "16px 0",
-                }}
-                items={items}
-            />
             <List
                 className="content-layout"
                 grid={{
                     gutter: 12,
                     xs: 1,
-                    sm: 2,
-                    md: 3,
-                    lg: 3,
+                    sm: 1,
+                    md: 2,
+                    lg: 2,
                     xl: 3,
                     xxl: 3,
                 }}
                 dataSource={characters}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
+                renderItem={(character) => (
+                    <List.Item>
+                        <CharacterTile
+                            href={`/characters/${character.id}`}
+                            name={character.name}
+                            hp={character.maxHP}
+                            currentHp={character.currentHP}
+                        />
+                    </List.Item>
+                )}
             />
             <FloatButton
-                href="/characters/new"
                 icon={<PlusOutlined />}
                 style={{
                     width: "50px",
                     height: "50px",
                 }}
+                onClick={handleNewCharacterButtonClick}
             />
         </>
     );

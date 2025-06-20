@@ -1,5 +1,5 @@
 import { Flex, Grid } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
 import { AbilityContext } from "./context/AbilityContext";
@@ -17,13 +17,34 @@ import Attack from "../../model/Attack";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
 import DiceRoller from "./dice roller/DiceRoller";
+import axios from "axios";
+import { useParams } from "react-router";
 
-const NewCharacterPage = () => {
+const CharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
     const [notifications, setNotifications] = useState([]);
+    const { id } = useParams();
+    
     const { useBreakpoint } = Grid;
     const screens = useBreakpoint();
     const isVertical = screens.xl;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getCharacter();
+            setCharacter(data);
+        };
+
+        fetchData();
+    }, []);
+
+    const getCharacter = async () => {
+        const url = `/characters/${id}`;
+        const response = await axios.get(url);
+        console.log(response.data);
+        
+        return response.data;
+    };
 
     //#region Сила
 
@@ -1514,4 +1535,4 @@ const NewCharacterPage = () => {
     );
 };
 
-export default NewCharacterPage;
+export default CharacterPage;

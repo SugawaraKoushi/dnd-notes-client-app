@@ -48,7 +48,7 @@ const Root = () => {
                             className="menu-toolbar"
                             theme="dark"
                             items={items}
-                            mode="horizontal"   
+                            mode="horizontal"
                             disabledOverflow={true}
                         />
                     </Flex>
@@ -62,7 +62,7 @@ const Root = () => {
                 </Flex>
             </Header>
             <Layout
-                style={{ margin: "auto", width: "100%", maxWidth: "1200px" }}
+                style={{ margin: "auto", width: "100%",minWidth: 0, maxWidth: "1200px" }}
             >
                 <Content>
                     <Outlet />

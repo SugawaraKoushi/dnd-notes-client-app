@@ -8,7 +8,7 @@ import Login from "./components/auth/Login";
 import axios from "axios";
 import Registration from "./components/auth/Registration";
 import Characters from "./components/characters/Characters";
-import NewCharacter from "./components/characters/NewCharacter";
+import CharacterPage from "./components/characters/CharacterPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -26,8 +26,8 @@ const router = createBrowserRouter([
                         element: <CharacterList />,
                     },
                     {
-                        path: "/characters/new",
-                        element: <NewCharacter />,
+                        path: "/characters/:id",
+                        element: <CharacterPage />,
                     },
                 ],
             },
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     },
 ]);
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "http://localhost:8080/api";
 axios.defaults.withCredentials = true;
 
 root.render(
