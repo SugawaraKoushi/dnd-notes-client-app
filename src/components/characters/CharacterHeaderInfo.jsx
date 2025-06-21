@@ -31,7 +31,7 @@ const CharacterHeaderInfo = () => {
                         whiteSpace: "nowrap",
                     }}
                 >
-                    {`${character.race} — ${character.class}, ${character.subclass}`}
+                    {`${character.race} — ${character.className}, ${character.subclass}`}
                 </p>
                 <p
                     style={{

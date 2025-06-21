@@ -5,7 +5,7 @@ class Character {
         this.level = 1;
         this.name = "Безымянный персонаж";
         this.race = "Дварф";
-        this.class = "Воин";
+        this.className = "Воин";
         this.subclass = "Рыцарь Эхо";
         this.speed = 25;
         this.armorClass = 10;

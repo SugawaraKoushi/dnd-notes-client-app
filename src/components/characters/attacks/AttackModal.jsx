@@ -11,7 +11,6 @@ import {
 import "./index.css";
 import { useState } from "react";
 
-import AttackAbilityEnum from "../../../model/enum/AttackAbilityEnum";
 import { calculateModifier } from "../../services/ModifierService";
 
 const AttackModal = ({
@@ -26,13 +25,13 @@ const AttackModal = ({
     const [deleteButtonText, setDeleteButtonText] = useState("Удалить");
     let plusPrefix = showPrefix && attack.additionalBonus > 0 ? "+" : <span />;
     const abilityOptions = [
-        { value: AttackAbilityEnum.EMPTY, label: "Без характеристики" },
-        { value: AttackAbilityEnum.STRENGTH, label: "Сила" },
-        { value: AttackAbilityEnum.DEXTERITY, label: "Ловкость" },
-        { value: AttackAbilityEnum.CONSTITUTION, label: "Телосложение" },
-        { value: AttackAbilityEnum.INTELLIGENCE, label: "Интеллект" },
-        { value: AttackAbilityEnum.WISDOM, label: "Мудрость" },
-        { value: AttackAbilityEnum.CHARISMA, label: "Харизма" },
+        { value: 0, label: "Без характеристики" },
+        { value: 1, label: "Сила" },
+        { value: 2, label: "Ловкость" },
+        { value: 3, label: "Телосложение" },
+        { value: 4, label: "Интеллект" },
+        { value: 5, label: "Мудрость" },
+        { value: 6, label: "Харизма" },
     ];
 
     const handleAttackNameChange = (event) => {
@@ -43,25 +42,24 @@ const AttackModal = ({
         let abilityModifier;
 
         switch (ability) {
-            case AttackAbilityEnum.STRENGTH:
+            case 1:
                 abilityModifier = calculateModifier(character.strength);
                 break;
-            case AttackAbilityEnum.DEXTERITY:
+            case 2:
                 abilityModifier = calculateModifier(character.dexterity);
                 break;
-            case AttackAbilityEnum.CONSTITUTION:
+            case 3:
                 abilityModifier = calculateModifier(character.constitution);
                 break;
-            case AttackAbilityEnum.INTELLIGENCE:
+            case 4:
                 abilityModifier = calculateModifier(character.intelligence);
                 break;
-            case AttackAbilityEnum.WISDOM:
+            case 5:
                 abilityModifier = calculateModifier(character.wisdom);
                 break;
-            case AttackAbilityEnum.CHARISMA:
+            case 6:
                 abilityModifier = calculateModifier(character.charisma);
                 break;
-            case AttackAbilityEnum.EMPTY:
             default:
                 abilityModifier = 0;
         }

@@ -97,9 +97,9 @@ const CharacterSettingsDrawer = (props) => {
                     <Flex justify="space-between" gap={24}>
                         <Form.Item
                             label="Класс"
-                            name="class"
+                            name="className"
                             style={{ width: "50%" }}
-                            initialValue={character.class}
+                            initialValue={character.className}
                             onChange={handleClassValueChange}
                         >
                             <Input placeholder="Класс" />

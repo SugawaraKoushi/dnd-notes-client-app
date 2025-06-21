@@ -2,12 +2,12 @@ import { Button, Flex, Table } from "antd";
 import { useContext, useMemo, useState } from "react";
 import "./index.css";
 import { Link } from "react-router";
-import Attack from "../../../model/Attack";
 import AttackModal from "./AttackModal";
 import { modifierAsString } from "../../services/ModifierService";
 import { AttackContext } from "../context/AttackContext";
 import { NotificationContext } from "../context/NotificationContext";
 import { rollDice } from "../../services/RollDiceService";
+import axios from "axios";
 
 const AttacksTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,8 +16,8 @@ const AttacksTable = () => {
     const [selectedAttackIndex, setSelectedAttackIndex] = useState(null);
 
     const datasource = useMemo(() => {
-        return attacks.map((attack, index) => ({
-            key: index,
+        return attacks.map((attack) => ({
+            key: attack.id,
             name: attack.name,
             bonus:
                 attack.proficiencyBonus +
@@ -27,43 +27,73 @@ const AttacksTable = () => {
         }));
     }, [attacks]);
 
-    const handleAddAttack = () => {
-        const attack = new Attack(
-            character.strength,
-            character.dexterity,
-            character.constitution,
-            character.intelligence,
-            character.wisdom,
-            character.charisma,
-            character.proficiencyBonus
-        );
-
-        onAttacksChange([...attacks, attack]);
+    const handleAddAttack = async () => {
+        try {
+            const url = "/attacks/create";
+            const response = await axios.post(url, null, {
+                params: {
+                    characterId: character.id,
+                },
+            });
+            const attack = response.data;
+            onAttacksChange([...attacks, attack]);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const handleDeleteLastAttack = () => {
+    const handleDeleteLastAttack = async () => {
         if (attacks.length === 0) return;
-        onAttacksChange(attacks.slice(0, -1));
+        const lastAttackId = attacks[attacks.length - 1].id;
+        await deleteAttack(lastAttackId);
+        await getAttacks();
     };
 
-    const handleDeleteAttack = () => {
-        let newAttacks = [...attacks];
-        newAttacks.splice(selectedAttackIndex, 1);
-        
-        onAttacksChange(newAttacks);
+    const handleDeleteAttack = async () => {
+        const selectedAttackId = attacks[selectedAttackIndex].id;
+        await deleteAttack(selectedAttackId);
+        await getAttacks();
         setIsModalOpen(false);
-    }
+    };
+
+    const deleteAttack = async (attackId) => {
+        try {
+            const url = `/attacks/delete/${attackId}`;
+            await axios.delete(url);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getAttacks = async () => {
+        try {
+            const url = `/attacks/character/${character.id}`;
+            const response = await axios.get(url);
+            const newAttacks = response.data;
+            onAttacksChange(newAttacks);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const updateAttack = async (attack) => {
+        try {
+            const url = `/attacks/update`;
+            await axios.put(url, {...attack});
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleModalOpen = (index) => {
         setSelectedAttackIndex(index);
         setIsModalOpen(true);
     };
 
-    const handleModalClose = (updatedAttack) => {
+    const handleModalClose = async (updatedAttack) => {
+        await updateAttack(updatedAttack);
         setIsModalOpen(false);
-        const newAttacks = [...attacks];
-        newAttacks[selectedAttackIndex] = updatedAttack;
-        onAttacksChange(newAttacks);
+        await getAttacks();
     };
 
     const handleRollAttackButtonClick = (bonus, attackName) => {

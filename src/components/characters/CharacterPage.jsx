@@ -24,27 +24,10 @@ const CharacterPage = () => {
     const [character, setCharacter] = useState(new Character());
     const [notifications, setNotifications] = useState([]);
     const { id } = useParams();
-    
+
     const { useBreakpoint } = Grid;
     const screens = useBreakpoint();
     const isVertical = screens.xl;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getCharacter();
-            setCharacter(data);
-        };
-
-        fetchData();
-    }, []);
-
-    const getCharacter = async () => {
-        const url = `/characters/${id}`;
-        const response = await axios.get(url);
-        console.log(response.data);
-        
-        return response.data;
-    };
 
     //#region Сила
 
@@ -1096,7 +1079,41 @@ const CharacterPage = () => {
         setAttacks(newAttacks);
     };
 
+    const getAttacks = async () => {
+        try {
+            const url = `/attacks/character/${id}`;
+            const response = await axios.get(url);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     //#endregion Атаки
+
+    //#region Работа с данными
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const characterData = await getCharacter();
+            setCharacter(characterData);
+
+            const attacksData = await getAttacks();
+            setAttacks(attacksData);
+        };
+
+        fetchData();
+    }, [character, attacks]);
+
+    const getCharacter = async () => {
+        const url = `/characters/${id}`;
+        const response = await axios.get(url);
+        console.log(response.data);
+
+        return response.data;
+    };
+
+    //#endregion Работа с данными
 
     // const sex = [
     //     { value: "MALE", label: <span>Мужской</span> },
