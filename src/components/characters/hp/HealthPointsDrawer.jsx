@@ -2,14 +2,14 @@ import { Button, Drawer, Flex, Form, InputNumber, Typography } from "antd";
 import { useContext, useState } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
-import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
+import { CharacterContext } from "../context/CharacterHeaderContext";
 import { getHealthBarColor } from "../../services/HealthService";
 
 const HealthPointsDrawer = ({ open }) => {
     const { Title } = Typography;
     const [form] = useForm();
     const { onClose } = useContext(DrawerContext);
-    const { character, onHPChange } = useContext(CharacterHeaderContext);
+    const { character, onCharacterChange } = useContext(CharacterContext);
     const [hpValue, setHPValue] = useState(0);
     const [color, setColor] = useState(
         getHealthBarColor(
@@ -28,7 +28,8 @@ const HealthPointsDrawer = ({ open }) => {
     };
 
     const handleMaxHPChange = (value) => {
-        onHPChange({
+        onCharacterChange({
+            ...character,
             currentHP:
                 character.currentHP > value ? value : character.currentHP,
             temporaryHP: character.temporaryHP,
@@ -40,7 +41,8 @@ const HealthPointsDrawer = ({ open }) => {
     };
 
     const handleAddTemporaryHPButtonClick = () => {
-        onHPChange({
+        onCharacterChange({
+            ...character,
             currentHP: character.currentHP,
             temporaryHP: character.temporaryHP + hpValue,
             maxHP: character.maxHP,
@@ -56,7 +58,9 @@ const HealthPointsDrawer = ({ open }) => {
 
         damagedCurrentHP = damagedCurrentHP < 0 ? 0 : damagedCurrentHP;
         damagedTemporaryHP = damagedTemporaryHP < 0 ? 0 : damagedTemporaryHP;
-        onHPChange({
+
+        onCharacterChange({
+            ...character,
             currentHP: damagedCurrentHP,
             temporaryHP: damagedTemporaryHP,
             maxHP: character.maxHP,
@@ -75,7 +79,9 @@ const HealthPointsDrawer = ({ open }) => {
             character.currentHP + hpValue >= character.maxHP
                 ? character.maxHP
                 : character.currentHP + hpValue;
-        onHPChange({
+                
+        onCharacterChange({
+            ...character,
             currentHP: healedCurrentHP,
             temporaryHP: character.temporaryHP,
             maxHP: character.maxHP,

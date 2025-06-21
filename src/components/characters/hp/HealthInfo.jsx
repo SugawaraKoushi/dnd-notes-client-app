@@ -4,13 +4,13 @@ import { Link } from "react-router";
 import "./index.css";
 import { getHealthBarColor } from "../../services/HealthService";
 import { useContext, useState } from "react";
-import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
+import { CharacterContext } from "../context/CharacterHeaderContext";
 import { DrawerContext } from "../context/DrawerContext";
 import HealthPointsDrawer from "./HealthPointsDrawer";
 
 const HealthInfo = (props) => {
     const { character } = useContext(
-        CharacterHeaderContext
+        CharacterContext
     );
     const [color, setColor] = useState(
         getHealthBarColor(character.currentHP, character.maxHP, character.temporaryHP)

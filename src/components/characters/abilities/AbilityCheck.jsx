@@ -2,16 +2,15 @@ import { Button, Checkbox, Flex } from "antd";
 import { useContext, useState } from "react";
 import { Link } from "react-router";
 import { modifierAsString } from "../../services/ModifierService";
-import { AbilityContext } from "../context/AbilityContext";
 import AbilityModal from "./AbilityModal";
 import SkillModal from "../SkillModal";
 import { rollDice } from "../../services/RollDiceService";
 import { NotificationContext } from "../context/NotificationContext";
+import { CharacterContext } from "../context/CharacterHeaderContext";
 
 const AbilityCheck = (props) => {
-    const { onSavingThrowProficiencyChange, onSkillProficiencyChange } =
-        useContext(AbilityContext);
     const { onRollButtonClick } = useContext(NotificationContext);
+    const { character, onCharacterChange } = useContext(CharacterContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const labelClassName = props.skill
@@ -29,12 +28,34 @@ const AbilityCheck = (props) => {
         setIsModalOpen(false);
     };
 
-    const handleProficiencyChange = () => {
+    const handleProficiencyChange = (event) => {
         if (props.skill) {
-            onSkillProficiencyChange(props.id);
+            handleSkillProficiencyChange(event);
         } else {
-            onSavingThrowProficiencyChange();
+            handleAbilitySavingThrowProficiencyChange(event);
         }
+    };
+
+    const handleSkillProficiencyChange = (event) => {
+        const k = event.target.checked ? 1 : -1;
+        const updatedCharacter = {
+            ...character,
+            [`${props.id}Proficiency`]: event.target.checked,
+            [props.id]: character[props.id] + k * character.proficiencyBonus,
+        };
+        onCharacterChange(updatedCharacter);
+    };
+
+    const handleAbilitySavingThrowProficiencyChange = (event) => {
+        const k = event.target.checked ? 1 : -1;
+        const updatedCharacter = {
+            ...character,
+            [`${props.id}SavingThrowProficiency`]: event.target.checked,
+            [`${props.id}SavingThrow`]:
+                character[`${props.id}SavingThrow`] +
+                k * character.proficiencyBonus,
+        };
+        onCharacterChange(updatedCharacter);
     };
 
     const handleRollButtonClick = () => {
@@ -67,7 +88,13 @@ const AbilityCheck = (props) => {
                     {props.checkable && (
                         <Checkbox
                             className={checkboxClassName}
-                            checked={props.checked}
+                            checked={
+                                props.skill
+                                    ? character[`${props.id}Proficiency`]
+                                    : character[
+                                          `${props.id}SavingThrowProficiency`
+                                      ]
+                            }
                             onChange={handleProficiencyChange}
                         />
                     )}

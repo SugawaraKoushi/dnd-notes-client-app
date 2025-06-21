@@ -8,12 +8,10 @@ import { calculateModifier } from "../services/ModifierService";
 import PassiveAbilityTile from "./abilities/PassiveAbilityTile";
 import TextBlock from "./TextBlock";
 import StatusTracker from "./StatusTracker";
-import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import NotificationStack from "../notification/NotificationStack";
 import "./index.css";
-import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
+import { CharacterContext } from "./context/CharacterHeaderContext";
 import AttacksTable from "./attacks/AttacksTable";
-import Attack from "../../model/Attack";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
 import DiceRoller from "./dice roller/DiceRoller";
@@ -51,42 +49,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleStrengthSavingThrowProficiencyChange = () => {
-        const proficiency = !character.strengthSavingThrowProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            strengthSavingThrowProficiency: proficiency,
-            strengthSavingThrow:
-                character.strengthSavingThrow + k * character.proficiencyBonus,
-        });
-    };
-
-    const handleStrengthSavingThrowBonusChange = (bonus) => {
-        const savingThrow =
-            character.strengthSavingThrow -
-            character.strengthSavingThrowBonus +
-            bonus;
-
-        setCharacter({
-            ...character,
-            strengthSavingThrow: savingThrow,
-            strengthSavingThrowBonus: bonus,
-        });
-    };
-
-    const handleAthleticsProficiencyChange = () => {
-        const proficiency = !character.athleticsProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            athleticsProficiency: proficiency,
-            athletics: character.athletics + k * character.proficiencyBonus,
-        });
-    };
-
     const handleAthleticsBonusChange = (bonus) => {
         const athletics =
             character.athletics - character.athleticsBonus + bonus;
@@ -100,6 +62,7 @@ const CharacterPage = () => {
 
     const strengthSkills = [
         {
+            id: "athelitcs",
             name: "атлетика",
             notificationName: "атлетики",
             score: character.athletics,
@@ -147,17 +110,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleDexteritySavingThrowProficiencyChange = () => {
-        const proficiency = !character.dexteritySavingThrowProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            dexteritySavingThrowProficiency: proficiency,
-            dexteritySavingThrow:
-                character.dexteritySavingThrow + k * character.proficiencyBonus,
-        });
-    };
 
     const handleDexterityhSavingThrowBonusChange = (bonus) => {
         const savingThrow =
@@ -172,17 +124,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleAcrobaticsProficiencyChange = () => {
-        const proficiency = !character.acrobaticsProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            acrobaticsProficiency: proficiency,
-            acrobatics: character.acrobatics + k * character.proficiencyBonus,
-        });
-    };
-
     const handleAcrobaticsBonusChange = (bonus) => {
         const value = character.acrobatics - character.acrobaticsBonus + bonus;
 
@@ -193,17 +134,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleSleightOfHandProficiencyChange = () => {
-        const proficiency = !character.sleightOfHandProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            sleightOfHandProficiency: proficiency,
-            sleightOfHand:
-                character.sleightOfHand + k * character.proficiencyBonus,
-        });
-    };
 
     const handleSleightOfHandBonusChange = (bonus) => {
         const value =
@@ -216,16 +146,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleStealthProficiencyChange = () => {
-        const proficiency = !character.stealthProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            stealthProficiency: proficiency,
-            stealth: character.stealth + k * character.proficiencyBonus,
-        });
-    };
 
     const handleStealthBonusChange = (bonus) => {
         const value = character.stealth - character.stealthBonus + bonus;
@@ -239,6 +159,7 @@ const CharacterPage = () => {
 
     const dexteritySkills = [
         {
+            id: "acrobatics",
             name: "акробатика",
             notificationName: "акробатики",
             score: character.acrobatics,
@@ -246,6 +167,7 @@ const CharacterPage = () => {
             proficiency: character.acrobaticsProficiency,
         },
         {
+            id: "sleightOfHand",
             name: "ловкость рук",
             notificationName: "ловкости рук",
             score: character.sleightOfHand,
@@ -253,6 +175,7 @@ const CharacterPage = () => {
             proficiency: character.sleightOfHandProficiency,
         },
         {
+            id: "stealth",
             name: "скрытность",
             notificationName: "скрытности",
             score: character.stealth,
@@ -260,13 +183,6 @@ const CharacterPage = () => {
             proficiency: character.stealthProficiency,
         },
     ];
-
-    const handleInitiativeChange = (value) => {
-        setCharacter({
-            ...character,
-            initiative: value,
-        });
-    };
 
     //#endregion Ловкость
 
@@ -284,19 +200,6 @@ const CharacterPage = () => {
             ...character,
             constitution: score,
             constitutionSavingThrow: savingThrow,
-        });
-    };
-
-    const handleConstitutionSavingThrowProficiencyChange = () => {
-        const proficiency = !character.constitutionSavingThrowProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            constitutionSavingThrowProficiency: proficiency,
-            constitutionSavingThrow:
-                character.constitutionSavingThrow +
-                k * character.proficiencyBonus,
         });
     };
 
@@ -363,19 +266,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleIntelligenceSavingThrowProficiencyChange = () => {
-        const proficiency = !character.intelligenceSavingThrowProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            intelligenceSavingThrowProficiency: proficiency,
-            intelligenceSavingThrow:
-                character.intelligenceSavingThrow +
-                k * character.proficiencyBonus,
-        });
-    };
-
     const handleIntelligenceSavingThrowBonusChange = (bonus) => {
         const savingThrow =
             character.intelligenceSavingThrow -
@@ -386,20 +276,6 @@ const CharacterPage = () => {
             ...character,
             intelligenceSavingThrow: savingThrow,
             intelligenceSavingThrowBonus: bonus,
-        });
-    };
-
-    const handleInvestigationProficiencyChange = () => {
-        const proficiency = !character.investigationProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            investigationProficiency: proficiency,
-            investigation:
-                character.investigation + k * character.proficiencyBonus,
-            investigationPassive:
-                character.investigationPassive + k * character.proficiencyBonus,
         });
     };
 
@@ -415,17 +291,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleHistoryProficiencyChange = () => {
-        const proficiency = !character.historyProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            historyProficiency: proficiency,
-            history: character.history + k * character.proficiencyBonus,
-        });
-    };
-
     const handleHistoryBonusChange = (bonus) => {
         const value = character.history - character.historyBonus + bonus;
 
@@ -433,17 +298,6 @@ const CharacterPage = () => {
             ...character,
             history: value,
             historyBonus: bonus,
-        });
-    };
-
-    const handleArcanaProficiencyChange = () => {
-        const proficiency = !character.arcanaProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            arcanaProficiency: proficiency,
-            arcana: character.arcana + k * character.proficiencyBonus,
         });
     };
 
@@ -457,17 +311,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleNatureProficiencyChange = () => {
-        const proficiency = !character.natureProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            natureProficiency: proficiency,
-            nature: character.nature + k * character.proficiencyBonus,
-        });
-    };
-
     const handleNatureBonusChange = (bonus) => {
         const value = character.nature - character.natureBonus + bonus;
 
@@ -475,17 +318,6 @@ const CharacterPage = () => {
             ...character,
             nature: value,
             natureBonus: bonus,
-        });
-    };
-
-    const handleReligionProficiencyChange = () => {
-        const proficiency = !character.religionProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            religionProficiency: proficiency,
-            religion: character.religion + k * character.proficiencyBonus,
         });
     };
 
@@ -501,6 +333,7 @@ const CharacterPage = () => {
 
     const intelligenceSkills = [
         {
+            id: "investigation",
             name: "анализ",
             notificationName: "анализа",
             score: character.investigation,
@@ -508,6 +341,7 @@ const CharacterPage = () => {
             proficiency: character.investigationProficiency,
         },
         {
+            id: "history",
             name: "история",
             notificationName: "истории",
             score: character.history,
@@ -515,6 +349,7 @@ const CharacterPage = () => {
             proficiency: character.historyProficiency,
         },
         {
+            id: "arcana",
             name: "магия",
             notificationName: "магии",
             score: character.arcana,
@@ -522,6 +357,7 @@ const CharacterPage = () => {
             proficiency: character.arcanaProficiency,
         },
         {
+            id: "nature",
             name: "природа",
             notificationName: "природы",
             score: character.nature,
@@ -529,6 +365,7 @@ const CharacterPage = () => {
             proficiency: character.natureProficiency,
         },
         {
+            id: "religion",
             name: "религия",
             notificationName: "религии",
             score: character.religion,
@@ -589,18 +426,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleWisdomSavingThrowProficiencyChange = () => {
-        const proficiency = !character.wisdomSavingThrowProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            wisdomSavingThrowProficiency: proficiency,
-            wisdomSavingThrow:
-                character.wisdomSavingThrow + k * character.proficiencyBonus,
-        });
-    };
-
     const handleWisdomSavingThrowBonusChange = (bonus) => {
         const savingThrow =
             character.wisdomSavingThrow -
@@ -611,19 +436,6 @@ const CharacterPage = () => {
             ...character,
             wisdomSavingThrow: savingThrow,
             wisdomSavingThrowBonus: bonus,
-        });
-    };
-
-    const handlePerceptionProficiencyChange = () => {
-        const proficiency = !character.perceptionProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            perceptionProficiency: proficiency,
-            perception: character.perception + k * character.proficiencyBonus,
-            perceptionPassive:
-                character.perceptionPassive + k * character.proficiencyBonus,
         });
     };
 
@@ -638,17 +450,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleSurvivalProficiencyChange = () => {
-        const proficiency = !character.survivalProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            survivalProficiency: proficiency,
-            survival: character.survival + k * character.proficiencyBonus,
-        });
-    };
-
     const handleSurvivalBonusChange = (bonus) => {
         const value = character.survival - character.survivalBonus + bonus;
 
@@ -656,17 +457,6 @@ const CharacterPage = () => {
             ...character,
             survival: value,
             survivalBonus: bonus,
-        });
-    };
-
-    const handleMedicineProficiencyChange = () => {
-        const proficiency = !character.medicineProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            medicineProficiency: proficiency,
-            medicine: character.medicine + k * character.proficiencyBonus,
         });
     };
 
@@ -680,19 +470,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleInsightProficiencyChange = () => {
-        const proficiency = !character.insightProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            insightProficiency: proficiency,
-            insight: character.insight + k * character.proficiencyBonus,
-            insightPassive:
-                character.insightPassive + k * character.proficiencyBonus,
-        });
-    };
-
     const handleInsightBonusChange = (bonus) => {
         const value = character.insight - character.insightBonus + bonus;
 
@@ -701,18 +478,6 @@ const CharacterPage = () => {
             insight: value,
             insightBonus: bonus,
             insightPassive: 10 + value,
-        });
-    };
-
-    const handleAnimalHandlingProficiencyChange = () => {
-        const proficiency = !character.animalHandlingProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            animalHandlingProficiency: proficiency,
-            animalHandling:
-                character.animalHandling + k * character.proficiencyBonus,
         });
     };
 
@@ -729,6 +494,7 @@ const CharacterPage = () => {
 
     const wisdomSkills = [
         {
+            id: "perception",
             name: "восприятие",
             notificationName: "восприятия",
             score: character.perception,
@@ -736,6 +502,7 @@ const CharacterPage = () => {
             proficiency: character.perceptionProficiency,
         },
         {
+            id: "survival",
             name: "выживание",
             notificationName: "выживания",
             score: character.survival,
@@ -743,6 +510,7 @@ const CharacterPage = () => {
             proficiency: character.survivalProficiency,
         },
         {
+            id: "medicine",
             name: "медицина",
             notificationName: "медицины",
             score: character.medicine,
@@ -750,6 +518,7 @@ const CharacterPage = () => {
             proficiency: character.medicineProficiency,
         },
         {
+            id: "insight",
             name: "проницательность",
             notificationName: "проницательности",
             score: character.insight,
@@ -757,6 +526,7 @@ const CharacterPage = () => {
             proficiency: character.insightProficiency,
         },
         {
+            id: "animalHandling",
             name: "уход за животными",
             notificationName: "ухода за животными",
             score: character.animalHandling,
@@ -808,18 +578,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleCharismaSavingThrowProficiencyChange = () => {
-        const proficiency = !character.charismaSavingThrowProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            charismaSavingThrowProficiency: proficiency,
-            charismaSavingThrow:
-                character.charismaSavingThrow + k * character.proficiencyBonus,
-        });
-    };
-
     const handleCharismaSavingThrowBonusChange = (bonus) => {
         const savingThrow =
             character.charismaSavingThrow -
@@ -830,17 +588,6 @@ const CharacterPage = () => {
             ...character,
             charismaSavingThrow: savingThrow,
             charismaSavingThrowBonus: bonus,
-        });
-    };
-
-    const handlePerformanceProficiencyChange = () => {
-        const proficiency = !character.performanceProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            performanceProficiency: proficiency,
-            performance: character.performance + k * character.proficiencyBonus,
         });
     };
 
@@ -855,18 +602,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleIntimidationProficiencyChange = () => {
-        const proficiency = !character.intimidationProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            intimidationProficiency: proficiency,
-            intimidation:
-                character.intimidation + k * character.proficiencyBonus,
-        });
-    };
-
     const handleIntimidationBonusChange = (bonus) => {
         const value =
             character.intimidation - character.intimidationBonus + bonus;
@@ -878,17 +613,6 @@ const CharacterPage = () => {
         });
     };
 
-    const handleDeceptionProficiencyChange = () => {
-        const proficiency = !character.deceptionProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            deceptionProficiency: proficiency,
-            deception: character.deception + k * character.proficiencyBonus,
-        });
-    };
-
     const handleDeceptionBonusChange = (bonus) => {
         const value = character.deception - character.deceptionBonus + bonus;
 
@@ -896,17 +620,6 @@ const CharacterPage = () => {
             ...character,
             deception: value,
             deceptionBonus: bonus,
-        });
-    };
-
-    const handlePersuasionProficiencyChange = () => {
-        const proficiency = !character.persuasionProficiency;
-        let k = proficiency ? 1 : -1;
-
-        setCharacter({
-            ...character,
-            persuasionProficiency: proficiency,
-            persuasion: character.persuasion + k * character.proficiencyBonus,
         });
     };
 
@@ -922,6 +635,7 @@ const CharacterPage = () => {
 
     const charismaSkills = [
         {
+            id: "performance",
             name: "выступление",
             notificationName: "выступления",
             score: character.performance,
@@ -929,6 +643,7 @@ const CharacterPage = () => {
             proficiency: character.performanceProficiency,
         },
         {
+            id: "intimidation",
             name: "запугивание",
             notificationName: "запугивания",
             score: character.intimidation,
@@ -936,6 +651,7 @@ const CharacterPage = () => {
             proficiency: character.intimidationProficiency,
         },
         {
+            id: "deception",
             name: "обман",
             notificationName: "обмана",
             score: character.deception,
@@ -943,6 +659,7 @@ const CharacterPage = () => {
             proficiency: character.deceptionProficiency,
         },
         {
+            id: "persuasuion",
             name: "убеждение",
             notificationName: "убеждения",
             score: character.persuasion,
@@ -965,8 +682,6 @@ const CharacterPage = () => {
 
     //#region Уведомления
 
-    //#endregion Уведомления
-
     const handleRollButtonClick = (value) => {
         setNotifications((prev) => {
             const updatedNotifications = [...prev, value].slice(-5);
@@ -978,102 +693,11 @@ const CharacterPage = () => {
         setNotifications([]);
     };
 
-    //#region Прочее
-
-    const handleCharacterChange = (value) => {
-        setCharacter({ ...value });
-    };
-
-    const handleInspirationChange = () => {
-        const value = !character.inspiration;
-
-        setCharacter({
-            ...character,
-            inspiration: value,
-        });
-    };
-
-    const handleExhaustChange = (value) => {
-        setCharacter({
-            ...character,
-            exhausted: value,
-        });
-    };
-
-    const handleSpeedChange = (value) => {
-        setCharacter({
-            ...character,
-            speed: value,
-        });
-    };
-
-    const handleArmorClassChange = (value) => {
-        setCharacter({
-            ...character,
-            armorClass: value,
-        });
-    };
-
-    const handleNameChange = (value) => {
-        setCharacter({
-            ...character,
-            name: value,
-        });
-    };
-
-    const handleClassChange = (value) => {
-        setCharacter({
-            ...character,
-            class: value,
-        });
-    };
-
-    const handleSubclassChange = (value) => {
-        setCharacter({
-            ...character,
-            subclass: value,
-        });
-    };
-
-    const handleRaceChange = (value) => {
-        setCharacter({
-            ...character,
-            race: value,
-        });
-    };
-
-    const handleHPChange = (hp) => {
-        setCharacter({
-            ...character,
-            currentHP: hp.currentHP,
-            maxHP: hp.maxHP,
-            temporaryHP: hp.temporaryHP,
-        });
-    };
-
-    const handleLevelChange = (level) => {
-        setCharacter({
-            ...character,
-            level: level,
-            proficiencyBonus: 2 + Math.floor(level / 4),
-        });
-    };
-
-    //#endregion Прочее
+    //#endregion Уведомления
 
     //#region Атаки
 
-    const [attacks, setAttacks] = useState([
-        new Attack(
-            character.strength,
-            character.dexterity,
-            character.constitution,
-            character.intelligence,
-            character.wisdom,
-            character.charisma,
-            character.proficiencyBonus
-        ),
-    ]);
+    const [attacks, setAttacks] = useState([]);
 
     const handleAttacksChange = (newAttacks) => {
         setAttacks(newAttacks);
@@ -1103,451 +727,310 @@ const CharacterPage = () => {
         };
 
         fetchData();
-    }, [character, attacks]);
+    }, []);
 
     const getCharacter = async () => {
         const url = `/characters/${id}`;
         const response = await axios.get(url);
-        console.log(response.data);
-
         return response.data;
+    };
+
+    const handleCharacterChange = (value) => {
+        setCharacter({ ...value });
     };
 
     //#endregion Работа с данными
 
-    // const sex = [
-    //     { value: "MALE", label: <span>Мужской</span> },
-    //     { value: "FEMALE", label: <span>Женский</span> },
-    //     { value: "OTHER", label: <span>Другое</span> },
-    // ];
-
-    // const alignments = [
-    //     { value: "LAWFUL_GOOD", label: <span>Законно-добрый</span> },
-    //     { value: "NEUTRAL_GOOD", label: <span>Нейтрально-добрый</span> },
-    //     { value: "CHAOTIC_GOOD", label: <span>Хаотично-добрый</span> },
-    //     { value: "LAWFUL_NEUTRAL", label: <span>Законно-нейтральный</span> },
-    //     { value: "NEUTRAL", label: <span>Нейтральный</span> },
-    //     { value: "CHAOTIC_NEUTRAL", label: <span>Хаотично-добрый</span> },
-    //     { value: "LAWFUL_EVIL", label: <span>Законно-злой</span> },
-    //     { value: "NEUTRAL_EVIL", label: <span>Нейтрально-злой</span> },
-    //     { value: "CHAOTIC_EVIL", label: <span>Хаотично-злой</span> },
-    // ];
-
-    // const characterDetails = [
-    //     <Form.Item name="name" label="Имя:" required>
-    //         <Input />
-    //     </Form.Item>,
-    //     <Form.Item name="sex" label="Пол:" required>
-    //         <Select options={sex} />
-    //     </Form.Item>,
-    //     <Form.Item name="alignment" label="Мировоззрение:" required>
-    //         <Select options={alignments} />
-    //     </Form.Item>,
-    //     <Form.Item name="author" label="Игрок:" required>
-    //         <Input disabled />
-    //     </Form.Item>,
-    //     <Form.Item name="EXP" label="Текущий опыт:" required>
-    //         <InputNumber
-    //             style={{ width: "100%" }}
-    //             prefix="EXP"
-    //             min={0}
-    //             precision={0}
-    //         />
-    //     </Form.Item>,
-    //     <Form.Item name="deity" label="Божество:" required>
-    //         <Input />
-    //     </Form.Item>,
-    // ];
-
     return (
         <>
-            <CharacterHeaderContext.Provider
+            <CharacterContext.Provider
                 value={{
-                    onInitiativeChange: handleInitiativeChange,
-                    onArmorClassChange: handleArmorClassChange,
-                    onSpeedChange: handleSpeedChange,
-                    onNameChange: handleNameChange,
-                    onRaceChange: handleRaceChange,
-                    onClassChange: handleClassChange,
-                    onSubclassChange: handleSubclassChange,
-                    onHPChange: handleHPChange,
-                    onLevelChange: handleLevelChange,
+                    onCharacterChange: handleCharacterChange,
                     character: character,
                 }}
             >
                 <CharacterHeader />
-            </CharacterHeaderContext.Provider>
-            <NotificationContext.Provider
-                value={{ onRollButtonClick: handleRollButtonClick }}
-            >
-                <Flex
-                    className="content-layout"
-                    style={{ lineHeight: "inherit" }}
-                    justify="space-between"
-                    gap="small"
+                <NotificationContext.Provider
+                    value={{ onRollButtonClick: handleRollButtonClick }}
                 >
                     <Flex
-                        vertical={isVertical}
-                        wrap
-                        className="abilities"
+                        className="content-layout"
+                        style={{ lineHeight: "inherit" }}
+                        justify="space-between"
                         gap="small"
                     >
-                        <AbilityContext.Provider
-                            value={{
-                                onScoreChange: handleStrengthScoreChange,
-                                onSavingThrowProficiencyChange:
-                                    handleStrengthSavingThrowProficiencyChange,
-                                onSavingThrowBonusChange:
-                                    handleStrengthSavingThrowBonusChange,
-                                onSkillProficiencyChange: (index) => {
-                                    if (index === 0) {
-                                        handleAthleticsProficiencyChange();
-                                    }
-                                },
-                                onSkillBonusChange: (index, bonus) => {
-                                    if (index === 0) {
-                                        handleAthleticsBonusChange(bonus);
-                                    }
-                                },
-                            }}
+                        <Flex
+                            vertical={isVertical}
+                            wrap
+                            className="abilities"
+                            gap="small"
                         >
-                            <AbilityTile
-                                key="strength"
-                                id="strength"
-                                name="сила"
-                                notificationName="силы"
-                                score={character.strength}
-                                savingThrow={character.strengthSavingThrow}
-                                savingThrowProficiency={
-                                    character.strengthSavingThrowProficiency
-                                }
-                                savingThrowBonus={
-                                    character.strengthSavingThrowBonus
-                                }
-                                skills={strengthSkills}
-                            />
-                        </AbilityContext.Provider>
-                        <AbilityContext.Provider
-                            value={{
-                                onScoreChange: handleDexterityScoreChange,
-                                onSavingThrowProficiencyChange:
-                                    handleDexteritySavingThrowProficiencyChange,
-                                onSavingThrowBonusChange:
-                                    handleDexterityhSavingThrowBonusChange,
-                                onSkillProficiencyChange: (index) => {
-                                    switch (index) {
-                                        case 0:
-                                            handleAcrobaticsProficiencyChange();
-                                            break;
-                                        case 1:
-                                            handleSleightOfHandProficiencyChange();
-                                            break;
-                                        case 2:
-                                            handleStealthProficiencyChange();
-                                            break;
-                                        default:
-                                            break;
+                            <AbilityContext.Provider
+                                value={{
+                                    onScoreChange: handleStrengthScoreChange,
+                                    onSkillBonusChange: (index, bonus) => {
+                                        if (index === 0) {
+                                            handleAthleticsBonusChange(bonus);
+                                        }
+                                    },
+                                }}
+                            >
+                                <AbilityTile
+                                    id="strength"
+                                    name="сила"
+                                    notificationName="силы"
+                                    score={character.strength}
+                                    savingThrow={character.strengthSavingThrow}
+                                    savingThrowProficiency={
+                                        character.strengthSavingThrowProficiency
                                     }
-                                },
-                                onSkillBonusChange: (index, bonus) => {
-                                    switch (index) {
-                                        case 0:
-                                            handleAcrobaticsBonusChange(bonus);
-                                            break;
-                                        case 1:
-                                            handleSleightOfHandBonusChange(
-                                                bonus
-                                            );
-                                            break;
-                                        case 2:
-                                            handleStealthBonusChange(bonus);
-                                            break;
-                                        default:
-                                            break;
+                                    savingThrowBonus={
+                                        character.strengthSavingThrowBonus
                                     }
-                                },
-                            }}
-                        >
-                            <AbilityTile
-                                key="dexterity"
-                                id="dexterity"
-                                name="ловкость"
-                                notificationName="ловкости"
-                                score={character.dexterity}
-                                savingThrow={character.dexteritySavingThrow}
-                                savingThrowProficiency={
-                                    character.dexteritySavingThrowProficiency
-                                }
-                                savingThrowBonus={
-                                    character.dexteritySavingThrowBonus
-                                }
-                                skills={dexteritySkills}
-                            />
-                        </AbilityContext.Provider>
-                        <AbilityContext.Provider
-                            value={{
-                                onScoreChange: handleConstitutionScoreChange,
-                                onSavingThrowProficiencyChange:
-                                    handleConstitutionSavingThrowProficiencyChange,
-                                onSavingThrowBonusChange:
-                                    handleConstitutionSavingThrowBonusChange,
-                            }}
-                        >
-                            <AbilityTile
-                                key="constitution"
-                                id="constitution"
-                                name="телосложение"
-                                notificationName="телосложения"
-                                score={character.constitution}
-                                savingThrow={character.constitutionSavingThrow}
-                                savingThrowProficiency={
-                                    character.constitutionSavingThrowProficiency
-                                }
-                                savingThrowBonus={
-                                    character.constitutionSavingThrowBonus
-                                }
-                            />
-                        </AbilityContext.Provider>
-                        <AbilityContext.Provider
-                            value={{
-                                onScoreChange: handleIntelligenceScoreChange,
-                                onSavingThrowProficiencyChange:
-                                    handleIntelligenceSavingThrowProficiencyChange,
-                                onSavingThrowBonusChange:
-                                    handleIntelligenceSavingThrowBonusChange,
-                                onSkillProficiencyChange: (index) => {
-                                    switch (index) {
-                                        case 0:
-                                            handleInvestigationProficiencyChange();
-                                            break;
-                                        case 1:
-                                            handleHistoryProficiencyChange();
-                                            break;
-                                        case 2:
-                                            handleArcanaProficiencyChange();
-                                            break;
-                                        case 3:
-                                            handleNatureProficiencyChange();
-                                            break;
-                                        case 4:
-                                            handleReligionProficiencyChange();
-                                            break;
-                                        default:
-                                            break;
+                                    skills={strengthSkills}
+                                />
+                            </AbilityContext.Provider>
+                            <AbilityContext.Provider
+                                value={{
+                                    onScoreChange: handleDexterityScoreChange,
+                                    onSavingThrowBonusChange:
+                                        handleDexterityhSavingThrowBonusChange,
+                                    onSkillBonusChange: (index, bonus) => {
+                                        switch (index) {
+                                            case 0:
+                                                handleAcrobaticsBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 1:
+                                                handleSleightOfHandBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 2:
+                                                handleStealthBonusChange(bonus);
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    },
+                                }}
+                            >
+                                <AbilityTile
+                                    id="dexterity"
+                                    name="ловкость"
+                                    notificationName="ловкости"
+                                    score={character.dexterity}
+                                    savingThrow={character.dexteritySavingThrow}
+                                    savingThrowProficiency={
+                                        character.dexteritySavingThrowProficiency
                                     }
-                                },
-                                onSkillBonusChange: (index, bonus) => {
-                                    switch (index) {
-                                        case 0:
-                                            handleInvestigationBonusChange(
-                                                bonus
-                                            );
-                                            break;
-                                        case 1:
-                                            handleHistoryBonusChange(bonus);
-                                            break;
-                                        case 2:
-                                            handleArcanaBonusChange(bonus);
-                                            break;
-                                        case 3:
-                                            handleNatureBonusChange(bonus);
-                                            break;
-                                        case 4:
-                                            handleReligionBonusChange(bonus);
-                                            break;
-                                        default:
-                                            break;
+                                    savingThrowBonus={
+                                        character.dexteritySavingThrowBonus
                                     }
-                                },
-                            }}
-                        >
-                            <AbilityTile
-                                key="intelligence"
-                                id="intelligence"
-                                name="интеллект"
-                                notificationName="интеллекта"
-                                score={character.intelligence}
-                                savingThrow={character.intelligenceSavingThrow}
-                                savingThrowProficiency={
-                                    character.intelligenceSavingThrowProficiency
-                                }
-                                savingThrowBonus={
-                                    character.intelligenceSavingThrowBonus
-                                }
-                                skills={intelligenceSkills}
-                            />
-                        </AbilityContext.Provider>
-                        <AbilityContext.Provider
-                            value={{
-                                onScoreChange: handleWisdomScoreChange,
-                                onSavingThrowProficiencyChange:
-                                    handleWisdomSavingThrowProficiencyChange,
-                                onSavingThrowBonusChange:
-                                    handleWisdomSavingThrowBonusChange,
-                                onSkillProficiencyChange: (index) => {
-                                    switch (index) {
-                                        case 0:
-                                            handlePerceptionProficiencyChange();
-                                            break;
-                                        case 1:
-                                            handleSurvivalProficiencyChange();
-                                            break;
-                                        case 2:
-                                            handleMedicineProficiencyChange();
-                                            break;
-                                        case 3:
-                                            handleInsightProficiencyChange();
-                                            break;
-                                        case 4:
-                                            handleAnimalHandlingProficiencyChange();
-                                            break;
-                                        default:
-                                            break;
+                                    skills={dexteritySkills}
+                                />
+                            </AbilityContext.Provider>
+                            <AbilityContext.Provider
+                                value={{
+                                    onScoreChange:
+                                        handleConstitutionScoreChange,
+                                    onSavingThrowBonusChange:
+                                        handleConstitutionSavingThrowBonusChange,
+                                }}
+                            >
+                                <AbilityTile
+                                    id="constitution"
+                                    name="телосложение"
+                                    notificationName="телосложения"
+                                    score={character.constitution}
+                                    savingThrow={
+                                        character.constitutionSavingThrow
                                     }
-                                },
-                                onSkillBonusChange: (index, bonus) => {
-                                    switch (index) {
-                                        case 0:
-                                            handlePerceptionBonusChange(bonus);
-                                            break;
-                                        case 1:
-                                            handleSurvivalBonusChange(bonus);
-                                            break;
-                                        case 2:
-                                            handleMedicineBonusChange(bonus);
-                                            break;
-                                        case 3:
-                                            handleInsightBonusChange(bonus);
-                                            break;
-                                        case 4:
-                                            handleAnimalHandlingBonusChange(
-                                                bonus
-                                            );
-                                            break;
-                                        default:
-                                            break;
+                                    savingThrowProficiency={
+                                        character.constitutionSavingThrowProficiency
                                     }
-                                },
-                            }}
-                        >
-                            <AbilityTile
-                                key="wisdom"
-                                id="wisdom"
-                                name="мудрость"
-                                notificationName="мудрости"
-                                score={character.wisdom}
-                                savingThrow={character.wisdomSavingThrow}
-                                savingThrowProficiency={
-                                    character.wisdomSavingThrowProficiency
-                                }
-                                savingThrowBonus={
-                                    character.wisdomSavingThrowBonus
-                                }
-                                skills={wisdomSkills}
-                            />
-                        </AbilityContext.Provider>
-                        <AbilityContext.Provider
-                            value={{
-                                onScoreChange: handleCharismaScoreChange,
-                                onSavingThrowProficiencyChange:
-                                    handleCharismaSavingThrowProficiencyChange,
-                                onSavingThrowBonusChange:
-                                    handleCharismaSavingThrowBonusChange,
-                                onSkillProficiencyChange: (index) => {
-                                    switch (index) {
-                                        case 0:
-                                            handlePerformanceProficiencyChange();
-                                            break;
-                                        case 1:
-                                            handleIntimidationProficiencyChange();
-                                            break;
-                                        case 2:
-                                            handleDeceptionProficiencyChange();
-                                            break;
-                                        case 3:
-                                            handlePersuasionProficiencyChange();
-                                            break;
-                                        default:
-                                            break;
+                                    savingThrowBonus={
+                                        character.constitutionSavingThrowBonus
                                     }
-                                },
-                                onSkillBonusChange: (index, bonus) => {
-                                    switch (index) {
-                                        case 0:
-                                            handlePerformanceBonusChange(bonus);
-                                            break;
-                                        case 1:
-                                            handleIntimidationBonusChange(
-                                                bonus
-                                            );
-                                            break;
-                                        case 2:
-                                            handleDeceptionBonusChange(bonus);
-                                            break;
-                                        case 3:
-                                            handlePersuasionBonusChange(bonus);
-                                            break;
-                                        default:
-                                            break;
+                                />
+                            </AbilityContext.Provider>
+                            <AbilityContext.Provider
+                                value={{
+                                    onScoreChange:
+                                        handleIntelligenceScoreChange,
+                                    onSavingThrowBonusChange:
+                                        handleIntelligenceSavingThrowBonusChange,
+                                    onSkillBonusChange: (index, bonus) => {
+                                        switch (index) {
+                                            case 0:
+                                                handleInvestigationBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 1:
+                                                handleHistoryBonusChange(bonus);
+                                                break;
+                                            case 2:
+                                                handleArcanaBonusChange(bonus);
+                                                break;
+                                            case 3:
+                                                handleNatureBonusChange(bonus);
+                                                break;
+                                            case 4:
+                                                handleReligionBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    },
+                                }}
+                            >
+                                <AbilityTile
+                                    id="intelligence"
+                                    name="интеллект"
+                                    notificationName="интеллекта"
+                                    score={character.intelligence}
+                                    savingThrow={
+                                        character.intelligenceSavingThrow
                                     }
-                                },
-                            }}
-                        >
-                            <AbilityTile
-                                key="charisma"
-                                id="charisma"
-                                name="харизма"
-                                notificationName="харизмы"
-                                score={character.charisma}
-                                savingThrow={character.charismaSavingThrow}
-                                savingThrowProficiency={
-                                    character.charismaSavingThrowProficiency
-                                }
-                                savingThrowBonus={
-                                    character.charismaSavingThrowBonus
-                                }
-                                skills={charismaSkills}
-                            />
-                        </AbilityContext.Provider>
-                        <PassiveAbilityTile skills={passiveSkills} />
-                    </Flex>
-                    <Flex vertical className="character-content" gap={6}>
-                        <StatusTrackerContext.Provider
-                            value={{
-                                onInspirationChange: handleInspirationChange,
-                                onExhaustChange: handleExhaustChange,
-                                onCharacterChange: handleCharacterChange,
-                                character: character,
-                            }}
-                        >
+                                    savingThrowProficiency={
+                                        character.intelligenceSavingThrowProficiency
+                                    }
+                                    savingThrowBonus={
+                                        character.intelligenceSavingThrowBonus
+                                    }
+                                    skills={intelligenceSkills}
+                                />
+                            </AbilityContext.Provider>
+                            <AbilityContext.Provider
+                                value={{
+                                    onScoreChange: handleWisdomScoreChange,
+                                    onSavingThrowBonusChange:
+                                        handleWisdomSavingThrowBonusChange,
+                                    onSkillBonusChange: (index, bonus) => {
+                                        switch (index) {
+                                            case 0:
+                                                handlePerceptionBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 1:
+                                                handleSurvivalBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 2:
+                                                handleMedicineBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 3:
+                                                handleInsightBonusChange(bonus);
+                                                break;
+                                            case 4:
+                                                handleAnimalHandlingBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    },
+                                }}
+                            >
+                                <AbilityTile
+                                    id="wisdom"
+                                    name="мудрость"
+                                    notificationName="мудрости"
+                                    score={character.wisdom}
+                                    savingThrow={character.wisdomSavingThrow}
+                                    savingThrowProficiency={
+                                        character.wisdomSavingThrowProficiency
+                                    }
+                                    savingThrowBonus={
+                                        character.wisdomSavingThrowBonus
+                                    }
+                                    skills={wisdomSkills}
+                                />
+                            </AbilityContext.Provider>
+                            <AbilityContext.Provider
+                                value={{
+                                    onScoreChange: handleCharismaScoreChange,
+                                    onSavingThrowBonusChange:
+                                        handleCharismaSavingThrowBonusChange,
+                                    onSkillBonusChange: (index, bonus) => {
+                                        switch (index) {
+                                            case 0:
+                                                handlePerformanceBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 1:
+                                                handleIntimidationBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 2:
+                                                handleDeceptionBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            case 3:
+                                                handlePersuasionBonusChange(
+                                                    bonus
+                                                );
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    },
+                                }}
+                            >
+                                <AbilityTile
+                                    id="charisma"
+                                    name="харизма"
+                                    notificationName="харизмы"
+                                    score={character.charisma}
+                                    savingThrow={character.charismaSavingThrow}
+                                    savingThrowProficiency={
+                                        character.charismaSavingThrowProficiency
+                                    }
+                                    savingThrowBonus={
+                                        character.charismaSavingThrowBonus
+                                    }
+                                    skills={charismaSkills}
+                                />
+                            </AbilityContext.Provider>
+                            <PassiveAbilityTile skills={passiveSkills} />
+                        </Flex>
+                        <Flex vertical className="character-content" gap={6}>
                             <StatusTracker />
-                        </StatusTrackerContext.Provider>
-                        <AttackContext.Provider
-                            value={{
-                                attacks: attacks,
-                                character: character,
-                                onAttacksChange: handleAttacksChange,
-                            }}
-                        >
-                            <AttacksTable
-                                attacksTableContent={attacks}
-                                character={character}
-                            />
-                        </AttackContext.Provider>
+                            <AttackContext.Provider
+                                value={{
+                                    attacks: attacks,
+                                    onAttacksChange: handleAttacksChange,
+                                }}
+                            >
+                                <AttacksTable />
+                            </AttackContext.Provider>
 
-                        <TextBlock title={"заметки"} />
+                            <TextBlock title={"заметки"} />
+                        </Flex>
                     </Flex>
-                </Flex>
-            </NotificationContext.Provider>
-            <NotificationStack
-                onClose={handleNotificationStackCloseButtonClick}
-                items={notifications}
-            />
-            <NotificationContext.Provider
-                value={{ onRollButtonClick: handleRollButtonClick }}
-            >
-                <DiceRoller />
-            </NotificationContext.Provider>
+                </NotificationContext.Provider>
+                <NotificationStack
+                    onClose={handleNotificationStackCloseButtonClick}
+                    items={notifications}
+                />
+                <NotificationContext.Provider
+                    value={{ onRollButtonClick: handleRollButtonClick }}
+                >
+                    <DiceRoller />
+                </NotificationContext.Provider>
+            </CharacterContext.Provider>
         </>
     );
 };

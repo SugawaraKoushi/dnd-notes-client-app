@@ -1,32 +1,27 @@
 import { Button, Checkbox, Dropdown, Flex } from "antd";
 import { modifierAsString } from "../services/ModifierService";
 import { useContext, useState } from "react";
-import { StatusTrackerContext } from "./context/StatusTrackerContext";
 import "./index.css";
 import { rollDice } from "../services/RollDiceService";
 import { NotificationContext } from "./context/NotificationContext";
 import StatesDrawer from "./drawer/StatesDrawer";
 import { DrawerContext } from "./context/DrawerContext";
+import { CharacterContext } from "./context/CharacterHeaderContext";
 
 const StatusTracker = () => {
-    const {
-        onInspirationChange,
-        onExhaustChange,
-        onCharacterChange,
-        character,
-    } = useContext(StatusTrackerContext);
+    const { character, onCharacterChange } = useContext(CharacterContext);
     const { onRollButtonClick } = useContext(NotificationContext);
     const [statesDrawerIsOpen, setStatesDrawerIsOpen] = useState(false);
     const [statesString, setStatesString] = useState("-");
 
     const exhaustingLevels = [
-        { key: 1, label: <span>0</span>, onClick: () => onExhaustChange(0) },
-        { key: 2, label: <span>1</span>, onClick: () => onExhaustChange(1) },
-        { key: 3, label: <span>2</span>, onClick: () => onExhaustChange(2) },
-        { key: 4, label: <span>3</span>, onClick: () => onExhaustChange(3) },
-        { key: 5, label: <span>4</span>, onClick: () => onExhaustChange(4) },
-        { key: 6, label: <span>5</span>, onClick: () => onExhaustChange(5) },
-        { key: 7, label: <span>6</span>, onClick: () => onExhaustChange(6) },
+        { key: 1, label: <span>0</span>, onClick: () => handleExhaustChange(0) },
+        { key: 2, label: <span>1</span>, onClick: () => handleExhaustChange(1) },
+        { key: 3, label: <span>2</span>, onClick: () => handleExhaustChange(2) },
+        { key: 4, label: <span>3</span>, onClick: () => handleExhaustChange(3) },
+        { key: 5, label: <span>4</span>, onClick: () => handleExhaustChange(4) },
+        { key: 6, label: <span>5</span>, onClick: () => handleExhaustChange(5) },
+        { key: 7, label: <span>6</span>, onClick: () => handleExhaustChange(6) },
     ];
 
     const handleIniativeButtonClick = () => {
@@ -47,7 +42,19 @@ const StatusTracker = () => {
     };
 
     const handleInspirationChange = () => {
-        onInspirationChange();
+        const value = !character.inspiration;
+
+        onCharacterChange({
+            ...character,
+            inspiration: value,
+        });
+    };
+
+    const handleExhaustChange = (value) => {
+        onCharacterChange({
+            ...character,
+            exhausted: value,
+        });
     };
 
     const handleStatesButtonClick = () => {

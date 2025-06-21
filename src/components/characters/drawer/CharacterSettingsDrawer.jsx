@@ -2,23 +2,13 @@ import { Drawer, Flex, Form, Input, InputNumber } from "antd";
 import { useContext, useState } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
-import { CharacterHeaderContext } from "../context/CharacterHeaderContext";
+import { CharacterContext } from "../context/CharacterHeaderContext";
 
 const CharacterSettingsDrawer = (props) => {
     const [form] = useForm();
     const [showPrefix, setShowPrefix] = useState(true);
     const { onClose } = useContext(DrawerContext);
-    const {
-        onInitiativeChange,
-        onArmorClassChange,
-        onSpeedChange,
-        onNameChange,
-        onRaceChange,
-        onClassChange,
-        onSubclassChange,
-        onLevelChange,
-        character,
-    } = useContext(CharacterHeaderContext);
+    const { onCharacterChange, character } = useContext(CharacterContext);
     let plusPrefix = showPrefix && character.initiative > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
@@ -33,36 +23,34 @@ const CharacterSettingsDrawer = (props) => {
         onClose();
     };
 
+    const handleCharacterTextFieldChange = (event) => {
+        const fieldName = event.target.id.split("_")[1];
+        const value = event.target.value;
+        const updatedCharacter = {
+            ...character,
+            [fieldName]: value,
+        };
+        onCharacterChange(updatedCharacter);
+    };
+
     const handleSpeedValueChange = (value) => {
-        onSpeedChange(value);
+        const updatedCharacter = {...character, speed: value};
+        onCharacterChange(updatedCharacter);
     };
 
     const handleInitiativeValueChange = (value) => {
-        onInitiativeChange(value);
+        const updatedCharacter = {...character, initiative: value};
+        onCharacterChange(updatedCharacter);
     };
 
     const handleArmorClassValueChange = (value) => {
-        onArmorClassChange(value);
-    };
-
-    const handleNameValueChange = (event) => {
-        onNameChange(event.target.value);
-    };
-
-    const handleRaceValueChange = (event) => {
-        onRaceChange(event.target.value);
-    };
-
-    const handleClassValueChange = (event) => {
-        onClassChange(event.target.value);
-    };
-
-    const handleSubclassValueChange = (event) => {
-        onSubclassChange(event.target.value);
+        const updatedCharacter = {...character, armorClass: value};
+        onCharacterChange(updatedCharacter);
     };
 
     const handleLevelChange = (value) => {
-        onLevelChange(value);
+        const updatedCharacter = {...character, level: value};
+        onCharacterChange(updatedCharacter);
     };
 
     return (
@@ -80,7 +68,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="name"
                             style={{ width: "50%" }}
                             initialValue={character.name}
-                            onChange={handleNameValueChange}
+                            onChange={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Имя" />
                         </Form.Item>
@@ -89,7 +77,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="race"
                             style={{ width: "50%" }}
                             initialValue={character.race}
-                            onChange={handleRaceValueChange}
+                            onChange={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Раса" />
                         </Form.Item>
@@ -100,7 +88,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="className"
                             style={{ width: "50%" }}
                             initialValue={character.className}
-                            onChange={handleClassValueChange}
+                            onChange={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Класс" />
                         </Form.Item>
@@ -109,7 +97,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="subclass"
                             style={{ width: "50%" }}
                             initialValue={character.subclass}
-                            onChange={handleSubclassValueChange}
+                            onChange={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Подкласс" />
                         </Form.Item>
@@ -127,7 +115,7 @@ const CharacterSettingsDrawer = (props) => {
                                 max={20}
                                 changeOnWheel
                                 style={{ width: "100%" }}
-                                onChange={(value) => handleLevelChange(value)}
+                                onChange={handleLevelChange}
                             />
                         </Form.Item>
                         <Form.Item

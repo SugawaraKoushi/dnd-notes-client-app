@@ -7,11 +7,11 @@ import HealthInfo from "./hp/HealthInfo";
 import CharacterSettingsDrawer from "./drawer/CharacterSettingsDrawer";
 import { useContext, useState } from "react";
 import { DrawerContext } from "./context/DrawerContext";
-import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
+import { CharacterContext } from "./context/CharacterHeaderContext";
 
 const CharacterHeader = () => {
     const [settingsDrawerIsOpen, setSettingsDrawerIsOpen] = useState(false);
-    const { character } = useContext(CharacterHeaderContext);
+    const { character } = useContext(CharacterContext);
 
     const handleStatsClick = () => {
         setSettingsDrawerIsOpen(true);

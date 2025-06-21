@@ -31,7 +31,7 @@ const AbilityTile = (props) => {
                     bonus={props.savingThrowBonus}
                 />
                 <AbilityCheck
-                    key={`${props.name} saving throw`}
+                    id={`${props.id}`}
                     name="спасбросок"
                     notificationName={props.notificationName}
                     skill={false}
@@ -44,12 +44,12 @@ const AbilityTile = (props) => {
                 />
             </Flex>
             {props.skills &&
-                props.skills.map((skill, i) => (
+                props.skills.map((skill) => (
                     <AbilityCheck
-                        key={skill.name}
-                        id={i}
+                        id={skill.id}
+                        key={skill.id}
                         name={skill.name}
-                        notificationName={skill .notificationName}
+                        notificationName={skill.notificationName}
                         skill={true}
                         modifier={skill.score}
                         bonus={skill.bonus}

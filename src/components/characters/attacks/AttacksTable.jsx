@@ -8,10 +8,12 @@ import { AttackContext } from "../context/AttackContext";
 import { NotificationContext } from "../context/NotificationContext";
 import { rollDice } from "../../services/RollDiceService";
 import axios from "axios";
+import { CharacterContext } from "../context/CharacterHeaderContext";
 
 const AttacksTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { attacks, character, onAttacksChange } = useContext(AttackContext);
+    const { attacks, onAttacksChange } = useContext(AttackContext);
+    const { character } = useContext(CharacterContext);
     const { onRollButtonClick } = useContext(NotificationContext);
     const [selectedAttackIndex, setSelectedAttackIndex] = useState(null);
 
@@ -79,7 +81,7 @@ const AttacksTable = () => {
     const updateAttack = async (attack) => {
         try {
             const url = `/attacks/update`;
-            await axios.put(url, {...attack});
+            await axios.put(url, { ...attack });
         } catch (error) {
             console.log(error);
         }
@@ -139,7 +141,7 @@ const AttacksTable = () => {
             title: "Название",
             dataIndex: "name",
             width: "40%",
-            render: (text) => <Link>{text}</Link>,
+            render: (text, record) => <Link>{text}</Link>,
             onCell: (_, index) => ({
                 onClick: () => handleModalOpen(index),
             }),

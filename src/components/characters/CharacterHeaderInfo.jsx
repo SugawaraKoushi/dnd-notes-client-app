@@ -2,11 +2,11 @@ import { Avatar, Flex, Typography } from "antd";
 import { capitalize } from "../services/StringHelper";
 import "./index.css";
 import { useContext } from "react";
-import { CharacterHeaderContext } from "./context/CharacterHeaderContext";
+import { CharacterContext } from "./context/CharacterHeaderContext";
 
 const CharacterHeaderInfo = () => {
     const { Title } = Typography;
-    const { character } = useContext(CharacterHeaderContext);
+    const { character } = useContext(CharacterContext);
 
     return (
         <Flex

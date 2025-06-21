@@ -2,12 +2,12 @@ import { Checkbox, Drawer, Flex, Form } from "antd";
 import { useContext } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
-import { StatusTrackerContext } from "../context/StatusTrackerContext";
+import { CharacterContext } from "../context/CharacterHeaderContext";
 
 const StatesDrawer = (props) => {
     const [form] = useForm();
-    const { onClose, onCharacterChange } = useContext(DrawerContext);
-    const { character } = useContext(StatusTrackerContext);
+    const { onClose } = useContext(DrawerContext);
+    const { character, onCharacterChange } = useContext(CharacterContext);
 
     const handleClose = () => {
         onClose();
