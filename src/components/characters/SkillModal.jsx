@@ -1,12 +1,12 @@
 import { Form, InputNumber, Modal } from "antd";
 import { capitalize } from "../services/StringHelper";
 import { useContext, useState } from "react";
-import { AbilityContext } from "./context/AbilityContext";
 import "./index.css";
+import { CharacterContext } from "./context/CharacterHeaderContext";
 
 const SkillModal = (props) => {
     const [showPrefix, setShowPrefix] = useState(true);
-    const { onSkillBonusChange } = useContext(AbilityContext);
+    const { character, onCharacterChange } = useContext(CharacterContext);
     let plusPrefix = showPrefix && props.bonus > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
@@ -18,7 +18,13 @@ const SkillModal = (props) => {
     };
 
     const handleSkillBonusChange = (value) => {
-        onSkillBonusChange(props.id, value);
+        const skillValue =
+            character[props.id] - character[`${props.id}Bonus`] + value;
+        onCharacterChange({
+            ...character,
+            [props.id]: skillValue,
+            [`${props.id}Bonus`]: value,
+        });
     };
 
     return (

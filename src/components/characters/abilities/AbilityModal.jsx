@@ -1,14 +1,14 @@
 import { Flex, Form, InputNumber, Modal } from "antd";
 import { capitalize } from "../../services/StringHelper";
 import { useContext, useState } from "react";
-import { AbilityContext } from "../context/AbilityContext";
 import "./index.css";
-
+import { CharacterContext } from "../context/CharacterHeaderContext";
+import { calculateModifier } from "../../services/ModifierService";
 
 const AbilityModal = (props) => {
+    const { id, skills } = props;
     const [showPrefix, setShowPrefix] = useState(true);
-    const { onScoreChange, onSavingThrowBonusChange } =
-        useContext(AbilityContext);
+    const { character, onCharacterChange } = useContext(CharacterContext);
     let plusPrefix = showPrefix && props.bonus > 0 ? "+" : <span />;
 
     const handleInputClick = () => {
@@ -20,11 +20,40 @@ const AbilityModal = (props) => {
     };
 
     const handleScoreChange = (value) => {
-        onScoreChange(value);
+        const updatedCharacter = { ...character };
+        const savingThrow =
+            calculateModifier(value) +
+            character[`${id}SavingThrowBonus`] +
+            (character[`${id}SavingThrowProficiency`]
+                ? character.proficiencyBonus
+                : 0);
+        updatedCharacter[id] = value;
+        updatedCharacter[`${id}SavingThrow`] = savingThrow;
+
+        skills.forEach((skill) => {
+            const skillValue =
+                calculateModifier(value) +
+                character[`${skill.id}Bonus`] +
+                (character[`${skill.id}Proficiency`]
+                    ? character.proficiencyBonus
+                    : 0);
+            updatedCharacter[skill.id] = skillValue;
+        });
+
+        onCharacterChange(updatedCharacter);
     };
 
     const handleSavingThrowBonusChange = (value) => {
-        onSavingThrowBonusChange(value);
+        const savingThrow =
+            character[`${id}SavingThrow`] -
+            character[`${id}SavingThrowBonus`] +
+            value;
+
+        onCharacterChange({
+            ...character,
+            [`${id}SavingThrow`]: savingThrow,
+            [`${id}SavingThrowBonus`]: value,
+        });
     };
 
     return (

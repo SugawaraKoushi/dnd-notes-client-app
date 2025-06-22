@@ -9,14 +9,26 @@ import { NotificationContext } from "../context/NotificationContext";
 import { CharacterContext } from "../context/CharacterHeaderContext";
 
 const AbilityCheck = (props) => {
+    const {
+        id,
+        name,
+        skill,
+        checkable,
+        modifier,
+        notificationName,
+        bonus,
+        skills,
+        modalTitle,
+        score,
+    } = props;
     const { onRollButtonClick } = useContext(NotificationContext);
     const { character, onCharacterChange } = useContext(CharacterContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const labelClassName = props.skill
+    const labelClassName = skill
         ? "ability-check-label"
         : "ability-check-label-small";
-    const checkboxClassName = props.skill
+    const checkboxClassName = skill
         ? "ability-check-checkbox"
         : "ability-check-checkbox-small";
 
@@ -29,7 +41,7 @@ const AbilityCheck = (props) => {
     };
 
     const handleProficiencyChange = (event) => {
-        if (props.skill) {
+        if (skill) {
             handleSkillProficiencyChange(event);
         } else {
             handleAbilitySavingThrowProficiencyChange(event);
@@ -40,8 +52,8 @@ const AbilityCheck = (props) => {
         const k = event.target.checked ? 1 : -1;
         const updatedCharacter = {
             ...character,
-            [`${props.id}Proficiency`]: event.target.checked,
-            [props.id]: character[props.id] + k * character.proficiencyBonus,
+            [`${id}Proficiency`]: event.target.checked,
+            [id]: character[id] + k * character.proficiencyBonus,
         };
         onCharacterChange(updatedCharacter);
     };
@@ -50,10 +62,9 @@ const AbilityCheck = (props) => {
         const k = event.target.checked ? 1 : -1;
         const updatedCharacter = {
             ...character,
-            [`${props.id}SavingThrowProficiency`]: event.target.checked,
-            [`${props.id}SavingThrow`]:
-                character[`${props.id}SavingThrow`] +
-                k * character.proficiencyBonus,
+            [`${id}SavingThrowProficiency`]: event.target.checked,
+            [`${id}SavingThrow`]:
+                character[`${id}SavingThrow`] + k * character.proficiencyBonus,
         };
         onCharacterChange(updatedCharacter);
     };
@@ -63,15 +74,15 @@ const AbilityCheck = (props) => {
         let times = 1;
         let value = rollDice(times, dice);
 
-        let type = props.skill ? "проверка" : props.name;
+        let type = skill ? "проверка" : name;
 
         let result = {
             type: type,
             value: value,
-            modifier: props.modifier,
+            modifier: modifier,
             dice: dice,
             times: times,
-            ability: props.notificationName,
+            ability: notificationName,
         };
 
         onRollButtonClick(result);
@@ -85,15 +96,13 @@ const AbilityCheck = (props) => {
                 align="center"
             >
                 <Flex className="ability-check-wrap" align="center">
-                    {props.checkable && (
+                    {checkable && (
                         <Checkbox
                             className={checkboxClassName}
                             checked={
-                                props.skill
-                                    ? character[`${props.id}Proficiency`]
-                                    : character[
-                                          `${props.id}SavingThrowProficiency`
-                                      ]
+                                skill
+                                    ? character[`${id}Proficiency`]
+                                    : character[`${id}SavingThrowProficiency`]
                             }
                             onChange={handleProficiencyChange}
                         />
@@ -103,32 +112,34 @@ const AbilityCheck = (props) => {
                         to=""
                         onClick={handleModalOpen}
                     >
-                        {props.name.toUpperCase()}
+                        {name.toUpperCase()}
                     </Link>
                 </Flex>
                 <Button
                     className="ability-check-button"
                     onClick={handleRollButtonClick}
                 >
-                    {modifierAsString(props.modifier)}
+                    {modifierAsString(modifier)}
                 </Button>
             </Flex>
-            {props.skill ? (
+            {skill ? (
                 <SkillModal
-                    id={props.id}
-                    title={props.name}
+                    id={id}
+                    title={name}
                     open={isModalOpen}
                     onClose={handleModalClose}
-                    bonus={props.bonus}
+                    bonus={bonus}
                 />
             ) : (
                 <AbilityModal
-                    title={props.modalTitle}
+                    id={id}
+                    skills={skills}
+                    title={modalTitle}
                     open={isModalOpen}
                     onClose={handleModalClose}
-                    score={props.score}
-                    modifier={props.modifier}
-                    bonus={props.bonus}
+                    score={score}
+                    modifier={modifier}
+                    bonus={bonus}
                 />
             )}
         </>

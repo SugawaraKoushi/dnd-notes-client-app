@@ -7,44 +7,54 @@ import {
 import "./index.css";
 
 const AbilityTile = (props) => {
+    const {
+        name,
+        skills,
+        score,
+        id,
+        notificationName,
+        savingThrow,
+        savingThrowBonus,
+        savingThrowProficiency,
+    } = props;
     const { Title } = Typography;
-    const abilityModalTitle = `${props.name} ${calculateModifierAsString(
-        props.score
-    )}`;
-    const modifier = calculateModifier(props.score);
+    const abilityModalTitle = `${name} ${calculateModifierAsString(score)}`;
+    const modifier = calculateModifier(score);
 
     return (
-        <Flex className="ability-tile" id={props.id} vertical>
+        <Flex className="ability-tile" id={id} vertical>
             <Flex className="ability-tile-header" justify="space-between">
-                <Title level={3}>{props.name.toUpperCase()}</Title>
-                <Title level={3}>{props.score}</Title>
+                <Title level={3}>{name.toUpperCase()}</Title>
+                <Title level={3}>{score}</Title>
             </Flex>
             <Flex className="ability-checks">
                 <AbilityCheck
-                    key={`${props.name} check`}
+                    id={id}
+                    skills={skills}
                     name="проверка"
-                    notificationName={props.notificationName}
+                    notificationName={notificationName}
                     skill={false}
                     modalTitle={abilityModalTitle}
-                    score={props.score}
+                    score={score}
                     modifier={modifier}
-                    bonus={props.savingThrowBonus}
+                    bonus={savingThrowBonus}
                 />
                 <AbilityCheck
-                    id={`${props.id}`}
+                    id={id}
+                    skills={skills}
                     name="спасбросок"
-                    notificationName={props.notificationName}
+                    notificationName={notificationName}
                     skill={false}
                     modalTitle={abilityModalTitle}
-                    score={props.score}
-                    modifier={props.savingThrow}
-                    bonus={props.savingThrowBonus}
+                    score={score}
+                    modifier={savingThrow}
+                    bonus={savingThrowBonus}
                     checkable={true}
-                    checked={props.savingThrowProficiency}
+                    checked={savingThrowProficiency}
                 />
             </Flex>
-            {props.skills &&
-                props.skills.map((skill) => (
+            {skills &&
+                skills.map((skill) => (
                     <AbilityCheck
                         id={skill.id}
                         key={skill.id}
