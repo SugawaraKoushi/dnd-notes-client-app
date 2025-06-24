@@ -1,8 +1,8 @@
 import { Button, Flex, Layout, Menu } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { Link, Outlet, useNavigate } from "react-router";
-import instance from "../axios";
 import logoImage from "../../src/icons/logo.png";
+import api from "../api";
 
 const Root = () => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Root = () => {
         const url = "/logout";
 
         try {
-            await instance.get(url).then(() => navigate("/login"));
+            await api.get(url).then(() => navigate("/login"));
         } catch (e) {
             console.log(e);
         }

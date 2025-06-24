@@ -7,8 +7,8 @@ import { modifierAsString } from "../../services/ModifierService";
 import { AttackContext } from "../context/AttackContext";
 import { NotificationContext } from "../context/NotificationContext";
 import { rollDice } from "../../services/RollDiceService";
-import axios from "axios";
 import { CharacterContext } from "../context/CharacterHeaderContext";
+import api from "../../../api";
 
 const AttacksTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +32,8 @@ const AttacksTable = () => {
     const handleAddAttack = async () => {
         try {
             const url = "/attacks/create";
-            const response = await axios.post(url, null, {
+            
+            const response = await api.post(url, null, {
                 params: {
                     characterId: character.id,
                 },
@@ -61,7 +62,7 @@ const AttacksTable = () => {
     const deleteAttack = async (attackId) => {
         try {
             const url = `/attacks/delete/${attackId}`;
-            await axios.delete(url);
+            await api.delete(url);
         } catch (error) {
             console.log(error);
         }
@@ -70,7 +71,7 @@ const AttacksTable = () => {
     const getAttacks = async () => {
         try {
             const url = `/attacks/character/${character.id}`;
-            const response = await axios.get(url);
+            const response = await api.get(url);
             const newAttacks = response.data;
             onAttacksChange(newAttacks);
         } catch (error) {
@@ -81,7 +82,7 @@ const AttacksTable = () => {
     const updateAttack = async (attack) => {
         try {
             const url = `/attacks/update`;
-            await axios.put(url, { ...attack });
+            await api.put(url, { ...attack });
         } catch (error) {
             console.log(error);
         }

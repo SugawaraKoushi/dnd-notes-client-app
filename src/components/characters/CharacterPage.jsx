@@ -2,7 +2,6 @@ import { Flex, Grid } from "antd";
 import { useEffect, useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
-import Character from "../../model/Character";
 import PassiveAbilityTile from "./abilities/PassiveAbilityTile";
 import TextBlock from "./TextBlock";
 import StatusTracker from "./StatusTracker";
@@ -13,8 +12,8 @@ import AttacksTable from "./attacks/AttacksTable";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
 import DiceRoller from "./dice roller/DiceRoller";
-import axios from "axios";
 import { useParams } from "react-router";
+import api from "../../api";
 
 const CharacterPage = () => {
     const [character, setCharacter] = useState({});
@@ -271,7 +270,8 @@ const CharacterPage = () => {
     const getCharacter = async () => {
         try {
             const url = `/characters/${id}`;
-            const response = await axios.get(url);
+
+            const response = await api.get(url);
             setCharacter(response.data);
         } catch (error) {
             console.log(error);
@@ -281,7 +281,7 @@ const CharacterPage = () => {
     const getAttacks = async () => {
         try {
             const url = `/attacks/character/${id}`;
-            const response = await axios.get(url);
+            const response = await api.get(url);
             setAttacks(response.data);
         } catch (error) {
             console.log(error);
@@ -291,7 +291,7 @@ const CharacterPage = () => {
     const updateCharacter = async (characterData) => {
         try {
             const url = "/characters/update";
-            const response = await axios.put(url, characterData);
+            const response = await api.put(url, characterData);
             setCharacter(response.data);
         } catch (error) {
             console.log(error);

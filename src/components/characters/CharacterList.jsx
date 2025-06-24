@@ -3,8 +3,8 @@ import CharacterTile from "./CharacterTile";
 import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import "./index.css";
-import axios from "axios";
 import { useNavigate } from "react-router";
+import api from "../../api";
 
 const CharacterList = () => {
     const [characters, setCharacters] = useState([]);
@@ -21,7 +21,7 @@ const CharacterList = () => {
     const getCharacters = async () => {
         try {
             let url = "/characters/list";
-            const response = await axios.get(url);
+            const response = await api.get(url);
             setCharacters(response.data);
         } catch (error) {
             console.log(error);
@@ -36,13 +36,13 @@ const CharacterList = () => {
 
     const createCharacter = async () => {
         const url = "/characters/create";
-        const response = await axios.post(url);
+        const response = await api.post(url);
         return response.data.id;
     };
 
     const deleteCharacter = async (id) => {
         const url = `/characters/delete/${id}`;
-        await axios.delete(url);
+        await api.delete(url);
         await getCharacters();
     };
 

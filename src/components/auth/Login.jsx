@@ -1,7 +1,7 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
 import { Link, useNavigate } from "react-router";
-import instance from "../../axios";
+import api from "../../api";
 
 const Login = () => {
     const { Title } = Typography;
@@ -11,7 +11,9 @@ const Login = () => {
         const url = "/auth/login";
 
         try {
-            await instance.post(url, values).then(() => navigate("/characters/list"));
+            await api
+                .post(url, values)
+                .then(() => navigate("/characters/list"));
         } catch (e) {
             console.log(e);
         }
@@ -34,50 +36,40 @@ const Login = () => {
                 }}
                 onFinish={onFinish}
             >
-                <Form.Item
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Введите Ваш логин!",
-                        },
-                    ]}
-                >
-                    <Input prefix={<UserOutlined />} placeholder="Логин" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Введите Ваш пароль!",
-                        },
-                    ]}
-                >
-                    <Input
-                        prefix={<LockOutlined />}
-                        type="password"
-                        placeholder="Пароль"
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Flex justify="space-between" align="center">
-                        <Form.Item
-                            name="remember"
-                            valuePropName="checked"
-                            noStyle
-                        >
-                            <Checkbox>Запомнить</Checkbox>
-                        </Form.Item>
-                        <Link to="">Забыл пароль</Link>
-                    </Flex>
-                </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" htmlType="submit">
-                        Войти
-                    </Button>
-                    или <Link to="/register">Зарегистрироваться!</Link>
-                </Form.Item>
+                <Flex vertical>
+                    <Form.Item
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Введите Ваш логин!",
+                            },
+                        ]}
+                    >
+                        <Input prefix={<UserOutlined />} placeholder="Логин" />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Введите Ваш пароль!",
+                            },
+                        ]}
+                    >
+                        <Input
+                            prefix={<LockOutlined />}
+                            type="password"
+                            placeholder="Пароль"
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button block type="primary" htmlType="submit">
+                            Войти
+                        </Button>
+                        или <Link to="/register">Зарегистрироваться!</Link>
+                    </Form.Item>
+                </Flex>
             </Form>
         </div>
     );

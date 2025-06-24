@@ -1,6 +1,7 @@
 import { Button, Form, Input, Typography } from "antd";
-import axios from "axios";
+
 import { useNavigate } from "react-router";
+import api from "../../api";
 
 const Registration = () => {
     const { Title } = Typography;
@@ -10,7 +11,7 @@ const Registration = () => {
         const url = "http://localhost:8080/api/users/create";
 
         try {
-            await axios.post(url, values).then(() => navigate("/characters/list"));
+            await api.post(url, values).then(() => navigate("/characters/list"));
         } catch (e) {
             console.log(e);
         }
@@ -29,7 +30,7 @@ const Registration = () => {
         };
 
         try {
-            const response = await axios.get(url, { params });
+            const response = await api.get(url, { params });
             if (response.data) {
                 return Promise.reject(
                     new Error("Пользователь с таким логином уже существует!")
