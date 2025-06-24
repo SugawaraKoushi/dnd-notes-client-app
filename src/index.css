@@ -18,6 +18,14 @@ body {
     margin-top: 24px;
 }
 
+.content-layout-empty {
+    justify-content: center;
+}
+
+.content-layout-centered {
+    align-items: center;
+}
+
 .menu-toolbar {
     max-width: calc(100% - 106px);
     width: fit-content;

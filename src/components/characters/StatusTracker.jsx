@@ -1,6 +1,6 @@
 import { Button, Checkbox, Dropdown, Flex } from "antd";
 import { modifierAsString } from "../services/ModifierService";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./index.css";
 import { rollDice } from "../services/RollDiceService";
 import { NotificationContext } from "./context/NotificationContext";
@@ -14,14 +14,46 @@ const StatusTracker = () => {
     const [statesDrawerIsOpen, setStatesDrawerIsOpen] = useState(false);
     const [statesString, setStatesString] = useState("-");
 
+    useEffect(() => {
+        handleChangeStates();
+    }, [character]);
+
     const exhaustingLevels = [
-        { key: 1, label: <span>0</span>, onClick: () => handleExhaustChange(0) },
-        { key: 2, label: <span>1</span>, onClick: () => handleExhaustChange(1) },
-        { key: 3, label: <span>2</span>, onClick: () => handleExhaustChange(2) },
-        { key: 4, label: <span>3</span>, onClick: () => handleExhaustChange(3) },
-        { key: 5, label: <span>4</span>, onClick: () => handleExhaustChange(4) },
-        { key: 6, label: <span>5</span>, onClick: () => handleExhaustChange(5) },
-        { key: 7, label: <span>6</span>, onClick: () => handleExhaustChange(6) },
+        {
+            key: 1,
+            label: <span>0</span>,
+            onClick: () => handleExhaustChange(0),
+        },
+        {
+            key: 2,
+            label: <span>1</span>,
+            onClick: () => handleExhaustChange(1),
+        },
+        {
+            key: 3,
+            label: <span>2</span>,
+            onClick: () => handleExhaustChange(2),
+        },
+        {
+            key: 4,
+            label: <span>3</span>,
+            onClick: () => handleExhaustChange(3),
+        },
+        {
+            key: 5,
+            label: <span>4</span>,
+            onClick: () => handleExhaustChange(4),
+        },
+        {
+            key: 6,
+            label: <span>5</span>,
+            onClick: () => handleExhaustChange(5),
+        },
+        {
+            key: 7,
+            label: <span>6</span>,
+            onClick: () => handleExhaustChange(6),
+        },
     ];
 
     const handleIniativeButtonClick = () => {
@@ -62,74 +94,74 @@ const StatusTracker = () => {
     };
 
     const handleStatesDrawerClose = () => {
+        handleChangeStates();
         setStatesDrawerIsOpen(false);
     };
 
-    const handleChangeStates = (updatedCharacter) => {
+    const handleChangeStates = async () => {
         let states = [];
 
-        if (updatedCharacter.unconscious) {
+        if (character.unconscious) {
             states.push("Бессознательный");
         }
 
-        if (updatedCharacter.frightened) {
+        if (character.frightened) {
             states.push("Испуганный");
         }
 
-        if (updatedCharacter.exhaustion) {
+        if (character.exhaustion) {
             states.push("Истощенный");
         }
 
-        if (updatedCharacter.invisible) {
+        if (character.invisible) {
             states.push("Невидимый");
         }
 
-        if (updatedCharacter.incapasitated) {
+        if (character.incapacitated) {
             states.push("Недееспособный");
         }
 
-        if (updatedCharacter.defeaned) {
+        if (character.deafened) {
             states.push("Оглохший");
         }
 
-        if (updatedCharacter.petrified) {
+        if (character.petrified) {
             states.push("Окаменевший");
         }
 
-        if (updatedCharacter.restrained) {
+        if (character.restrained) {
             states.push("Опутанный");
         }
 
-        if (updatedCharacter.blinded) {
+        if (character.blinded) {
             states.push("Ослеплённый");
         }
 
-        if (updatedCharacter.poisoned) {
+        if (character.poisoned) {
             states.push("Отравленный");
         }
 
-        if (updatedCharacter.charmed) {
+        if (character.charmed) {
             states.push("Очарованный");
         }
 
-        if (updatedCharacter.stunned) {
+        if (character.stunned) {
             states.push("Ошеломлённый");
         }
 
-        if (updatedCharacter.paralyzed) {
+        if (character.paralyzed) {
             states.push("Парализованный");
         }
 
-        if (updatedCharacter.prone) {
+        if (character.prone) {
             states.push("Сбитый с ног");
         }
 
-        if (updatedCharacter.grappled) {
+        if (character.grappled) {
             states.push("Схваченный");
         }
 
         setStatesString(states.length > 0 ? states.join(", ") : "-");
-        onCharacterChange(updatedCharacter);
     };
 
     return (

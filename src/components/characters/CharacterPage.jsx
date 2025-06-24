@@ -17,7 +17,7 @@ import axios from "axios";
 import { useParams } from "react-router";
 
 const CharacterPage = () => {
-    const [character, setCharacter] = useState(new Character());
+    const [character, setCharacter] = useState({});
     const [notifications, setNotifications] = useState([]);
     const { id } = useParams();
 
@@ -193,7 +193,7 @@ const CharacterPage = () => {
             proficiency: character.deceptionProficiency,
         },
         {
-            id: "persuasuion",
+            id: "persuasion",
             name: "убеждение",
             notificationName: "убеждения",
             score: character.persuasion,
@@ -237,40 +237,65 @@ const CharacterPage = () => {
         setAttacks(newAttacks);
     };
 
-    const getAttacks = async () => {
-        try {
-            const url = `/attacks/character/${id}`;
-            const response = await axios.get(url);
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     //#endregion Атаки
 
     //#region Работа с данными
 
+    const handleCharacterChange = async (value) => {
+        await updateCharacter(value);
+    };
+
+    const handleLanguagesChange = (value) => {
+        handleCharacterChange({
+            ...character,
+            languages: value,
+        });
+    };
+
+    const handleNotesChange = (value) => {
+        handleCharacterChange({
+            ...character,
+            notes: value,
+        });
+    };
+
     useEffect(() => {
         const fetchData = async () => {
-            const characterData = await getCharacter();
-            setCharacter(characterData);
-
-            const attacksData = await getAttacks();
-            setAttacks(attacksData);
+            await getCharacter();
+            await getAttacks();
         };
 
         fetchData();
     }, []);
 
     const getCharacter = async () => {
-        const url = `/characters/${id}`;
-        const response = await axios.get(url);
-        return response.data;
+        try {
+            const url = `/characters/${id}`;
+            const response = await axios.get(url);
+            setCharacter(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const handleCharacterChange = (value) => {
-        setCharacter({ ...value });
+    const getAttacks = async () => {
+        try {
+            const url = `/attacks/character/${id}`;
+            const response = await axios.get(url);
+            setAttacks(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const updateCharacter = async (characterData) => {
+        try {
+            const url = "/characters/update";
+            const response = await axios.put(url, characterData);
+            setCharacter(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     //#endregion Работа с данными
@@ -383,6 +408,12 @@ const CharacterPage = () => {
                                 skills={charismaSkills}
                             />
                             <PassiveAbilityTile skills={passiveSkills} />
+                            <TextBlock
+                                id="languages"
+                                title="прочие владения и языки"
+                                onChange={handleLanguagesChange}
+                                value={character.languages}
+                            />
                         </Flex>
                         <Flex vertical className="character-content" gap={6}>
                             <StatusTracker />
@@ -394,8 +425,11 @@ const CharacterPage = () => {
                             >
                                 <AttacksTable />
                             </AttackContext.Provider>
-
-                            <TextBlock title={"заметки"} />
+                            <TextBlock
+                                title={"заметки"}
+                                onChange={handleNotesChange}
+                                value={character.notes}
+                            />
                         </Flex>
                     </Flex>
                 </NotificationContext.Provider>

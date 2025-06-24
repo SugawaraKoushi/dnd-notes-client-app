@@ -30,15 +30,17 @@ const AbilityModal = (props) => {
         updatedCharacter[id] = value;
         updatedCharacter[`${id}SavingThrow`] = savingThrow;
 
-        skills.forEach((skill) => {
-            const skillValue =
-                calculateModifier(value) +
-                character[`${skill.id}Bonus`] +
-                (character[`${skill.id}Proficiency`]
-                    ? character.proficiencyBonus
-                    : 0);
-            updatedCharacter[skill.id] = skillValue;
-        });
+        if (skills) {
+            skills.forEach((skill) => {
+                const skillValue =
+                    calculateModifier(value) +
+                    character[`${skill.id}Bonus`] +
+                    (character[`${skill.id}Proficiency`]
+                        ? character.proficiencyBonus
+                        : 0);
+                updatedCharacter[skill.id] = skillValue;
+            });
+        }
 
         onCharacterChange(updatedCharacter);
     };

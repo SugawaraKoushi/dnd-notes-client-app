@@ -12,8 +12,7 @@ const CharacterList = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getCharacters();
-            setCharacters(data);
+            await getCharacters();
         };
 
         fetchData();
@@ -23,7 +22,7 @@ const CharacterList = () => {
         try {
             let url = "/characters/list";
             const response = await axios.get(url);
-            return response.data;
+            setCharacters(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -41,10 +40,18 @@ const CharacterList = () => {
         return response.data.id;
     };
 
+    const deleteCharacter = async (id) => {
+        const url = `/characters/delete/${id}`;
+        await axios.delete(url);
+        await getCharacters();
+    };
+
     return (
         <>
             <List
-                className="content-layout"
+                className={"content-layout content-layout-centered".concat(
+                    characters.length <= 0 ? " content-layout-empty" : 0
+                )}
                 grid={{
                     gutter: 12,
                     xs: 1,
@@ -59,9 +66,11 @@ const CharacterList = () => {
                     <List.Item>
                         <CharacterTile
                             href={`/characters/${character.id}`}
+                            id={character.id}
                             name={character.name}
-                            hp={character.maxHP}
-                            currentHp={character.currentHP}
+                            maxHP={character.maxHP}
+                            currentHP={character.currentHP}
+                            onDelete={deleteCharacter}
                         />
                     </List.Item>
                 )}

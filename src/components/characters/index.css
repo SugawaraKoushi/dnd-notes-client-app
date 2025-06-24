@@ -22,6 +22,7 @@
     .character-content {
         height: 684px;
         width: 572px;
+        max-width: 572px;
         overflow: auto;
     }
 
@@ -45,6 +46,10 @@
         order: 6;
     }
 
+    #languages {
+        order: 7;
+    }
+
     .status-tracker-item {
         width: 58%;
     }
@@ -63,7 +68,8 @@
     border-radius: 8px;
     border: 1px solid #f0f0f0;
     padding: 10px 8px 10px 14px;
-    min-width: 350px;
+    min-width: 376px;
+    max-width: 376px;
 }
 
 .inspire-checkbox {

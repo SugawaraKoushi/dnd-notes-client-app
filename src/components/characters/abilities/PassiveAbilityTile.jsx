@@ -1,6 +1,5 @@
 import { Flex, Typography } from "antd";
 import PassiveAbilityCheck from "./PassiveAbilityCheck";
-import TextBlock from "../TextBlock";
 import "./index.css";
 
 const PassiveAbilityTile = (props) => {
@@ -19,7 +18,6 @@ const PassiveAbilityTile = (props) => {
                         score={skill.score}
                     />
                 ))}
-            <TextBlock title="прочие владения и языки"/>
         </Flex>
     );
 };
