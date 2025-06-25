@@ -62,7 +62,7 @@ const AttacksTable = () => {
     const deleteAttack = async (attackId) => {
         try {
             const url = `/attacks/delete/${attackId}`;
-            await axios.delete(url);
+            await api.delete(url);
         } catch (error) {
             console.log(error);
         }
@@ -71,7 +71,7 @@ const AttacksTable = () => {
     const getAttacks = async () => {
         try {
             const url = `/attacks/character/${character.id}`;
-            const response = await axios.get(url);
+            const response = await api.get(url);
             const newAttacks = response.data;
             onAttacksChange(newAttacks);
         } catch (error) {
@@ -82,7 +82,7 @@ const AttacksTable = () => {
     const updateAttack = async (attack) => {
         try {
             const url = `/attacks/update`;
-            await axios.put(url, { ...attack });
+            await api.put(url, { ...attack });
         } catch (error) {
             console.log(error);
         }
