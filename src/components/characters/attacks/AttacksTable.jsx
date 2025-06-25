@@ -7,8 +7,8 @@ import { modifierAsString } from "../../services/ModifierService";
 import { AttackContext } from "../context/AttackContext";
 import { NotificationContext } from "../context/NotificationContext";
 import { rollDice } from "../../services/RollDiceService";
-import axios from "axios";
 import { CharacterContext } from "../context/CharacterHeaderContext";
+import axios from "axios";
 
 const AttacksTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,6 +32,7 @@ const AttacksTable = () => {
     const handleAddAttack = async () => {
         try {
             const url = "/attacks/create";
+            
             const response = await axios.post(url, null, {
                 params: {
                     characterId: character.id,

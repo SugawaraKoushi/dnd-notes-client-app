@@ -1,16 +1,19 @@
 import { Button, Form, Input, Typography } from "antd";
-import axios from "axios";
+
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const Registration = () => {
     const { Title } = Typography;
     const navigate = useNavigate();
 
     const handleFinish = async (values) => {
-        const url = "http://localhost:8080/api/users/create";
+        const url = "/users/create";
 
         try {
-            await axios.post(url, values).then(() => navigate("/characters/list"));
+            await axios
+                .post(url, values)
+                .then(() => navigate("/characters/list"));
         } catch (e) {
             console.log(e);
         }
@@ -23,7 +26,7 @@ const Registration = () => {
             );
         }
 
-        const url = "http://localhost:8080/api/users/is-exist?";
+        const url = "/users/is-exist?   ";
         const params = {
             username: username,
         };

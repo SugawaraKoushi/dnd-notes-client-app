@@ -3,8 +3,8 @@ import CharacterTile from "./CharacterTile";
 import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import "./index.css";
-import axios from "axios";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const CharacterList = () => {
     const [characters, setCharacters] = useState([]);

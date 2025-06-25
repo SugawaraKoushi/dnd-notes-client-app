@@ -2,7 +2,6 @@ import { Flex, Grid } from "antd";
 import { useEffect, useState } from "react";
 import AbilityTile from "./abilities/AbilityTile";
 import CharacterHeader from "./CharacterHeader";
-import Character from "../../model/Character";
 import PassiveAbilityTile from "./abilities/PassiveAbilityTile";
 import TextBlock from "./TextBlock";
 import StatusTracker from "./StatusTracker";
@@ -13,8 +12,8 @@ import AttacksTable from "./attacks/AttacksTable";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
 import DiceRoller from "./dice roller/DiceRoller";
-import axios from "axios";
 import { useParams } from "react-router";
+import axios from "axios";
 
 const CharacterPage = () => {
     const [character, setCharacter] = useState({});
@@ -271,6 +270,7 @@ const CharacterPage = () => {
     const getCharacter = async () => {
         try {
             const url = `/characters/${id}`;
+
             const response = await axios.get(url);
             setCharacter(response.data);
         } catch (error) {
