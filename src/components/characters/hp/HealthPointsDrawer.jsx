@@ -27,7 +27,8 @@ const HealthPointsDrawer = ({ open }) => {
         setHPValue(value);
     };
 
-    const handleMaxHPChange = (value) => {
+    const handleMaxHPChange = (event) => {
+        const value = +event.target.value;
         onCharacterChange({
             ...character,
             currentHP:
@@ -79,7 +80,7 @@ const HealthPointsDrawer = ({ open }) => {
             character.currentHP + hpValue >= character.maxHP
                 ? character.maxHP
                 : character.currentHP + hpValue;
-                
+
         onCharacterChange({
             ...character,
             currentHP: healedCurrentHP,
@@ -141,11 +142,12 @@ const HealthPointsDrawer = ({ open }) => {
                         name="maxHP"
                         style={{ width: "60%" }}
                         initialValue={character.maxHP}
+                        onBlur={handleMaxHPChange}
                     >
                         <InputNumber
                             placeholder="Максимальное значение"
                             style={{ width: "100%" }}
-                            onChange={handleMaxHPChange}
+                            min={0}
                             changeOnWheel
                         />
                     </Form.Item>

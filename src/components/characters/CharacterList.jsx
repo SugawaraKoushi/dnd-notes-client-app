@@ -67,6 +67,7 @@ const CharacterList = () => {
                         <CharacterTile
                             href={`/characters/${character.id}`}
                             id={character.id}
+                            avatarLink={character.avatarLink}
                             name={character.name}
                             maxHP={character.maxHP}
                             currentHP={character.currentHP}

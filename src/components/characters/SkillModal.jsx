@@ -17,7 +17,8 @@ const SkillModal = (props) => {
         setShowPrefix(true);
     };
 
-    const handleSkillBonusChange = (value) => {
+    const handleSkillBonusChange = (event) => {
+        const value = +event.target.value;
         const skillValue =
             character[props.id] - character[`${props.id}Bonus`] + value;
         onCharacterChange({
@@ -41,7 +42,11 @@ const SkillModal = (props) => {
                     remember: false,
                 }}
             >
-                <Form.Item name="modifier" initialValue={props.bonus}>
+                <Form.Item
+                    name="modifier"
+                    initialValue={props.bonus}
+                    onBlur={handleSkillBonusChange}
+                >
                     <InputNumber
                         style={{ width: "100%" }}
                         placeholder="Бонус"
@@ -53,7 +58,6 @@ const SkillModal = (props) => {
                         min={-30}
                         max={30}
                         prefix={plusPrefix}
-                        onChange={(value) => handleSkillBonusChange(value)}
                     />
                 </Form.Item>
                 <Form.Item name="value">

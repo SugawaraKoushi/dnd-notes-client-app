@@ -19,7 +19,8 @@ const AbilityModal = (props) => {
         setShowPrefix(true);
     };
 
-    const handleScoreChange = (value) => {
+    const handleScoreChange = (event) => {
+        const value = event.target.value;
         const updatedCharacter = { ...character };
         const savingThrow =
             calculateModifier(value) +
@@ -45,11 +46,17 @@ const AbilityModal = (props) => {
         onCharacterChange(updatedCharacter);
     };
 
-    const handleSavingThrowBonusChange = (value) => {
+    const handleSavingThrowBonusChange = (event) => {
+        const value = +event.target.value;
         const savingThrow =
             character[`${id}SavingThrow`] -
             character[`${id}SavingThrowBonus`] +
             value;
+        console.log(
+            character[`${id}SavingThrow`],
+            character[`${id}SavingThrowBonus`],
+            value, savingThrow
+        );
 
         onCharacterChange({
             ...character,
@@ -73,7 +80,11 @@ const AbilityModal = (props) => {
                 }}
             >
                 <Flex justify="space-between">
-                    <Form.Item name="ability-score" initialValue={props.score}>
+                    <Form.Item
+                        name="ability-score"
+                        initialValue={props.score}
+                        onBlur={(value) => handleScoreChange(value)}
+                    >
                         <InputNumber
                             style={{ width: "auto" }}
                             placeholder="Значение"
@@ -82,10 +93,13 @@ const AbilityModal = (props) => {
                             changeOnWheel
                             min={-30}
                             max={30}
-                            onChange={(value) => handleScoreChange(value)}
                         />
                     </Form.Item>
-                    <Form.Item name="bonus" initialValue={props.bonus}>
+                    <Form.Item
+                        name="bonus"
+                        initialValue={props.bonus}
+                        onBlur={handleSavingThrowBonusChange}
+                    >
                         <InputNumber
                             style={{ width: "auto" }}
                             placeholder="Бонус к спасброску"
@@ -97,9 +111,6 @@ const AbilityModal = (props) => {
                             min={-30}
                             max={30}
                             prefix={plusPrefix}
-                            onChange={(value) =>
-                                handleSavingThrowBonusChange(value)
-                            }
                         />
                     </Form.Item>
                 </Flex>

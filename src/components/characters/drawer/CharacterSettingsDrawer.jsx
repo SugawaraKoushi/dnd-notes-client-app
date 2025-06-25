@@ -1,4 +1,4 @@
-import { Drawer, Flex, Form, Input, InputNumber } from "antd";
+import { Avatar, Divider, Drawer, Flex, Form, Input, InputNumber } from "antd";
 import { useContext, useState } from "react";
 import { DrawerContext } from "../context/DrawerContext";
 import { useForm } from "antd/es/form/Form";
@@ -30,26 +30,18 @@ const CharacterSettingsDrawer = (props) => {
             ...character,
             [fieldName]: value,
         };
+
         onCharacterChange(updatedCharacter);
     };
 
-    const handleSpeedValueChange = (value) => {
-        const updatedCharacter = {...character, speed: value};
-        onCharacterChange(updatedCharacter);
-    };
+    const handleCharacterNumberFieldChange = (event) => {
+        const fieldName = event.target.id.split("_")[1];
+        const value = +event.target.value;
+        const updatedCharacter = {
+            ...character,
+            [fieldName]: value,
+        };
 
-    const handleInitiativeValueChange = (value) => {
-        const updatedCharacter = {...character, initiative: value};
-        onCharacterChange(updatedCharacter);
-    };
-
-    const handleArmorClassValueChange = (value) => {
-        const updatedCharacter = {...character, armorClass: value};
-        onCharacterChange(updatedCharacter);
-    };
-
-    const handleLevelChange = (value) => {
-        const updatedCharacter = {...character, level: value};
         onCharacterChange(updatedCharacter);
     };
 
@@ -68,7 +60,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="name"
                             style={{ width: "50%" }}
                             initialValue={character.name}
-                            onChange={handleCharacterTextFieldChange}
+                            onBlur={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Имя" />
                         </Form.Item>
@@ -77,7 +69,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="race"
                             style={{ width: "50%" }}
                             initialValue={character.race}
-                            onChange={handleCharacterTextFieldChange}
+                            onBlur={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Раса" />
                         </Form.Item>
@@ -88,7 +80,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="className"
                             style={{ width: "50%" }}
                             initialValue={character.className}
-                            onChange={handleCharacterTextFieldChange}
+                            onBlur={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Класс" />
                         </Form.Item>
@@ -97,7 +89,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="subclass"
                             style={{ width: "50%" }}
                             initialValue={character.subclass}
-                            onChange={handleCharacterTextFieldChange}
+                            onBlur={handleCharacterTextFieldChange}
                         >
                             <Input placeholder="Подкласс" />
                         </Form.Item>
@@ -108,30 +100,28 @@ const CharacterSettingsDrawer = (props) => {
                             name="level"
                             style={{ width: "50%" }}
                             initialValue={character.level}
+                            onBlur={handleCharacterNumberFieldChange}
                         >
                             <InputNumber
                                 placeholder="Уровень"
-                                min={0}
+                                min={1}
                                 max={20}
                                 changeOnWheel
                                 style={{ width: "100%" }}
-                                onChange={handleLevelChange}
                             />
                         </Form.Item>
                         <Form.Item
                             label="КЗ"
-                            name="armor-class"
+                            name="armorClass"
                             style={{ width: "50%" }}
                             initialValue={character.armorClass}
+                            onBlur={handleCharacterNumberFieldChange}
                         >
                             <InputNumber
                                 placeholder="КЗ"
                                 min={0}
                                 changeOnWheel
                                 style={{ width: "100%" }}
-                                onChange={(value) =>
-                                    handleArmorClassValueChange(value)
-                                }
                             />
                         </Form.Item>
                     </Flex>
@@ -141,15 +131,13 @@ const CharacterSettingsDrawer = (props) => {
                             name="speed"
                             style={{ width: "50%" }}
                             initialValue={character.speed}
+                            onBlur={handleCharacterNumberFieldChange}
                         >
                             <InputNumber
                                 placeholder="Скорость"
                                 min={0}
                                 changeOnWheel
                                 style={{ width: "100%" }}
-                                onChange={(value) =>
-                                    handleSpeedValueChange(value)
-                                }
                             />
                         </Form.Item>
                         <Form.Item
@@ -157,9 +145,7 @@ const CharacterSettingsDrawer = (props) => {
                             name="initiative"
                             style={{ width: "50%" }}
                             initialValue={character.initiative}
-                            onChange={(value) =>
-                                handleInitiativeValueChange(value)
-                            }
+                            onBlur={handleCharacterNumberFieldChange}
                         >
                             <InputNumber
                                 placeholder="Инициатива"
@@ -170,6 +156,30 @@ const CharacterSettingsDrawer = (props) => {
                                 onBlur={handleBlurInput}
                             />
                         </Form.Item>
+                    </Flex>
+                    <Divider />
+                    <Flex vertical align="center" style={{ width: "100%" }}>
+                        <Avatar
+                            size={256}
+                            shape="square"
+                            src={character.avatarLink}
+                            style={{
+                                margin: "0 10px 0 0",
+                                padding: 0,
+                                minWidth: "70px",
+                                minHeight: "70px",
+                            }}
+                        />
+                        <Form.Item
+                            label="Ссылка на изображение"
+                            name="avatarLink"
+                            style={{ width: "100%", marginTop: "10px" }}
+                            initialValue={character.avatarLink}
+                            onBlur={handleCharacterTextFieldChange}
+                        >
+                            <Input placeholder="Ссылка на изображение" />
+                        </Form.Item>
+                        <Flex></Flex>
                     </Flex>
                 </Flex>
             </Form>

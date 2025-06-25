@@ -6,7 +6,7 @@ import ConfirmModal from "./ConfirmModal";
 import { useState } from "react";
 
 const CharacterTile = (props) => {
-    const { href, id, name, maxHP, currentHP, onDelete } = props;
+    const { href, id, avatarLink, name, maxHP, currentHP, onDelete } = props;
     const { Title } = Typography;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,7 +54,7 @@ const CharacterTile = (props) => {
                     <Avatar
                         size={70}
                         shape="square"
-                        src="https://avatarko.ru/img/kartinka/1/Crazy_Frog.jpg"
+                        src={avatarLink}
                         style={{
                             margin: "0 10px 0 0",
                             padding: 0,

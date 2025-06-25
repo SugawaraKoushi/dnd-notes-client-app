@@ -17,7 +17,7 @@ const CharacterHeaderInfo = () => {
             <Avatar
                 size={68}
                 shape="square"
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                src={character.avatarLink}
                 style={{ margin: "0 10px 0 0", padding: "0" }}
             />
             <Flex gap={2} vertical style={{ minWidth: "300px", width: "300px" }}>

@@ -15,7 +15,7 @@ const Root = () => {
     ];
 
     const handleLogoutButtonClick = async () => {
-        const url = "/logout";
+        const url = "http://localhost:8080/logout";
 
         try {
             await axios.get(url).then(() => navigate("/login"));
@@ -62,7 +62,12 @@ const Root = () => {
                 </Flex>
             </Header>
             <Layout
-                style={{ margin: "auto", width: "100%",minWidth: 0, maxWidth: "1200px" }}
+                style={{
+                    margin: "auto",
+                    width: "100%",
+                    minWidth: 0,
+                    maxWidth: "1200px",
+                }}
             >
                 <Content>
                     <Outlet />
