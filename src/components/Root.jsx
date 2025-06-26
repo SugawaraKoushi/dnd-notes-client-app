@@ -15,7 +15,7 @@ const Root = () => {
     ];
 
     const handleLogoutButtonClick = async () => {
-        const url = "http://192.168.0.105:9090/logout";
+        const url = `${process.env.REACT_APP_API_URL}/logout`;
 
         try {
             await axios.get(url).then(() => navigate("/login"));
