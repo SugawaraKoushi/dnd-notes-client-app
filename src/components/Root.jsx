@@ -15,7 +15,7 @@ const Root = () => {
     ];
 
     const handleLogoutButtonClick = async () => {
-        const url = "http://localhost:8080/logout";
+        const url = "http://localhost:9090/logout";
 
         try {
             await axios.get(url).then(() => navigate("/login"));

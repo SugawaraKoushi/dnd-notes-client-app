@@ -1,0 +1,15 @@
+services:
+  client:
+    build:
+      context: .
+      target: production
+    volumes:
+      - react-static:/usr/share/nginx/html
+    ports:
+      - "3030:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  react-static:
