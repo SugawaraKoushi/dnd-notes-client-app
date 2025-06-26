@@ -1,5 +1,6 @@
 services:
   client:
+    container_name: dndnotes-client
     build:
       context: .
       target: production
@@ -8,9 +9,11 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    # environment:
+    #   - NODE_ENV=production
+    #   - REACT_APP_API_URL=${REACT_APP_API_URL}
+    env_file:
+      - stack.env
     networks:
       - dndnotes-network
 
