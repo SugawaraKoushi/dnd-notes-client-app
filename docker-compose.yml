@@ -16,5 +16,5 @@ volumes:
   react-static:
 
 networks:
-  app-network:
+  dndnotes-network:
     external: true
