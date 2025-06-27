@@ -10,7 +10,8 @@ RUN npm run build
  
 # Production Stage
 FROM nginx:stable-alpine AS production
+RUN apk add --no-cache gettext
 COPY --from=build /app/build /usr/share/nginx/html
-COPY /nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.template.conf
 # CMD ["nginx", "-g", "daemon off;"]
-CMD ["sh", "-c", "envsubst '${BACKEND_URL}' < /etc/nginx/nginx.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]d
+CMD ["sh", "-c", "envsubst '${BACKEND_URL}' < /etc/nginx/nginx.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
