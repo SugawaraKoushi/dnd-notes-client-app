@@ -15,11 +15,10 @@ const Root = () => {
     ];
 
     const handleLogoutButtonClick = async () => {
-        const auth = axios.create({baseURL: ""});
-        const url = `/logout`;
+        const url = `/auth/logout`;
 
         try {
-            await auth.get(url).then(() => navigate("/login"));
+            await axios.get(url).then(() => navigate("/login"));
         } catch (e) {
             console.log(e);
         }
