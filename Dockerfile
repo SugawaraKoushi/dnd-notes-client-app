@@ -4,11 +4,13 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+# ARG REACT_APP_API_URL
+# ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 RUN npm run build
  
 # Production Stage
 FROM nginx:stable-alpine AS production
 COPY --from=build /app/build /usr/share/nginx/html
-CMD ["nginx", "-g", "daemon off;"]
+COPY /nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "envsubst '${BACKEND_URL}' < /etc/nginx/nginx.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
