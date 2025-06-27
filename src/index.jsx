@@ -43,8 +43,9 @@ const router = createBrowserRouter([
     },
 ]);
 
-// axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}/api`;
-axios.defaults.baseURL = `/api`;
+const apiUrl = process.env.REACT_APP_API_URL;
+const baseUrl = apiUrl == null ? "/api" : `${apiUrl}/api`;
+axios.defaults.baseURL = baseUrl;
 axios.defaults.withCredentials = true;
 
 axios.interceptors.response.use(

@@ -39,9 +39,28 @@ const AttackModal = ({
     };
 
     const handleAttackAbilityChange = (ability) => {
+        const abilityModifier = getAbilityModifier(ability);
+        setAttack({
+            ...attack,
+            ability: ability,
+            abilityBonus: attack.proficiency ? abilityModifier : 0,
+        });
+    };
+
+    const handleProficiencyToggle = () => {
+        const proficiency = !attack.proficiency;
+        const abilityModifier = getAbilityModifier(attack.ability);
+        setAttack({
+            ...attack,
+            proficiency: proficiency,
+            abilityBonus: proficiency ? abilityModifier : 0
+        });
+    };
+
+    const getAbilityModifier = (ability) => {
         let abilityModifier;
 
-        switch (ability) {
+        switch (attack.ability) {
             case 1:
                 abilityModifier = calculateModifier(character.strength);
                 break;
@@ -64,21 +83,8 @@ const AttackModal = ({
                 abilityModifier = 0;
         }
 
-        setAttack({
-            ...attack,
-            ability: ability,
-            abilityBonus: abilityModifier,
-        });
-    };
-
-    const handleProficiencyToggle = () => {
-        const proficiency = !attack.proficiency;
-        setAttack({
-            ...attack,
-            proficiency: proficiency,
-            proficiencyBonus: proficiency ? character.proficiencyBonus : 0,
-        });
-    };
+        return abilityModifier;
+    }
 
     const handleAttackDamageChange = (event) => {
         setAttack({ ...attack, damage: event.target.value });
@@ -144,7 +150,7 @@ const AttackModal = ({
                                 onChange={handleAttackAbilityChange}
                             />
                         </Form.Item>
-                        <Form.Item name="proficiency" label="Бонус владения">
+                        <Form.Item name="proficiency" label="Бонус характеристики">
                             <Checkbox
                                 checked={attack?.proficiency}
                                 onChange={handleProficiencyToggle}
