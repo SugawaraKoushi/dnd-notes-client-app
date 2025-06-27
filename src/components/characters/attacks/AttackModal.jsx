@@ -60,7 +60,7 @@ const AttackModal = ({
     const getAbilityModifier = (ability) => {
         let abilityModifier;
 
-        switch (attack.ability) {
+        switch (ability) {
             case 1:
                 abilityModifier = calculateModifier(character.strength);
                 break;

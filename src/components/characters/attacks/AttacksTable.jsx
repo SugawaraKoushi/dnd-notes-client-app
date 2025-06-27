@@ -22,7 +22,6 @@ const AttacksTable = () => {
             key: attack.id,
             name: attack.name,
             bonus:
-                attack.proficiencyBonus +
                 attack.additionalBonus +
                 attack.abilityBonus,
             damage: attack.damage,
