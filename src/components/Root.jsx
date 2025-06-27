@@ -15,7 +15,7 @@ const Root = () => {
     ];
 
     const handleLogoutButtonClick = async () => {
-        const url = `${process.env.REACT_APP_API_URL}/logout`;
+        const url = `/logout`;
 
         try {
             await axios.get(url).then(() => navigate("/login"));
