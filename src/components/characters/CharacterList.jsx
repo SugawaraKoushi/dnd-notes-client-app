@@ -49,9 +49,7 @@ const CharacterList = () => {
     return (
         <>
             <List
-                className={"content-layout content-layout-centered".concat(
-                    characters.length <= 0 ? " content-layout-empty" : 0
-                )}
+                className="content-layout"
                 grid={{
                     gutter: 12,
                     xs: 1,
@@ -63,7 +61,7 @@ const CharacterList = () => {
                 }}
                 dataSource={characters}
                 renderItem={(character) => (
-                    <List.Item>
+                    <List.Item style={{ width: "100%", maxWidth: "396px" }}>
                         <CharacterTile
                             href={`/characters/${character.id}`}
                             id={character.id}
