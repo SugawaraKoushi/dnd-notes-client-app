@@ -1,6 +1,5 @@
 import { Button, Form, Input, Typography } from "antd";
 
-
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -15,8 +14,16 @@ const Registration = () => {
             await axios
                 .post(url, values)
                 .then(() => navigate("/characters/list"));
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 

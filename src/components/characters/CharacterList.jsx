@@ -24,7 +24,15 @@ const CharacterList = () => {
             const response = await axios.get(url);
             setCharacters(response.data);
         } catch (error) {
-            console.log(error);
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 
@@ -42,7 +50,20 @@ const CharacterList = () => {
 
     const deleteCharacter = async (id) => {
         const url = `/characters/delete/${id}`;
-        await axios.delete(url);
+        try {
+            await axios.delete(url);
+        } catch (error) {
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
+        }
+
         await getCharacters();
     };
 

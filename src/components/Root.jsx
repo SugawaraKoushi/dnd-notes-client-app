@@ -15,12 +15,19 @@ const Root = () => {
     ];
 
     const handleLogoutButtonClick = async () => {
-        const url = `/auth/logout`;
-
         try {
+            const url = `/auth/logout`;
             await axios.get(url).then(() => navigate("/login"));
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 

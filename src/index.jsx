@@ -9,6 +9,7 @@ import Registration from "./components/auth/Registration";
 import Characters from "./components/characters/Characters";
 import CharacterPage from "./components/characters/CharacterPage";
 import axios from "axios";
+import ErrorPage from "./components/ErrorPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: <Registration />,
+    },
+    {
+        path: "/error",
+        element: <ErrorPage />,
     },
 ]);
 

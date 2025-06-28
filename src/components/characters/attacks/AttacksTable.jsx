@@ -1,7 +1,7 @@
 import { Button, Flex, Table } from "antd";
 import { useContext, useMemo, useState } from "react";
 import "./index.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import AttackModal from "./AttackModal";
 import { modifierAsString } from "../../services/ModifierService";
 import { AttackContext } from "../context/AttackContext";
@@ -16,14 +16,13 @@ const AttacksTable = () => {
     const { character } = useContext(CharacterContext);
     const { onRollButtonClick } = useContext(NotificationContext);
     const [selectedAttackIndex, setSelectedAttackIndex] = useState(null);
+    const navigate = useNavigate();
 
     const datasource = useMemo(() => {
         return attacks.map((attack) => ({
             key: attack.id,
             name: attack.name,
-            bonus:
-                attack.additionalBonus +
-                attack.abilityBonus,
+            bonus: attack.additionalBonus + attack.abilityBonus,
             damage: attack.damage,
         }));
     }, [attacks]);
@@ -31,7 +30,7 @@ const AttacksTable = () => {
     const handleAddAttack = async () => {
         try {
             const url = "/attacks/create";
-            
+
             const response = await axios.post(url, null, {
                 params: {
                     characterId: character.id,
@@ -40,7 +39,15 @@ const AttacksTable = () => {
             const attack = response.data;
             onAttacksChange([...attacks, attack]);
         } catch (error) {
-            console.log(error);
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 
@@ -63,7 +70,15 @@ const AttacksTable = () => {
             const url = `/attacks/delete/${attackId}`;
             await axios.delete(url);
         } catch (error) {
-            console.log(error);
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 
@@ -74,7 +89,15 @@ const AttacksTable = () => {
             const newAttacks = response.data;
             onAttacksChange(newAttacks);
         } catch (error) {
-            console.log(error);
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 
@@ -83,7 +106,15 @@ const AttacksTable = () => {
             const url = `/attacks/update`;
             await axios.put(url, { ...attack });
         } catch (error) {
-            console.log(error);
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 

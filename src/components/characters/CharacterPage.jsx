@@ -12,7 +12,7 @@ import AttacksTable from "./attacks/AttacksTable";
 import { AttackContext } from "./context/AttackContext";
 import { NotificationContext } from "./context/NotificationContext";
 import DiceRoller from "./dice roller/DiceRoller";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 
 const CharacterPage = () => {
@@ -23,6 +23,8 @@ const CharacterPage = () => {
     const { useBreakpoint } = Grid;
     const screens = useBreakpoint();
     const isVertical = screens.xl;
+
+    const navigate = useNavigate();
 
     //#region Сила
 
@@ -260,32 +262,35 @@ const CharacterPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await getCharacter();
-            await getAttacks();
+            try {
+                await getCharacter();
+                await getAttacks();
+            } catch (error) {
+                navigate("/error", {
+                    state: {
+                        error: {
+                            message: error.message,
+                            stack: error.stack,
+                            code: error.code || "NO_CODE",
+                        },
+                    },
+                });
+            }
         };
 
         fetchData();
     }, []);
 
     const getCharacter = async () => {
-        try {
-            const url = `/characters/${id}`;
-
-            const response = await axios.get(url);
-            setCharacter(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        const url = `/characters/${id}`;
+        const response = await axios.get(url);
+        setCharacter(response.data);
     };
 
     const getAttacks = async () => {
-        try {
-            const url = `/attacks/character/${id}`;
-            const response = await axios.get(url);
-            setAttacks(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        const url = `/attacks/character/${id}`;
+        const response = await axios.get(url);
+        setAttacks(response.data);
     };
 
     const updateCharacter = async (characterData) => {
@@ -294,7 +299,15 @@ const CharacterPage = () => {
             const response = await axios.put(url, characterData);
             setCharacter(response.data);
         } catch (error) {
-            console.log(error);
+            navigate("/error", {
+                state: {
+                    error: {
+                        message: error.message,
+                        stack: error.stack,
+                        code: error.code || "NO_CODE",
+                    },
+                },
+            });
         }
     };
 
