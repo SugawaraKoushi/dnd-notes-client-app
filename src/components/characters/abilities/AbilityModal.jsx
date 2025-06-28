@@ -31,6 +31,10 @@ const AbilityModal = (props) => {
         updatedCharacter[id] = value;
         updatedCharacter[`${id}SavingThrow`] = savingThrow;
 
+        if (id === 'dexterity') {
+            updatedCharacter.initiative = calculateModifier(value);
+        }
+
         if (skills) {
             skills.forEach((skill) => {
                 const skillValue =

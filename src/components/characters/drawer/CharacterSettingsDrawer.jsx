@@ -42,6 +42,10 @@ const CharacterSettingsDrawer = (props) => {
             [fieldName]: value,
         };
 
+        if (fieldName === "level") {
+            updatedCharacter.proficiencyBonus = 2 + Math.floor(value / 4);
+        }
+
         onCharacterChange(updatedCharacter);
     };
 
