@@ -43,17 +43,16 @@ const AttackModal = ({
         setAttack({
             ...attack,
             ability: ability,
-            abilityBonus: attack.proficiency ? abilityModifier : 0,
+            abilityBonus: abilityModifier,
         });
     };
 
     const handleProficiencyToggle = () => {
         const proficiency = !attack.proficiency;
-        const abilityModifier = getAbilityModifier(attack.ability);
         setAttack({
             ...attack,
             proficiency: proficiency,
-            abilityBonus: proficiency ? abilityModifier : 0
+            proficiencyBonus: proficiency ? character.proficiencyBonus : 0
         });
     };
 

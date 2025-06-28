@@ -22,7 +22,7 @@ const AttacksTable = () => {
         return attacks.map((attack) => ({
             key: attack.id,
             name: attack.name,
-            bonus: attack.additionalBonus + attack.abilityBonus,
+            bonus: attack.additionalBonus + attack.abilityBonus + attack.proficiencyBonus,
             damage: attack.damage,
         }));
     }, [attacks]);
